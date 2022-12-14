@@ -8,13 +8,8 @@ public class Computer_Player : Player
     }
     internal override int realizar_apuesta()
     {
-        if ((int)Hand.rank >= 3)
-        {
-            return Dinero / 2 ;
-        }
-        else
-        {
-            return 1 ;
-        }
+        var apuesta = (int)Hand.rank >= 3 ? Dinero / 2 : 1;
+        Console.WriteLine(apuesta);
+        return apuesta;
     }
 }

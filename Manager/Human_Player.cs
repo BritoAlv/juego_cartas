@@ -7,7 +7,13 @@ public class Human_Player : Player
     }
     internal override int realizar_apuesta()
     {
-        var a = (int)L.Use_Compiler();
+        var line = Console.ReadLine();
+        while (string.IsNullOrEmpty(line))
+        {
+            Console.Write("Apuesta Bien >");
+            line = Console.ReadLine();
+        }
+        var a = (int)L.Use_Compiler(line);
         return a;
     }
 }

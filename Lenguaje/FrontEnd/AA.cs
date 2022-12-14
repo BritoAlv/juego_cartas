@@ -2,10 +2,9 @@ using AnálisisCodigo;
 using AnálisisCodigo.Sintaxis;
 public static class L
 {
-    public static object Use_Compiler()
+    public static object Use_Compiler(string line)
     {
         var variables = new Dictionary<VariableSymbol, object>();
-        var line = Console.ReadLine();
         var syntaxtree = NodoRoot.Parse(line);
         var compilacion = new Compilacion(syntaxtree);
         var result = compilacion.Evaluate(variables);

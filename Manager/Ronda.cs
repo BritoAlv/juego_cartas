@@ -2,26 +2,32 @@ using Poker;
 namespace Game;
 internal class Ronda
 {
-    int dinero_apostado { get; set; }
+    Bet Bet { get;}
     internal Ronda(IEnumerable<Player> participants)
     {
         Participants = participants;
+        Bet = new Bet(Participants);
     }
     public IEnumerable<Player> Participants { get; }
     internal IEnumerable<Player> Simulate()
     {
         StartRonda();
-        dinero_apostado = 0;
         foreach (var cant_cartas in new List<int> { 3, 1, 1 })
         {
-            Repartir_Apuesta(cant_cartas);
+            var mini_ronda = new MiniRonda(Participants, cant_cartas);
+            mini_ronda.Execute(Bet);
         }
         var best_hand = Participants.Select(x => x.Hand).OrderDescending().First();
         Tools.ShowColoredMessage("La ronda fue ganada por: ", ConsoleColor.DarkGray);
+        foreach (var participant in Participants)
+        {
+            Console.WriteLine($"{participant.Id} " +  participant.Hand + $" {participant.Hand.rank}");
+        }
+        Console.WriteLine();
         var winners = Participants.Where(x => x.Hand == best_hand);
         foreach (var winner in winners)
         {
-            winner.Dinero += dinero_apostado / winners.Count();
+            winner.Dinero += Bet.Get_Dinero_Total_Apostado()/ winners.Count();
             Tools.ShowColoredMessage($"{winner.Id} con ${winner.Dinero}, ", ConsoleColor.DarkGray);
         }
         Console.WriteLine("\nLa ronda acaba aquí");
@@ -39,42 +45,5 @@ internal class Ronda
             Tools.ShowColoredMessage(" " + player.Id + ", ", ConsoleColor.Blue);
         }
         Console.WriteLine();
-    }
-
-    void Repartir_Apuesta(int cartas_repartir)
-    {
-        foreach (var player in Participants)
-        {
-            RepartCards(cartas_repartir, player);
-            RealizarApuesta(player);
-        }
-    }
-    void RealizarApuesta(Player player)
-    {
-        Tools.ShowColoredMessage($"Esta es la mano de {player.Id} ", ConsoleColor.Gray);
-        Console.Write(player.Hand);
-        Console.Write($"con ${player.Dinero} \n");
-        if (player.Dinero > 0)
-        {
-            Console.Write("Apuesta > ");
-            var apuesta = player.realizar_apuesta();
-            while (apuesta > player.Dinero || apuesta == 0)
-            {
-                Console.WriteLine("Apuesta bien");
-                Console.Write("Apuesta > ");
-                apuesta = player.realizar_apuesta();
-            }
-            // at this point the player bets a reasonable number.
-            player.Dinero -= apuesta;
-            dinero_apostado += apuesta;
-            Tools.ShowColoredMessage($"{player.Id} apostó {apuesta} \n", ConsoleColor.Yellow);
-        }
-    }
-    void RepartCards(int v, Player player)
-    {
-        for (int i = 0; i < v; i++)
-        {
-            player.Hand.Draw(random.generate_random_card());
-        }
     }
 }
