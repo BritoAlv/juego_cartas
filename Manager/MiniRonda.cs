@@ -33,12 +33,12 @@ internal class MiniRonda
         int DoBet()
         {
             Console.Write("Apuesta > ");
-            var apuesta_jugador = player.realizar_apuesta();
+            var apuesta_jugador = player.realizar_apuesta(apuesta);
             while (apuesta_jugador > player.Dinero || apuesta_jugador == 0)
             {
                 Console.WriteLine("Apuesta bien");
                 Console.Write("Apuesta > ");
-                apuesta_jugador = player.realizar_apuesta();
+                apuesta_jugador = player.realizar_apuesta(apuesta);
             }
             return apuesta_jugador;
         }
