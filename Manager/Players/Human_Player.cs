@@ -5,7 +5,7 @@ public class Human_Player : Player
     public Human_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    internal override int realizar_apuesta(Bet Apuestas)
+    internal override int realizar_apuesta(Bet Apuestas, IEnumerable<Player> Players)
     {
         var line = Console.ReadLine();
         while (string.IsNullOrEmpty(line))

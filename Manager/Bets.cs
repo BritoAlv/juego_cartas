@@ -9,6 +9,10 @@ internal class Bet
             Bets[participant] = new List<int>();
         }
     }
+    /*
+    To each player (id) I assign in a List all the bets it does in a List, last element of the list,
+    is the last element he bets.
+    */
     public Dictionary<Ideable, List<int>> Bets { get; private set; }
 
     internal void Apostar(Player A, int dinero)
