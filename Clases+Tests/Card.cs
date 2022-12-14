@@ -10,7 +10,13 @@ public class Card
     public CardSuit Suit { get; }
     public override string ToString()
     {
-        string number = ((int)this.Value).ToString();
+        int numero = ((int)this.Value);
+        if (numero == 14)
+        {
+            numero = 1;
+        }
+        string number = numero.ToString();
+    
         string suit = this.Suit.GetEmoji().ToString();
         if(number.Length == 1)
         {

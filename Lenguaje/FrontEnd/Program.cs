@@ -19,7 +19,7 @@ public class Test
                 Console.Clear();
                 continue;
             }
-            
+
             var syntaxtree = NodoRoot.Parse(line);
             var compilacion = new Compilacion(syntaxtree);
             var result = compilacion.Evaluate(variables);

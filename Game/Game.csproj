@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Clases+Tests\Poker.csproj" />
+    <ProjectReference Include="..\Manager\Manager.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

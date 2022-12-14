@@ -1,3 +1,10 @@
-# JuegoDeCartas
+# Implementing a poker hand ranker using functional programming. Based on:
 
-> Proyecto de Programación II. Facultad de Matemática y Computación. Universidad de La Habana. Curso 2022. 
+ https://edcharbeneau.com/csharp-functional-workshop-instructions/
+
+## Run
+
+```bash
+cd Game
+dotnet run
+```
