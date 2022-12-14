@@ -2,7 +2,7 @@ using Poker;
 namespace Game;
 internal class Ronda
 {
-    Bet Bet { get;}
+    Bet Bet { get; }
     internal Ronda(IEnumerable<Player> participants)
     {
         Participants = participants;
@@ -19,16 +19,17 @@ internal class Ronda
         }
         var best_hand = Participants.Select(x => x.Hand).OrderDescending().First();
         Tools.ShowColoredMessage("La ronda fue ganada por: ", ConsoleColor.DarkGray);
-        foreach (var participant in Participants)
-        {
-            Console.WriteLine($"{participant.Id} " +  participant.Hand + $" {participant.Hand.rank}");
-        }
-        Console.WriteLine();
+
         var winners = Participants.Where(x => x.Hand == best_hand);
         foreach (var winner in winners)
         {
-            winner.Dinero += Bet.Get_Dinero_Total_Apostado()/ winners.Count();
+            winner.Dinero += Bet.Get_Dinero_Total_Apostado() / winners.Count();
             Tools.ShowColoredMessage($"{winner.Id} con ${winner.Dinero}, ", ConsoleColor.DarkGray);
+        }
+        Console.WriteLine();
+        foreach (var participant in Participants)
+        {
+            Console.WriteLine($"{participant.Id} " + participant.Hand + $" {participant.Hand.rank}");
         }
         Console.WriteLine("\nLa ronda acaba aquí");
         foreach (var player in Participants)

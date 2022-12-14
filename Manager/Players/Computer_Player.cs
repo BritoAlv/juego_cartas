@@ -6,7 +6,7 @@ public class Computer_Player : Player
     public Computer_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    internal override int realizar_apuesta()
+    internal override int realizar_apuesta(Bet apuestas)
     {
         var apuesta = (int)Hand.rank >= 3 ? Dinero / 2 : 1;
         Console.WriteLine(apuesta);
