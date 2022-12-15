@@ -19,8 +19,8 @@ internal class MiniRonda
     }
     void RealizarApuesta(Player player, Bet apuesta)
     {
-        Tools.ShowColoredMessage($"Esta es la mano de {player.Id} ", ConsoleColor.Gray);
-        Console.Write(player.Hand);
+        Tools.ShowColoredMessage($"Esta es la mano de " +$"{player.Id}".PadLeft(6), ConsoleColor.Gray);
+        Console.Write("  " + player.Hand);
         Console.Write($"con ${player.Dinero} \n");
         if (player.Dinero > 0)
         {
@@ -32,14 +32,19 @@ internal class MiniRonda
         }
         int DoBet()
         {
-            Console.Write("Apuesta > ");
-            var apuesta_jugador = player.realizar_apuesta(apuesta, Participants);
-            while (apuesta_jugador > player.Dinero || apuesta_jugador == 0)
+           var apuesta_jugador = 0;
+           var flag = false;
+            do
             {
-                Console.WriteLine("Apuesta bien");
-                Console.Write("Apuesta > ");
-                apuesta_jugador = player.realizar_apuesta(apuesta, Participants);
-            }
+                Console.Write(flag ? "Apuesta Bien > " :"Apuesta > ");
+                var apuesta_string = Console.ReadLine();
+                if (apuesta_string == null)
+                {
+                    continue;
+                }
+                apuesta_jugador = player.realizar_apuesta(apuesta, Participants, apuesta_string);
+                flag = true;
+            } while (apuesta_jugador > player.Dinero || apuesta_jugador == 0);
             return apuesta_jugador;
         }
     }

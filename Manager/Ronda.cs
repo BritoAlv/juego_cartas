@@ -29,7 +29,7 @@ internal class Ronda
         Console.WriteLine();
         foreach (var participant in Participants)
         {
-            Console.WriteLine($"{participant.Id} " + participant.Hand + $" {participant.Hand.rank}");
+            Console.WriteLine($"{participant.Id}".PadLeft(Participants.Select(x => x.Id.Length).Max()) + " " + participant.Hand + $" {participant.Hand.rank}");
         }
         Console.WriteLine("\nLa ronda acaba aquí");
         foreach (var player in Participants)

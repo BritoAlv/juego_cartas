@@ -6,7 +6,7 @@ public class Computer_Player : Player
     public Computer_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    internal override int realizar_apuesta(Bet apuestas, IEnumerable<Player> Players)
+    internal override int realizar_apuesta(Bet apuestas, IEnumerable<Player> Players, string info_apuesta)
     {
         var mayor_dinero = Players.Select(x => apuestas.Get_Dinero_Apostado(x)).Max();
         int apuesta = this.Dinero / 2;
@@ -19,7 +19,6 @@ public class Computer_Player : Player
         {
             apuesta =  Math.Min(mayor_dinero, this.Dinero);
         }
-        Console.WriteLine(apuesta);
         return apuesta;
     }
 }

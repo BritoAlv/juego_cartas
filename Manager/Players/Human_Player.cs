@@ -5,15 +5,14 @@ public class Human_Player : Player
     public Human_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    internal override int realizar_apuesta(Bet Apuestas, IEnumerable<Player> Players)
+    internal override int realizar_apuesta(Bet Apuestas, IEnumerable<Player> Players, string info_apuesta)
     {
-        var line = Console.ReadLine();
-        while (string.IsNullOrEmpty(line))
+        var line = info_apuesta;
+        if (string.IsNullOrEmpty(line))
         {
-            Console.Write("Apuesta Bien >");
-            line = Console.ReadLine();
+            return 0;
         }
-        var a = (int)L.Use_Compiler(line);
+        var a = Convert.ToInt32(L.Use_Compiler(line));
         return a;
     }
 }
