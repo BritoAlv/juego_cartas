@@ -12,11 +12,27 @@ internal class Ronda
     internal IEnumerable<Player> Simulate()
     {
         StartRonda();
-        foreach (var cant_cartas in new List<int> { 3, 1, 1 })
+        ExecuteMiniRondas(3, 1, 1);
+        GetWinners();
+        ShowRondaFinalState();
+        return Participants.Where(x => x.Dinero > 0);
+    }
+
+    private void ShowRondaFinalState()
+    {
+        foreach (var participant in Participants)
         {
-            var mini_ronda = new MiniRonda(Participants, cant_cartas);
-            mini_ronda.Execute(Bet);
+            Console.WriteLine($"{participant.Id}".PadLeft(Participants.Select(x => x.Id.Length).Max()) + " " + participant.Hand + $" {participant.Hand.rank}");
         }
+        Console.WriteLine("\nLa ronda acaba aquí");
+        foreach (var player in Participants)
+        {
+            player.Hand = new Hand();
+        }
+    }
+
+    private void GetWinners()
+    {
         var best_hand = Participants.Select(x => x.Hand).OrderDescending().First();
         Tools.ShowColoredMessage("La ronda fue ganada por: ", ConsoleColor.DarkGray);
 
@@ -27,16 +43,15 @@ internal class Ronda
             Tools.ShowColoredMessage($"{winner.Id} con ${winner.Dinero}, ", ConsoleColor.DarkGray);
         }
         Console.WriteLine();
-        foreach (var participant in Participants)
+    }
+
+    private void ExecuteMiniRondas(params int[] cartas_repartir)
+    {
+        foreach (var cant_cartas in cartas_repartir)
         {
-            Console.WriteLine($"{participant.Id}".PadLeft(Participants.Select(x => x.Id.Length).Max()) + " " + participant.Hand + $" {participant.Hand.rank}");
+            var mini_ronda = new MiniRonda(Participants, cant_cartas);
+            mini_ronda.Execute(Bet);
         }
-        Console.WriteLine("\nLa ronda acaba aquí");
-        foreach (var player in Participants)
-        {
-            player.Hand = new Hand();
-        }
-        return Participants.Where(x => x.Dinero > 0);
     }
     void StartRonda()
     {
