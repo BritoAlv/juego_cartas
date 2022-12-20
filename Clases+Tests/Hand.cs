@@ -1,45 +1,49 @@
 using NeoSmart.Unicode;
-namespace Poker
+namespace Poker;
+
+public class Hand : IComparable<Hand>
 {
-    public class Hand : IComparable<Hand>
+    public override string ToString()
     {
-
-        public override string ToString()
+        var result = "";
+        foreach (var card in Cards.OrderByDescending(x => ((int)x.Value == 1) ? 15 : (int)x.Value))
         {
-            var result = "";
-            foreach (var card in Cards.OrderByDescending(x => ((int)x.Value == 1) ? 15 : (int)x.Value))
-            {
-                result = result + card.ToString();
-            }
-            return result;
+            result = result + card.ToString();
         }
-        public HandRank rank => Scorer.GetHandRank(Cards);
-        public string ToStringWithRank() => this.ToString() + " => " + Scorer.GetHandRank(Cards);
-        private List<Card> _cards = new List<Card>();
-        public IEnumerable<Card> Cards
-        {
-            get
-            {
-                return this._cards;
-            }
-        }
-        public int CompareTo(Hand? other)
-        {
-            if (Scorer.GetHandRank(this.Cards) > Scorer.GetHandRank(other.Cards))
-            {
-                return 1;
-            }
-            else if (Scorer.GetHandRank(this.Cards) < Scorer.GetHandRank(other.Cards))
-            {
-                return -1;
-            }
-            else
-            {
-                var common_rank = Scorer.GetHandRank(this.Cards);
-                return Common_Hand_Rank.CommonRanker(common_rank, this, other);
-            }
-        }
-
-        public void Draw(Card card) => _cards.Add(card);
+        return result;
     }
+    public HandRank rank => this.Scorer.GetHandRank(Cards);
+    public string ToStringWithRank() => this.ToString() + " => " + Scorer.GetHandRank(Cards);
+    private List<Card> _cards;
+    public Hand(Scorer scorer)
+    {
+        Scorer = scorer;
+        _cards = new List<Card>();
+    }
+
+    public IEnumerable<Card> Cards
+    {
+        get
+        {
+            return this._cards;
+        }
+    }
+    public Scorer Scorer { get; }
+    public int CompareTo(Hand? other)
+    {
+        if (other is null)
+        {
+            return 1;
+        }
+        if (this.rank.CompareTo(other.rank) == 0)
+        {
+            var common_rank = Scorer.GetHandRank(this.Cards);
+            return Scorer.Common_Ranker(common_rank, this.Cards, other.Cards);
+        }
+        else
+        {
+            return this.rank.CompareTo(other.rank);
+        }
+    }
+    public void Draw(Card card) => _cards.Add(card);
 }

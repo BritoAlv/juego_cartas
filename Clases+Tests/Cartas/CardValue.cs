@@ -1,6 +1,7 @@
 /*
 Enums have default values.
 */
+namespace Poker;
 public enum CardValue
 {
     Dos = 2,

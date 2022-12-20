@@ -1,4 +1,4 @@
-namespace Game;
+namespace Poker;
 internal class Bet
 {
     internal Bet(IEnumerable<Player> participants)

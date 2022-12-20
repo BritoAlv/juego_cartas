@@ -1,6 +1,4 @@
-using Poker;
-namespace Game;
-
+namespace Poker;
 public class Computer_Player : Player
 {
     public Computer_Player(string id, int dinero) : base(id, dinero)
@@ -10,12 +8,12 @@ public class Computer_Player : Player
     {
         var mayor_dinero = Players.Select(x => apuestas.Get_Dinero_Apostado(x)).Max();
         int apuesta = this.Dinero / 2;
-        if((int)Hand.rank == 1) // has pair.
+        if(Hand.rank.Id == "Una Pareja") // has pair.
         {
             apuesta =  this.Dinero;
         }
 
-        if ( (int)Hand.rank >= 3)
+        if (Hand.rank.Priority >= 3)
         {
             apuesta =  Math.Min(mayor_dinero, this.Dinero);
         }

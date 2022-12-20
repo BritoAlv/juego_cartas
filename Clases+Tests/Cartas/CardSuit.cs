@@ -2,6 +2,7 @@ using NeoSmart.Unicode;
 /*
 Enums have default values.
 */
+namespace Poker;
 public enum CardSuit
 {
     CorazónRojo,
@@ -10,7 +11,7 @@ public enum CardSuit
     Diamante,
 }
 
-public static class tool
+internal static class tool
 {
     public static NeoSmart.Unicode.SingleEmoji GetEmoji(this CardSuit suit)
     {

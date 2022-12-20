@@ -1,4 +1,4 @@
-using NeoSmart.Unicode;
+namespace Poker;
 public class Card
 {
     public Card(CardValue value, CardSuit suit)
@@ -16,13 +16,12 @@ public class Card
             numero = 1;
         }
         string number = numero.ToString();
-    
+
         string suit = this.Suit.GetEmoji().ToString();
-        if(number.Length == 1)
+        if (number.Length == 1)
         {
             number = " " + number;
         }
         return number + suit + "   ";
-    } 
+    }
 }
-  

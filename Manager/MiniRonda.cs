@@ -1,5 +1,4 @@
-namespace Game;
-using Poker;
+namespace Poker;
 internal class MiniRonda
 {
     private readonly IEnumerable<Player> Participants;

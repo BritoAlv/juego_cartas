@@ -1,4 +1,4 @@
-namespace Game;
+namespace Poker;
 
 public interface Ideable
 {

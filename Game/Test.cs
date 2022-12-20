@@ -3,10 +3,11 @@ public class Test
 {
     public static void RandomPlay()
     {
+        var scorer = new Scorer();
         while (true)
         {
-            Hand A = random.generate_random_hand();
-            Hand B = random.generate_random_hand();
+            Hand A = random.generate_random_hand(scorer);
+            Hand B = random.generate_random_hand(scorer);
             Console.WriteLine(A.ToStringWithRank());
             Console.WriteLine(B.ToStringWithRank());
             int result = A.CompareTo(B);

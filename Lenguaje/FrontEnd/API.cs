@@ -1,6 +1,7 @@
 using AnálisisCodigo;
 using AnálisisCodigo.Sintaxis;
-public static class L
+namespace LenguajeAPI;
+public static class API
 {
     public static object Use_Compiler(string line)
     {

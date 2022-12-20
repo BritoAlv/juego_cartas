@@ -1,23 +1,25 @@
-using Poker;
-namespace Game;
+namespace Poker;
 internal class Ronda
 {
     Bet Bet { get; }
-    internal Ronda(IEnumerable<Player> participants)
+    internal Ronda(Scorer scorer, int[] bets, IEnumerable<Player> participants)
     {
+        Scorer = scorer;
+        Bets = bets;
         Participants = participants;
         Bet = new Bet(Participants);
     }
+    public Scorer Scorer { get; }
+    public int[] Bets { get; }
     public IEnumerable<Player> Participants { get; }
     internal IEnumerable<Player> Simulate()
     {
         StartRonda();
-        ExecuteMiniRondas(3, 1, 1);
+        ExecuteMiniRondas(Bets);
         GetWinners();
         ShowRondaFinalState();
         return Participants.Where(x => x.Dinero > 0);
     }
-
     private void ShowRondaFinalState()
     {
         foreach (var participant in Participants)
@@ -27,10 +29,9 @@ internal class Ronda
         Console.WriteLine("\nLa ronda acaba aquí");
         foreach (var player in Participants)
         {
-            player.Hand = new Hand();
+            player.Hand = new Hand(this.Scorer);
         }
     }
-
     private void GetWinners()
     {
         var best_hand = Participants.Select(x => x.Hand).OrderDescending().First();
@@ -44,7 +45,6 @@ internal class Ronda
         }
         Console.WriteLine();
     }
-
     private void ExecuteMiniRondas(params int[] cartas_repartir)
     {
         foreach (var cant_cartas in cartas_repartir)
@@ -59,6 +59,7 @@ internal class Ronda
         foreach (var player in Participants)
         {
             Tools.ShowColoredMessage(" " + player.Id + ", ", ConsoleColor.Blue);
+            player.Hand = new Hand(this.Scorer);
         }
         Console.WriteLine();
     }
