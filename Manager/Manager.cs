@@ -15,7 +15,6 @@ public class Manager
         Bets = bets;
         Players = players;
     }
-
     private Scorer Scorer { get; }
     public int[] Bets { get; }
     public IEnumerable<Player> Players { get; set; }
