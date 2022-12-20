@@ -21,13 +21,13 @@ public class Manager
     public IEnumerable<Player> Players { get; set; }
     public void SimulateGame()
     {
-        Tools.ShowColoredMessage("Comienza la partida \n", ConsoleColor.DarkGray);
+        Tools.ShowColoredMessage("Comienza la partida: \n", ConsoleColor.DarkGray);
         var active_players = Players.Where(x => x.Dinero > 0);
         while (active_players.Count() > 1)
         {
             Ronda ronda = new Ronda(Scorer, Bets, Players);
             Players = ronda.Simulate();
         }
-        Tools.ShowColoredMessage($"la partida la ganó {active_players.First().Id} \n", ConsoleColor.DarkGray);
+        Tools.ShowColoredMessage($"la partida la ganó: {active_players.First().Id} \n", ConsoleColor.DarkGray);
     }
 }

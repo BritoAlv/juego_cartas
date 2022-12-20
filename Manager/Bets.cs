@@ -1,5 +1,5 @@
 namespace Poker;
-internal class Bet
+public class Bet
 {
     internal Bet(IEnumerable<Player> participants)
     {

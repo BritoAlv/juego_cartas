@@ -11,4 +11,3 @@ public class Program
         manager.SimulateGame();
     }
 }
-

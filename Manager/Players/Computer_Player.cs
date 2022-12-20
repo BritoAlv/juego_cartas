@@ -1,10 +1,10 @@
 namespace Poker;
-public class Computer_Player : Player
+public sealed class Computer_Player : Player
 {
     public Computer_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    internal override int realizar_apuesta(Bet apuestas, IEnumerable<Player> Players, string info_apuesta)
+    public override int realizar_apuesta(Bet apuestas, IEnumerable<Player> Players, string info_apuesta)
     {
         var mayor_dinero = Players.Select(x => apuestas.Get_Dinero_Apostado(x)).Max();
         int apuesta = this.Dinero / 2;

@@ -18,7 +18,8 @@ internal class MiniRonda
     }
     void RealizarApuesta(Player player, Bet apuesta)
     {
-        Tools.ShowColoredMessage($"Esta es la mano de " + $"{player.Id}".PadLeft(6), ConsoleColor.Gray);
+        Console.Write("Esta es la mano de ");
+        Tools.ShowColoredMessage($"{player.Id}".PadLeft(6), ConsoleColor.DarkMagenta);
         Console.Write("  " + player.Hand);
         Console.Write($"con ${player.Dinero} \n");
         if (player.Dinero > 0)
