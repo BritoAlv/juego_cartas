@@ -43,5 +43,18 @@ namespace AnálisisCodigo.Sintaxis
         FalseKeyword,
         NumberToken,
         IdentifierToken,
+        Menor,
+        MenorIgual,
+        Mayor,
+        MayorIgual,
+        OpenBraceToken,
+        CloseBraceToken,
+        Else,
+        For,
+        If,
+        Let,
+        To,
+        Var,
+        While,
     }
 }

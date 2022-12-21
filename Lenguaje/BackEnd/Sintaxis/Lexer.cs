@@ -10,16 +10,16 @@ namespace AnálisisCodigo.Sintaxis
     {
         private readonly string _text;
         private int _position;
-        private DiagnosticBag _diagnostics = new DiagnosticBag();
+        private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
+        private int _start;
+        private Tipo _kind;
+        private object? _value;
         public Lexer(string text)
         {
             this._text = text;
         }
-
         private char Current => Peek(0);
         private char LookAhead => Peek(1);
-
-
         private char Peek(int offset)
         {
             var index = _position + offset;
@@ -29,116 +29,148 @@ namespace AnálisisCodigo.Sintaxis
             }
             return _text[index];
         }
-
         private void Next()
         {
             _position++;
         }
-
         public DiagnosticBag Diagnostics => _diagnostics;
-
         public Token Lex()
         {
-            if (_position >= _text.Length)
-            {
-                return new Token(Tipo.EndOfFileToken, _position, "\0", null);
-            }
-            var start = _position;
-            if (char.IsDigit(Current))
-            {
-                while (char.IsDigit(Current))
-                {
-                    Next();
-                }
-                var length = _position - start;
-                var text = _text.Substring(start, length);
-                if (!int.TryParse(text, out var value))
-                {
-                    _diagnostics.ReportInvalidNumber(new TextSpan(start, length), _text, typeof(int));
-                }
-                return new Token(Tipo.NumberToken, start, text, value);
-            }
-
-            if (char.IsWhiteSpace(Current))
-            {
-
-                while (char.IsWhiteSpace(Current))
-                {
-                    Next();
-                }
-                var length = _position - start;
-                var text = _text.Substring(start, length);
-                return new Token(Tipo.WhiteSpaceToken, start, text, null);
-            }
-
-            if (char.IsLetter(Current))
-            {
-                while (char.IsLetter(Current))
-                {
-                    Next();
-                }
-                var length = _position - start;
-                var text = _text.Substring(start, length);
-                var kind = SyntaxFacts.GetKeyWordKind(text);
-                return new Token(kind, start, text, text);
-            }
-
+            _start = _position;
+            _kind = Tipo.BadToken;
+            _value = null;
             switch (Current)
             {
+                case '\0':
+                    _kind = Tipo.EndOfFileToken;
+                    break;
                 case '+':
-                    return new Token(Tipo.PlusToken, _position++, "+", "Operador +");
+                    _kind = Tipo.PlusToken;
+                    _position++;
+                    break;
                 case '-':
-                    return new Token(Tipo.MinusToken, _position++, "-", "Operador -");
+                    _kind = Tipo.MinusToken;
+                    _position++;
+                    break;
                 case '*':
-                    return new Token(Tipo.StarToken, _position++, "*", "Operador *");
+                    _kind = Tipo.StarToken;
+                    _position++;
+                    break;
                 case '/':
-                    return new Token(Tipo.SlashToken, _position++, "/", "Operador /");
+                    _kind = Tipo.SlashToken;
+                    _position++;
+                    break;
                 case '(':
-                    return new Token(Tipo.OpenParenthesisToken, _position++, "(", "Agrupador (");
+                    _kind = Tipo.OpenParenthesisToken;
+                    _position++;
+                    break;
                 case ')':
-                    return new Token(Tipo.CloseParenthesisToken, _position++, ")", "Agrupador )");
-
+                    _kind = Tipo.CloseParenthesisToken;
+                    _position++;
+                    break;
                 case '&':
                     if (LookAhead == '&')
                     {
                         _position += 2;
-                        return new Token(Tipo.AmpersandToken, start, "&&", "AND");
+                        _kind = Tipo.AmpersandToken;
                     }
                     break;
                 case '|':
                     if (LookAhead == '|')
                     {
                         _position += 2;
-                        return new Token(Tipo.PipeToken, start, "||", "OR");
+                        _kind = Tipo.PipeToken;
                     }
                     break;
                 case '=':
                     if (LookAhead == '=')
                     {
                         _position += 2;
-                        return new Token(Tipo.Equal, start, "==", "Equals");
+                        _kind = Tipo.Equal;
+                        break;
                     }
                     else
                     {
                         _position += 1;
-                        return new Token(Tipo.AsignacionToken, start, "=", "Asignacion =");
+                        _kind = Tipo.AsignacionToken;
+                        break;
                     }
                 case '!':
                     if (LookAhead == '=')
                     {
                         _position += 2;
-                        return new Token(Tipo.Distinto, start, "!=", "NotEquals != ");
+                        _kind = Tipo.Distinto;
+                        break;
                     }
                     else
                     {
                         _position += 1;
-                        return new Token(Tipo.BangToken, start, "!", "Negation !");
+                        _kind = Tipo.BangToken;
+                        break;
                     }
+                default:
+                    if (char.IsDigit(Current))
+                    {
+                        ReadNumber();
+                    }
+                    else if (char.IsWhiteSpace(Current))
+                    {
+                        ReadWhiteSpace();
+                    }
+                    else if (char.IsLetter(Current))
+                    {
+                        ReadIdentifierKeyword();
+                    }
+                    else
+                    {
+                        _diagnostics.ReportBadCharacter(_position, Current);
+                        _position++;
+                    }
+                    break;
             }
-
-            _diagnostics.ReportBadCharacter(_position, Current);
-            return new Token(Tipo.BadToken, _position++, _text.Substring(_position - 1, 1), null);
+            var length = _position - _start;
+            var text = SyntaxFacts.GetText(_kind);
+            if (text == null)
+            {
+                text = _text.Substring(_start, length);
+            }
+            return new Token(_kind, _start, text, _value);
         }
 
+        private void ReadIdentifierKeyword()
+        {
+            while (char.IsLetter(Current))
+            {
+                Next();
+            }
+            var length = _position - _start;
+            var text = _text.Substring(_start, length);
+            _kind = SyntaxFacts.GetKeyWordKind(text);
+        }
+
+        private void ReadWhiteSpace()
+        {
+            while (char.IsWhiteSpace(Current))
+            {
+                Next();
+            }
+            _kind = Tipo.WhiteSpaceToken;
+        }
+
+        private void ReadNumber()
+        {
+            while (char.IsDigit(Current))
+            {
+                Next();
+            }
+            var length = _position - _start;
+            var text = _text.Substring(_start, length);
+            if (!int.TryParse(text, out var value))
+            {
+                _diagnostics.ReportInvalidNumber(new TextSpan(_start, length), _text, typeof(int));
+            }
+            _value = value;
+            _kind = Tipo.NumberToken;
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace AnálisisCodigo.Sintaxis
     /// </summary>
     public class Token : Nodo
     {
-        public Token(Tipo tipo, int position, string text, object value)
+        public Token(Tipo tipo, int position, string text, object? value)
         {
             this.tipo = tipo;
             Position = position;
@@ -16,7 +16,7 @@ namespace AnálisisCodigo.Sintaxis
         public override Tipo tipo { get; }
         public int Position { get; }
         public string Text { get; }
-        public object Value { get; }
+        public object? Value { get; }
 
         public TextSpan Span => new TextSpan(Position, Text.Length);
         public override IEnumerable<Nodo> Hijos()
