@@ -5,7 +5,6 @@ public class Test
     public static void Main()
     {
         var variables = new Dictionary<VariableSymbol, object>();
-        var showTree = false;
         while (true)
         {
             Console.Write("> ");

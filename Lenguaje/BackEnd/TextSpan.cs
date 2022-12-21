@@ -7,10 +7,8 @@ namespace AnálisisCodigo
             Start = start;
             Length = length;
         }
-
         public int Start { get; }
         public int Length { get; }
-
         public int End => Start + Length;
     }
 }
