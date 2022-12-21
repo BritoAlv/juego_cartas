@@ -1,0 +1,12 @@
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/bin/Debug/net7.0/BackEnd.deps.json
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/bin/Debug/net7.0/BackEnd.dll
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/bin/Debug/net7.0/BackEnd.pdb
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/obj/Debug/net7.0/BackEnd.csproj.AssemblyReference.cache
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/obj/Debug/net7.0/BackEnd.GeneratedMSBuildEditorConfig.editorconfig
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/obj/Debug/net7.0/BackEnd.AssemblyInfoInputs.cache
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/obj/Debug/net7.0/BackEnd.AssemblyInfo.cs
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/obj/Debug/net7.0/BackEnd.csproj.CoreCompileInputs.cache
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/obj/Debug/net7.0/BackEnd.dll
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/obj/Debug/net7.0/refint/BackEnd.dll
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/obj/Debug/net7.0/BackEnd.pdb
+/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/obj/Debug/net7.0/ref/BackEnd.dll

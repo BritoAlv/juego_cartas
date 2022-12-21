@@ -44,7 +44,7 @@ internal class MiniRonda
                 }
                 apuesta_jugador = player.realizar_apuesta(apuesta, Participants, apuesta_string);
                 flag = true;
-            } while (apuesta_jugador > player.Dinero || apuesta_jugador == 0);
+            } while (apuesta_jugador > player.Dinero || apuesta_jugador <= 0 );
             return apuesta_jugador;
         }
     }

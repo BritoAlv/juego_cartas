@@ -1,0 +1,89 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0": {
+      "BackEnd/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/BackEnd.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BackEnd.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BackEnd/1.0.0": {
+      "type": "project",
+      "path": "../BackEnd/BackEnd.csproj",
+      "msbuildProject": "../BackEnd/BackEnd.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0": [
+      "BackEnd >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/nex/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/FrontEnd/Lenguaje.csproj",
+      "projectName": "Lenguaje",
+      "projectPath": "/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/FrontEnd/Lenguaje.csproj",
+      "packagesPath": "/home/nex/.nuget/packages/",
+      "outputPath": "/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/FrontEnd/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/nex/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {
+            "/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/BackEnd.csproj": {
+              "projectPath": "/home/nex/Estudio/1roMio/Programming/Juego_Cartas/Lenguaje/BackEnd/BackEnd.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0": {
+        "targetAlias": "net7.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
