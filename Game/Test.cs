@@ -1,7 +1,19 @@
 using Poker;
 public class Test
 {
-    public static void RandomPlay()
+    public static void RandomComputerPlay()
+    {
+        while (true)
+        {
+            Scorer scorer = new Scorer();
+            Player A = new Computer_Player("Alvaro", 100000);
+            Player B = new Computer_Player("Miguel", 20023);
+            Computer_Player C = new Computer_Player("PC", 50);
+            Manager manager = new Manager(scorer, new int[] { 3, 1, 1 }, A, B, C);
+            manager.SimulateGame();
+        }
+    }
+    public static void RandomBasicPlay()
     {
         var scorer = new Scorer();
         while (true)

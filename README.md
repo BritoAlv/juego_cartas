@@ -16,5 +16,11 @@ dotnet run
 
 - There is a class Scorer which contains default ranks for the poker game, you can remove them and implement the ranks you want as long as you hold the contract.
 - You can change the number of cards distributed in each mini-round of the game.
-- You also can implement your own player with its own "how to bet logic".
+- The interface IDecision allows you to define a new decision that players can take like *Apostar* or *Pasar*, to do so define a class that implement this interface, and also define another interface which will represent the contract that players should have to put this decision in practice. Look at the examples in code.
+- You can define your own Player or implement a new Computer Player, or a new Human_Player.
 
+## Bugs, Mejoras e Ideas Para Añadirle:
+
+- Create some new decision that implements a mini-parser.
+- A more sophisticated IA player.
+- Extend more the Context.

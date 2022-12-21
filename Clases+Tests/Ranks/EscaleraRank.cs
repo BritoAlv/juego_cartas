@@ -22,6 +22,10 @@ internal class EscaleraRank : Rank
     }
     public static bool HasEscalera_5(IEnumerable<Card> cards)
     {
+        if (cards.Count() < 5)
+        {
+            return false;
+        }
         if (cards.Any(x => x.Value == CardValue.As))
         {
             IEnumerable<int> c = cards.Select(x => (((int)x.Value <= 5) ? (int)x.Value + 13 : (int)x.Value));

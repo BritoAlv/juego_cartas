@@ -1,4 +1,8 @@
 namespace Poker;
+/// <summary>
+/// This class represent the Context that a player may use to determine its decision. From the Player point the Context
+/// is an immutable object.
+/// </summary>
 public class Contexto
 {
     internal Contexto(IEnumerable<Player> players, int[] Bets_Rounds)
@@ -6,11 +10,11 @@ public class Contexto
         Players = players;
         this.Bets_Rounds = Bets_Rounds;
         _apuestas = new Bet(players);
-        Active_Players = Players;
+        Active_Players = Players.ToList();
     }
-
     private Bet? _apuestas;
-    public Bet Apuestas{ 
+    public Bet Apuestas
+    { 
         get
         {
             if (_apuestas is null)
@@ -19,12 +23,12 @@ public class Contexto
             }
             return _apuestas;
         }
-        set
+        internal set
         {
-            _apuestas = Apuestas;
+            _apuestas = value;
         } 
-        }
+    }
     public IEnumerable<Player> Players { get;}
-    public IEnumerable<Player> Active_Players{ get; internal set;}
+    public List<Player> Active_Players{ get; internal set;}
     public int[] Bets_Rounds { get; }
 }

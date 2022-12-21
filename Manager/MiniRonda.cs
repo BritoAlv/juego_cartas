@@ -1,4 +1,7 @@
 namespace Poker;
+/// <summary>
+/// This represent what happens inside a round.
+/// </summary>
 internal class MiniRonda
 {
     private IEnumerable<Player> Participants => Contexto.Active_Players;
@@ -8,10 +11,8 @@ internal class MiniRonda
         Contexto = contexto;
         cant_Cartas = cant_cartas;
     }
-
     public Contexto Contexto { get; }
-
-    internal void Execute(Contexto contexto)
+    internal void Execute()
     {
         foreach (var player in Participants)
         {
@@ -19,7 +20,7 @@ internal class MiniRonda
             EmpezarJugada(player);
             if (player.Dinero > 0)
             {
-                JugarPlayer(player, contexto);
+                JugarPlayer(player);
             }
             Console.WriteLine("-----------------------------------------------------------------");
         }
@@ -34,18 +35,18 @@ internal class MiniRonda
         Console.Write("  " + player.Hand);
         Console.Write($"con ${player.Dinero} \n");
     }
-    void JugarPlayer(Player player, Contexto contexto)
+    void JugarPlayer(Player player)
     {
         IDecision decision = new InvalidDecision();
         bool flag = false;
         do
         {
             Console.Write(flag ? "Decide Bien > " : "Decide > ");
-            var try_decision = player.parse_decision(contexto);
+            var try_decision = player.parse_decision(this.Contexto);
             if (try_decision.Id != "InvalidDecision")
             {
                 Tools.ShowColoredMessage($"Tomaste la decision de {try_decision.Id}\n", ConsoleColor.Green);
-                if (try_decision.DoDecision(player, contexto))
+                if (try_decision.DoDecision(player, this.Contexto))
                 {
                     decision = try_decision;
                 }

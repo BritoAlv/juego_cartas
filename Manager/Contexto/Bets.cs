@@ -1,6 +1,10 @@
 namespace Poker;
 public class Bet
 {
+    /// <summary>
+    /// This holds the information about the Bets in each round.
+    /// </summary>
+    /// <param name="participants"></param>
     internal Bet(IEnumerable<Player> participants)
     {
         Bets = new Dictionary<Ideable, List<int>>();
