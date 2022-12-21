@@ -6,8 +6,8 @@ public class Computer_Player : Player, IApostador
     }
     public virtual int realizar_apuesta(Contexto contexto)
     {
-        var mayor_dinero = contexto.Players.Select(x => contexto.Apuestas.Get_Dinero_Apostado(x)).Max();
-        int apuesta = this.Dinero / 2;
+        var mayor_dinero = contexto.Active_Players.Select(x => contexto.Apuestas.Get_Dinero_Apostado(x)).Max();
+        int apuesta = this.Dinero/10 + 1;
         if(Hand.rank.Id == "Una Pareja") // has pair.
         {
             apuesta =  this.Dinero;
@@ -15,7 +15,16 @@ public class Computer_Player : Player, IApostador
 
         if (Hand.rank.Priority >= 3)
         {
+            if (mayor_dinero == 0)
+            {
+                return this.Dinero;
+            }
             apuesta = Math.Min(mayor_dinero, this.Dinero);
+        }
+
+        if (apuesta == 0)
+        {
+            return 1;
         }
         return apuesta;
     }

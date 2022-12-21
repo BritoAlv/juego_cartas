@@ -10,11 +10,8 @@ internal class Apostar : IDecision
     {
         Apostador = apostador;
     }
-
     public string Id => "Apostar";
-
     public IApostador Apostador { get; }
-
     public bool DoDecision(Player player, Contexto contexto)
     {
         var apuesta_jugador = 0;
@@ -26,8 +23,6 @@ internal class Apostar : IDecision
         contexto.Apuestas.Apostar(player, apuesta_jugador);
         Tools.ShowColoredMessage($"{player.Id} apostó {contexto.Apuestas.Get_Last_Apuesta(player)} \n", ConsoleColor.Yellow);
         return true;
-
-
     }
     public string Help => "La apuesta debe ser <= tu dinero y mayor que 0";
 }

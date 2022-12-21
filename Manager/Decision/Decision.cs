@@ -5,10 +5,6 @@ public interface IDecision
     bool DoDecision(Player player, Contexto contexto);
     string Help { get; }
 }
-
-
-
-
 internal class InvalidDecision : IDecision
 {
     public string Id => "InvalidDecision";
@@ -16,6 +12,5 @@ internal class InvalidDecision : IDecision
     {
         return false;
     }
-
     public string Help => "Invalid";
 }

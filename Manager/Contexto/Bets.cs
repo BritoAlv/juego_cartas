@@ -1,6 +1,10 @@
 namespace Poker;
 public class Bet
 {
+    /// <summary>
+    /// This holds the information about the Bets in each round.
+    /// </summary>
+    /// <param name="participants"></param>
     internal Bet(IEnumerable<Player> participants)
     {
         Bets = new Dictionary<Ideable, List<int>>();
@@ -33,7 +37,8 @@ public class Bet
     }
     public int Get_Dinero_Total_Apostado()
     {
-        return Bets.Values.Aggregate(0, (actual, next) => actual + next.Sum());
+        int result = Bets.Values.Aggregate(0, (actual, next) => actual + next.Sum());
+        return result;
         // other way of do the same process. 
         // return Bets.Values.Select(x => x.Sum()).Sum();
     }

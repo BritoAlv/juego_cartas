@@ -21,13 +21,13 @@ public class Manager
     public void SimulateGame()
     {
         Tools.ShowColoredMessage("Comienza la partida: \n", ConsoleColor.DarkGray);
-        var active_players = Players.Where(x => x.Dinero > 0);
         Contexto contexto = new Contexto(Players, Bets);
-        while (active_players.Count() > 1)
+        while (contexto.Active_Players.Count > 1)
         {
+            contexto.Apuestas = new Bet(contexto.Active_Players);
             Ronda ronda = new Ronda(Scorer, contexto);
             contexto.Active_Players = ronda.Simulate();
         }
-        Tools.ShowColoredMessage($"la partida la ganó: {active_players.First().Id} \n", ConsoleColor.DarkGray);
+        Tools.ShowColoredMessage($"Winner is: {contexto.Active_Players.First().Id} \n", ConsoleColor.DarkGray);
     }
 }
