@@ -16,17 +16,18 @@ public class Bet
     public Dictionary<Ideable, List<int>> Bets { get; private set; }
     internal void Apostar(Player A, int dinero)
     {
+        A.Dinero -= dinero;
         Bets[A].Add(dinero);
     }
     internal List<int> this[Ideable index]
     {
         get { return Bets[index]; }
     }
-    public int Get_Dinero_Apostado(Player A)
+    public int Get_Dinero_Apostado(Ideable A)
     {
         return Bets[A].Sum();
     }
-    public int Get_Last_Apuesta(Player A)
+    public int Get_Last_Apuesta(Ideable A)
     {
         return Bets[A].Last();
     }

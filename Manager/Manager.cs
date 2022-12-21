@@ -17,15 +17,16 @@ public class Manager
     }
     private Scorer Scorer { get; }
     public int[] Bets { get; }
-    public IEnumerable<Player> Players { get; set; }
+    internal IEnumerable<Player> Players { get; private set; }
     public void SimulateGame()
     {
         Tools.ShowColoredMessage("Comienza la partida: \n", ConsoleColor.DarkGray);
         var active_players = Players.Where(x => x.Dinero > 0);
+        Contexto contexto = new Contexto(Players, Bets);
         while (active_players.Count() > 1)
         {
-            Ronda ronda = new Ronda(Scorer, Bets, Players);
-            Players = ronda.Simulate();
+            Ronda ronda = new Ronda(Scorer, contexto);
+            contexto.Active_Players = ronda.Simulate();
         }
         Tools.ShowColoredMessage($"la partida la ganó: {active_players.First().Id} \n", ConsoleColor.DarkGray);
     }

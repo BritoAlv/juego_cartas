@@ -1,52 +1,68 @@
 namespace Poker;
 internal class MiniRonda
 {
-    private readonly IEnumerable<Player> Participants;
+    private IEnumerable<Player> Participants => Contexto.Active_Players;
     private readonly int cant_Cartas;
-    public MiniRonda(IEnumerable<Player> participants, int cant_cartas)
+    public MiniRonda(Contexto contexto, int cant_cartas)
     {
-        this.Participants = participants;
+        Contexto = contexto;
         cant_Cartas = cant_cartas;
     }
-    internal void Execute(Bet apuesta)
+
+    public Contexto Contexto { get; }
+
+    internal void Execute(Contexto contexto)
     {
         foreach (var player in Participants)
         {
             RepartCards(cant_Cartas, player);
-            RealizarApuesta(player, apuesta);
+            EmpezarJugada(player);
+            if (player.Dinero > 0)
+            {
+                JugarPlayer(player, contexto);
+            }
+            Console.WriteLine("-----------------------------------------------------------------");
         }
+        Console.WriteLine("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+        Console.WriteLine("-----------------------------------------------------------------");
+        Console.WriteLine();
     }
-    void RealizarApuesta(Player player, Bet apuesta)
+    void EmpezarJugada(Player player)
     {
         Console.Write("Esta es la mano de ");
         Tools.ShowColoredMessage($"{player.Id}".PadLeft(6), ConsoleColor.DarkMagenta);
         Console.Write("  " + player.Hand);
         Console.Write($"con ${player.Dinero} \n");
-        if (player.Dinero > 0)
+    }
+    void JugarPlayer(Player player, Contexto contexto)
+    {
+        IDecision decision = new InvalidDecision();
+        bool flag = false;
+        do
         {
-            var apuesta_jugador = DoBet();
-            // at this point the player bets a reasonable number.
-            player.Dinero -= apuesta_jugador;
-            apuesta.Apostar(player, apuesta_jugador);
-            Tools.ShowColoredMessage($"{player.Id} apostó {apuesta.Get_Last_Apuesta(player)} \n", ConsoleColor.Yellow);
-        }
-        int DoBet()
-        {
-            var apuesta_jugador = 0;
-            var flag = false;
-            do
+            Console.Write(flag ? "Decide Bien > " : "Decide > ");
+            var try_decision = player.parse_decision(contexto);
+            if (try_decision.Id != "InvalidDecision")
             {
-                Console.Write(flag ? "Apuesta Bien > " : "Apuesta > ");
-                var apuesta_string = Console.ReadLine();
-                if (apuesta_string == null)
+                Tools.ShowColoredMessage($"Tomaste la decision de {try_decision.Id}\n", ConsoleColor.Green);
+                if (try_decision.DoDecision(player, contexto))
                 {
-                    continue;
+                    decision = try_decision;
                 }
-                apuesta_jugador = player.realizar_apuesta(apuesta, Participants, apuesta_string);
-                flag = true;
-            } while (apuesta_jugador > player.Dinero || apuesta_jugador == 0);
-            return apuesta_jugador;
-        }
+                else
+                {
+                    Tools.ShowColoredMessage("Ejecuta bien tu decisión! \n", ConsoleColor.DarkRed);
+                    Tools.ShowColoredMessage(try_decision.Help, ConsoleColor.DarkGray);
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Tools.ShowColoredMessage("Decisión Inválida \n", ConsoleColor.DarkRed);
+            }
+            flag = true;
+        } while (decision.Id == "InvalidDecision");
+        // at this point the player bets a reasonable number.
     }
     void RepartCards(int v, Player player)
     {
