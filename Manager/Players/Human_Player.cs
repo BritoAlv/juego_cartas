@@ -1,6 +1,4 @@
 namespace Poker;
-using LenguajeAPI;
-
 /// <summary>
 /// This represent a basic Human Player who knows by default how to bet.
 /// </summary>
