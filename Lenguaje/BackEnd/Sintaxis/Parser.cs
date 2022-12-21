@@ -162,32 +162,45 @@ namespace AnálisisCodigo.Sintaxis
             switch (Current.tipo)
             {
                 case Tipo.OpenParenthesisToken:
-                    {
-                        var left = NextToken();
-                        var expression = ParseAsignacion();
-                        var right = Match(Tipo.CloseParenthesisToken);
-                        return new ExpresionParéntesis(left, expression, right);
-                    }
-
+                    return ParseParenthesizedExpression();
                 case Tipo.TrueKeyword:
                 case Tipo.FalseKeyword:
-                    {
-                        var keyword = NextToken();
-                        var value = keyword.tipo == Tipo.TrueKeyword;
-                        return new ExpresionLiteral(keyword, value);
-                    }
-                case Tipo.IdentifierToken:
-                    var identificador = NextToken();
-                    return new ExpresionNombre(identificador);
+                    return ParseBooleanLiteral();
                 case Tipo.NumberToken:
-                    var numberToken = NextToken();
-                    return new ExpresionLiteral(numberToken);
-                default:
-                    var literalToken = Match(Tipo.NumberToken);
-                    return new ExpresionLiteral(literalToken);
+                    return ParseNumberLiteral();
+                default: 
+                    return ParseNameExpression();
 
             }
 
+        }
+
+
+        private Expresion ParseNumberLiteral()
+        {
+            var numberToken = Match(Tipo.NumberToken);
+            return new ExpresionLiteral(numberToken);
+        }
+
+        private Expresion ParseParenthesizedExpression()
+        {
+            var left = Match(Tipo.OpenParenthesisToken);
+            var expression = ParseAsignacion();
+            var right = Match(Tipo.CloseParenthesisToken);
+            return new ExpresionParéntesis(left, expression, right);
+        }
+
+        private Expresion ParseBooleanLiteral()
+        {
+            var is_True = Current.tipo == Tipo.TrueKeyword;
+            var keywordToken = is_True ? Match(Tipo.TrueKeyword) : Match(Tipo.FalseKeyword);
+            return new ExpresionLiteral(keywordToken, is_True);
+        }
+
+        private Expresion ParseNameExpression()
+        {
+            var identificador = Match(Tipo.IdentifierToken);
+            return new ExpresionNombre(identificador);
         }
     }
 }

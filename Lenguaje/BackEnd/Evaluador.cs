@@ -8,7 +8,6 @@ namespace AnálisisCodigo
     {
         private readonly ExpresionTipada _root;
         private readonly Dictionary<VariableSymbol, object> _variables;
-
         public Evaluator(ExpresionTipada root, Dictionary<VariableSymbol, object> variables)
         {
             this._root = root;
@@ -24,70 +23,85 @@ namespace AnálisisCodigo
         */
         private object EvaluateExpresion(ExpresionTipada node)
         {
-            if (node is ExpresionLiteralTipada n)
+            switch (node)
             {
-                return n.Value;
+                case ExpresionLiteralTipada n:
+                    return EvaluateLiteralExpression(n);
+                case ExpresionVariableTipada v:
+                    return EvaluateVariableExpression(v);
+                case ExpresionAsignacionTipada r:
+                    return EvaluateAsignacionExpression(r);
+                case ExpresionUnariaTipada u:
+                    return EvaluateUnaryExpression(u);
+                case ExpresionBinariaTipada b:
+                    return EvaluateExpresionBinaria(b);
+                default:
+                    throw new Exception($"Unexpected node {node.tipo}");
             }
+        }
+        private object EvaluateExpresionBinaria(ExpresionBinariaTipada b)
+        {
+            var left = EvaluateExpresion(b.Left);
+            var right = EvaluateExpresion(b.Right);
 
-            if (node is ExpresionVariableTipada v)
+            switch (b.OperadorBinario.Tipo_Operador)
             {
-                return _variables[v.VariableSymbol];
+                case TipoOperadorBinario.AdicionBooleanos:
+                    return (((bool)left || (bool)right)) && (!(((bool)left && (bool)right)));
+                case TipoOperadorBinario.MultiplicacionBooleanos:
+                    return (bool)left && (bool)right;
+                case TipoOperadorBinario.AdicionNumeros:
+                    return (int)left + (int)right;
+                case TipoOperadorBinario.Substraccion:
+                    return (int)left - (int)right;
+                case TipoOperadorBinario.MultiplicacionNumeros:
+                    return (int)left * (int)right;
+                case TipoOperadorBinario.Division:
+                    return (int)left / (int)right;
+                case TipoOperadorBinario.LogicalAnd:
+                    return (bool)left && (bool)right;
+                case TipoOperadorBinario.LogicalOr:
+                    return (bool)left || (bool)right;
+                case TipoOperadorBinario.Igualdad:
+                    return Equals(left, right);
+                case TipoOperadorBinario.Diferente:
+                    return !Equals(left, right);
+                default:
+                    throw new Exception($"Unexpected binary operator {b.OperadorBinario}");
             }
+        }
 
-            if (node is ExpresionAsignacionTipada r)
-            {
-                var value = EvaluateExpresion(r.expresiontipada);
-                _variables[r.VariableSymbol] = value;
-                return value;
-            }
+        private object EvaluateAsignacionExpression(ExpresionAsignacionTipada r)
+        {
+            var value = EvaluateExpresion(r.expresiontipada);
+            _variables[r.VariableSymbol] = value;
+            return value;
+        }
 
-            if (node is ExpresionUnariaTipada u)
+        private object EvaluateUnaryExpression(ExpresionUnariaTipada u)
+        {
+            var operand = EvaluateExpresion(u.Operand);
+            switch (u.OperadorUnarioTipo.Tipo_Operador)
             {
-                var operand = EvaluateExpresion(u.Operand);
-                switch (u.OperadorUnarioTipo.Tipo_Operador)
-                {
-                    case TipoOperadorUnario.Identidad:
-                        return (int)operand;
-                    case TipoOperadorUnario.Negacion:
-                        return -(int)operand;
-                    case TipoOperadorUnario.NegacionLogica:
-                        return !(bool)operand;
-                    default:
-                        throw new Exception($"Unexpected unary operator {u.OperadorUnarioTipo}");
-                }
+                case TipoOperadorUnario.Identidad:
+                    return (int)operand;
+                case TipoOperadorUnario.Negacion:
+                    return -(int)operand;
+                case TipoOperadorUnario.NegacionLogica:
+                    return !(bool)operand;
+                default:
+                    throw new Exception($"Unexpected unary operator {u.OperadorUnarioTipo}");
             }
-            if (node is ExpresionBinariaTipada b)
-            {
-                var left = EvaluateExpresion(b.Left);
-                var right = EvaluateExpresion(b.Right);
+        }
 
-                switch (b.OperadorBinario.Tipo_Operador)
-                {
-                    case TipoOperadorBinario.AdicionBooleanos:
-                        return (((bool)left || (bool)right)) && (! (((bool)left && (bool)right)) );
-                    case TipoOperadorBinario.MultiplicacionBooleanos:
-                        return  (bool)left && (bool)right;   
-                    case TipoOperadorBinario.AdicionNumeros:
-                        return (int)left + (int)right;
-                    case TipoOperadorBinario.Substraccion:
-                        return (int)left - (int)right;
-                    case TipoOperadorBinario.MultiplicacionNumeros:
-                        return (int)left * (int)right;
-                    case TipoOperadorBinario.Division:
-                        return (int)left / (int)right;
-                    case TipoOperadorBinario.LogicalAnd:
-                        return (bool)left && (bool)right;
-                    case TipoOperadorBinario.LogicalOr:
-                        return (bool)left || (bool)right;
-                    case TipoOperadorBinario.Igualdad:
-                        return Equals(left, right);
-                    case TipoOperadorBinario.Diferente:
-                        return !Equals(left,  right);
-                    default:
-                        throw new Exception($"Unexpected binary operator {b.OperadorBinario}");
-                }
-            }
-            throw new Exception($"Unexpected node {node.tipo}");
+        private object EvaluateVariableExpression(ExpresionVariableTipada v)
+        {
+            return _variables[v.VariableSymbol];
+        }
+
+        private object EvaluateLiteralExpression(ExpresionLiteralTipada n)
+        {
+            return n.Value;
         }
     }
-} 
+}
