@@ -1,25 +1,47 @@
-﻿using AnálisisCodigo;
+﻿using System.Text;
+using AnálisisCodigo;
 using AnálisisCodigo.Sintaxis;
 public class Test
 {
     public static void Main()
     {
         var variables = new Dictionary<VariableSymbol, object>();
+        var textBuilder = new StringBuilder();
         while (true)
         {
-            Console.Write("> ");
-            var line = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(line))
+            if (textBuilder.Length == 0)
             {
-                return;
+                Console.Write("> ");
             }
-            else if (line == "#clear")
+            else
             {
-                Console.Clear();
+                Console.Write("| ");
+            }
+
+            var input = Console.ReadLine();
+            var isBlank = string.IsNullOrWhiteSpace(input);
+
+            if (textBuilder.Length == 0)
+            {
+                if (isBlank)
+                {
+                    break;
+                }
+                else if (input == "#clear")
+                {
+                    Console.Clear();
+                    continue;
+                }
+            }
+            textBuilder.AppendLine(input);
+            var text = textBuilder.ToString();
+            var syntaxtree = NodoRoot.Parse(text);
+
+            if (!isBlank && syntaxtree.Diagnostics.Any())
+            {
                 continue;
             }
 
-            var syntaxtree = NodoRoot.Parse(line);
             var compilacion = new Compilacion(syntaxtree);
             var result = compilacion.Evaluate(variables);
             var diagnostics = result.Diagnostics;
@@ -40,21 +62,12 @@ public class Test
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
                     Console.WriteLine(diag);
                     Console.ResetColor();
-
-                    var prefix = line.Substring(0, diag.Span.Start);
-                    var error = line.Substring(diag.Span.Start, diag.Span.Length);
-                    var suffix = line.Substring(diag.Span.End);
-
                     Console.Write("    ");
-                    Console.Write(prefix);
-                    Console.ForegroundColor = ConsoleColor.DarkBlue;
-                    Console.Write(error);
-                    Console.ResetColor();
-                    Console.Write(suffix);
                     Console.WriteLine();
                 }
                 Console.ResetColor();
             }
+            textBuilder.Clear();
         }
     }
 }

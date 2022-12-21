@@ -9,7 +9,7 @@ namespace AnálisisCodigo.Sintaxis
         private int _position;
         private DiagnosticBag _diagnostics = new DiagnosticBag();
 
-        public Parser(string text)
+        public Parser(SourceText text)
         {
             var tokens = new List<Token>();
             var lexer = new Lexer(text);
@@ -29,6 +29,7 @@ namespace AnálisisCodigo.Sintaxis
             } while (token.tipo != Tipo.EndOfFileToken);
             _diagnostics.AddRange(lexer.Diagnostics);
             _tokens = tokens.ToArray();
+            Text = text;
         }
 
         public DiagnosticBag Diagnostics => _diagnostics;
@@ -48,6 +49,8 @@ namespace AnálisisCodigo.Sintaxis
             return _tokens[index];
         }
         private Token Current => Peek(0);
+
+        public SourceText Text { get; }
 
         /// <summary>
         /// Return the actual Token and move the Pointer.
@@ -93,7 +96,7 @@ namespace AnálisisCodigo.Sintaxis
             // notice that after parse the expression should be an endOfFileToken at the end.
             var endOfFileToken = Match(Tipo.EndOfFileToken);
             // The tree is made up of ExpressionSyntax objects,
-            return new NodoRoot(_diagnostics, expression, endOfFileToken);
+            return new NodoRoot(Text, _diagnostics, expression, endOfFileToken);
         }
         public Expresion ParseExpresion()
         {
