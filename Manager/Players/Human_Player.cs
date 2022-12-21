@@ -33,6 +33,9 @@ public class Human_Player : Player
         {
             return new Apostar(this);
         }
+        else if(decision.TrimEnd() == "Pasar"){
+            return new Pasar();
+        }
         return new InvalidDecision();
     }
 }

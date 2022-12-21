@@ -14,6 +14,13 @@ public sealed class Test_Best_Player : Player
         throw new NotImplementedException();
     }
 
+    public override int realizar_apuesta(Contexto contexto)
+    {
+        throw new NotImplementedException();
+    }
+
+
+
     // public override int realizar_apuesta(Bet apuestas, IEnumerable<Player> Players, string info_apuesta)
     // {
     //     var rank = Hand.rank.Priority;
@@ -40,7 +47,7 @@ public sealed class Test_Best_Player : Player
     //             break;
     //         }
     //     }
-        
+
 
     //     throw new ArgumentException();
     // }
