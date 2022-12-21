@@ -49,13 +49,6 @@ internal class MiniRonda
                 {
                     decision = try_decision;
                 }
-<<<<<<< HEAD
-                apuesta_jugador = player.realizar_apuesta(apuesta, Participants, apuesta_string);
-                flag = true;
-            } while (apuesta_jugador > player.Dinero || apuesta_jugador <= 0 );
-            return apuesta_jugador;
-        }
-=======
                 else
                 {
                     Tools.ShowColoredMessage("Ejecuta bien tu decisión! \n", ConsoleColor.DarkRed);
@@ -70,7 +63,6 @@ internal class MiniRonda
             flag = true;
         } while (decision.Id == "InvalidDecision");
         // at this point the player bets a reasonable number.
->>>>>>> 1ba619eff5a31961e44381967e590199e5bcc753
     }
     void RepartCards(int v, Player player)
     {

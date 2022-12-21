@@ -9,11 +9,16 @@ public sealed class Test_Player : Player
     {
     }
 
-    public override int realizar_apuesta(Bet apuestas, IEnumerable<Player> Players, string info_apuesta)
+    public override IDecision parse_decision(Contexto contexto)
     {
-        var rank = Hand.rank.Priority;
-        if(rank==0) return (int)(this.Dinero/15);
-        var apuesta = (int)Math.Floor(this.Dinero*(rank/4));
-        return apuesta;
+        throw new NotImplementedException();
     }
+
+    // public override int realizar_apuesta(Bet apuestas, IEnumerable<Player> Players, string info_apuesta)
+    // {
+    //     var rank = Hand.rank.Priority;
+    //     if(rank==0) return (int)(this.Dinero/15);
+    //     var apuesta = (int)Math.Floor(this.Dinero*(rank/4));
+    //     return apuesta;
+    // }
 } 
