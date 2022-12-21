@@ -17,13 +17,21 @@ public class Human_Player : Player
         {
             return 0;
         }
-        var a = Convert.ToInt32(API.Use_Compiler(line));
-        return a;
+        if (!int.TryParse(line, out var value))
+        {
+            return 0;
+        }
+        return value;
     }
     public override IDecision parse_decision(Contexto contexto)
     {
         var decision = Console.ReadLine();
-        if (decision == "Apostar")
+        if (string.IsNullOrEmpty(decision))
+        {
+            return new InvalidDecision();    
+        }
+
+        if (decision.TrimEnd() == "Apostar")
         {
             return new Apostar(this);
         }
