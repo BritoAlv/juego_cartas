@@ -20,6 +20,10 @@ internal class ColorRank : Rank
 
     public static bool HasColor_5(IEnumerable<Card> cards)
     {
+        if (cards.Count() < 5)
+        {
+            return false;
+        }
         return cards.All(x => cards.First().Suit == x.Suit);
     }
 }
