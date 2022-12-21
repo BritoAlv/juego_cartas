@@ -37,8 +37,7 @@ public class Bet
     }
     public int Get_Dinero_Total_Apostado()
     {
-        int result = Bets.Values.Aggregate(0, (actual, next) => actual + next.Sum());
-        return result;
+        return Bets.Values.Aggregate(0, (actual, next) => actual + next.Sum());
         // other way of do the same process. 
         // return Bets.Values.Select(x => x.Sum()).Sum();
     }
