@@ -1,10 +1,13 @@
 namespace Poker;
-public class Computer_Player : Player, IApostador
+/// <summary>
+/// This represent a basic computer player who knows by default how to Bet.
+/// </summary>
+public class Computer_Player : Player
 {
     public Computer_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    public virtual int realizar_apuesta(Contexto contexto)
+    public override int realizar_apuesta(Contexto contexto)
     {
         var mayor_dinero = contexto.Active_Players.Select(x => contexto.Apuestas.Get_Dinero_Apostado(x)).Max();
         int apuesta = this.Dinero/10 + 1;

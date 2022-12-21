@@ -1,6 +1,7 @@
 namespace Poker;
 /// <summary>
-/// This class represent the Context that a player may use to determine its decision.
+/// This class represent the Context that a player may use to determine its decision. From the Player point the Context
+/// is an immutable object.
 /// </summary>
 public class Contexto
 {

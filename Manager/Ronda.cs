@@ -1,4 +1,7 @@
 namespace Poker;
+/// <summary>
+/// A match is nothing else that simulate Rounds until there is only one player with Money.
+/// </summary>
 internal class Ronda
 {
     internal Ronda(Scorer scorer, Contexto contexto)

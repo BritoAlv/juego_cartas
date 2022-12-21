@@ -1,11 +1,15 @@
 namespace Poker;
 using LenguajeAPI;
-public class Human_Player : Player, IApostador
+
+/// <summary>
+/// This represent a basic Human Player who knows by default how to bet.
+/// </summary>
+public class Human_Player : Player
 {
     public Human_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    public virtual int realizar_apuesta(Contexto contexto)
+    public override int realizar_apuesta(Contexto contexto)
     {
         Console.Write("Apuesta > ");
         var line = Console.ReadLine();
@@ -16,7 +20,7 @@ public class Human_Player : Player, IApostador
         var a = Convert.ToInt32(API.Use_Compiler(line));
         return a;
     }
-    public sealed override IDecision parse_decision(Contexto contexto)
+    public override IDecision parse_decision(Contexto contexto)
     {
         var decision = Console.ReadLine();
         if (decision == "Apostar")

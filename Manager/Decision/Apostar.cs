@@ -1,9 +1,21 @@
 namespace Poker;
 
+/// <summary>
+/// Contract for a player to know how to bet. 
+/// </summary>
+
+/// <summary>
+/// This defines what needs to have someone who wants to Bet.
+/// </summary>
 public interface IApostador
 {
     int realizar_apuesta(Contexto contexto);
 }
+
+/// <summary>
+/// To define an IDecision we implement a class and a public interface that players that will implement this IDecision should
+/// have.
+/// </summary>
 internal class Apostar : IDecision
 {
     public Apostar(IApostador apostador)

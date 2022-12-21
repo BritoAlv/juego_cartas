@@ -1,9 +1,8 @@
 namespace Poker;
-public abstract class Player : Ideable
+public abstract class Player : Ideable, IApostador
 {
     public string Id { get; }
     internal int Dinero { get; set; }
-
     private Hand? _hand;
     internal Hand Hand
     {
@@ -25,6 +24,7 @@ public abstract class Player : Ideable
         }
     }
     public abstract IDecision parse_decision(Contexto contexto);
+    public abstract int realizar_apuesta(Contexto contexto);
     protected Player(string id, int dinero)
     {
         Id = id;

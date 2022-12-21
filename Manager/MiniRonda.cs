@@ -1,4 +1,7 @@
 namespace Poker;
+/// <summary>
+/// This represent what happens inside a round.
+/// </summary>
 internal class MiniRonda
 {
     private IEnumerable<Player> Participants => Contexto.Active_Players;
