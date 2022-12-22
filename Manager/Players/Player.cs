@@ -1,5 +1,5 @@
 namespace Poker;
-public abstract class Player : Ideable, IApostador, IPasador
+public abstract class Player : Ideable, IApostador
 {
     public string Id { get; }
     internal int Dinero { get; set; }

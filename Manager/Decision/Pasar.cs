@@ -1,17 +1,11 @@
 namespace Poker;
-public interface IPasador{
-    
-}
 internal class Pasar : IDecision
 {
     public Pasar()
     {
     }
-
     public string Id => "Pasar";
-
-    public string Help => "No puedes pasar el primer turno";
-
+    public string Help => "Debes haber apostado alguna cantidad inicial para pasar";
     public bool DoDecision(Player player, Contexto contexto)
     { 
         if (contexto.Apuestas.Get_Dinero_Apostado(player)==0) return false;

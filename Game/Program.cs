@@ -3,6 +3,8 @@ public class Program
 {
     public static void Main()
     {
+        // Use below method to test.
+        // Test.RandomComputerPlay();
         Scorer scorer = new Scorer();
         Player A = new Computer_Player("Alvaro", 500);
         Player B = new Test_Player("Miguel", 100);
