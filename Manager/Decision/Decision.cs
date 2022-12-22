@@ -12,7 +12,7 @@ public interface IDecision
     /// Given a player, this will try to execute the decision of the player, returning if fails or not the player.
     /// </summary>
     /// <param name="player"></param>
-    /// <param name="contexto"></param>
+    /// <param name="context"></param>
     /// <returns></returns>
     bool DoDecision(Player player, Contexto contexto);
     /// <summary>

@@ -32,6 +32,7 @@ public class Human_Player : Player
         if (decision.TrimEnd() == "Apostar")
         {
             return new Apostar(this);
+            // notice that we can pase an IApostador here, not necessary the player.
         }
         return new InvalidDecision();
     }

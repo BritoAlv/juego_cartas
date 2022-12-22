@@ -16,7 +16,6 @@ public abstract class Player : Ideable, IApostador
             {
                 return _hand;
             }
-
         }
         set
         {
