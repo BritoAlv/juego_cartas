@@ -4,14 +4,14 @@ namespace Poker;
 /// </summary>
 internal class MiniRonda
 {
-    private IEnumerable<Player> Participants => Contexto.Active_Players;
+    private IEnumerable<Player> Participants => Global_Contexto.Active_Players;
     private readonly int cant_Cartas;
-    public MiniRonda(Contexto contexto, int cant_cartas)
+    public MiniRonda(Global_Contexto contexto, int cant_cartas)
     {
-        Contexto = contexto;
+        Global_Contexto = contexto;
         cant_Cartas = cant_cartas;
     }
-    public Contexto Contexto { get; }
+    public Global_Contexto Global_Contexto { get; }
     internal void Execute()
     {
         foreach (var player in Participants)
@@ -42,11 +42,11 @@ internal class MiniRonda
         do
         {
             Console.Write(flag ? "Decide Bien > " : "Decide > ");
-            var try_decision = player.parse_decision(this.Contexto);
+            var try_decision = player.parse_decision(this.Global_Contexto);
             if (try_decision.Id != "InvalidDecision")
             {
                 Tools.ShowColoredMessage($"Tomaste la decision de {try_decision.Id}\n", ConsoleColor.Green);
-                if (try_decision.DoDecision(player, this.Contexto))
+                if (try_decision.DoDecision(player, this.Global_Contexto))
                 {
                     decision = try_decision;
                 }

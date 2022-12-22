@@ -14,7 +14,7 @@ public interface IDecision
     /// <param name="player"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-    bool DoDecision(Player player, Contexto contexto);
+    bool DoDecision(Player player, Global_Contexto contexto);
     /// <summary>
     /// A string message in case the Player doesn't know how to put this decision in practice.
     /// </summary>
@@ -26,7 +26,7 @@ public interface IDecision
 internal class InvalidDecision : IDecision
 {
     public string Id => "InvalidDecision";
-    public bool DoDecision(Player player, Contexto contexto)
+    public bool DoDecision(Player player, Global_Contexto contexto)
     {
         return false;
     }

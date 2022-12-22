@@ -9,7 +9,7 @@ namespace Poker;
 /// </summary>
 public interface IApostador
 {
-    int realizar_apuesta(Contexto contexto);
+    int realizar_apuesta(Global_Contexto contexto);
 }
 
 /// <summary>
@@ -24,7 +24,7 @@ internal class Apostar : IDecision
     }
     public string Id => "Apostar";
     public IApostador Apostador { get; }
-    public bool DoDecision(Player player, Contexto contexto)
+    public bool DoDecision(Player player, Global_Contexto contexto)
     {
         var apuesta_jugador = 0;
         apuesta_jugador = Apostador.realizar_apuesta(contexto);

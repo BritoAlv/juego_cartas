@@ -22,8 +22,8 @@ public abstract class Player : Ideable, IApostador
             _hand = value;
         }
     }
-    public abstract IDecision parse_decision(Contexto contexto);
-    public abstract int realizar_apuesta(Contexto contexto);
+    public abstract IDecision parse_decision(Global_Contexto contexto);
+    public abstract int realizar_apuesta(Global_Contexto contexto);
     protected Player(string id, int dinero)
     {
         Id = id;

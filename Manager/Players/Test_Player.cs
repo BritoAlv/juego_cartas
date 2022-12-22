@@ -5,7 +5,7 @@ public sealed class Test_Player : Player
     public Test_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    public override IDecision parse_decision(Contexto contexto)
+    public override IDecision parse_decision(Global_Contexto contexto)
     {
         if (Hand.rank.Priority == 0 && contexto.Apuestas.Get_Dinero_Apostado(this) != 0)
         {
@@ -16,7 +16,7 @@ public sealed class Test_Player : Player
             return new Apostar(this);
         }
     }
-    public override int realizar_apuesta(Contexto contexto)
+    public override int realizar_apuesta(Global_Contexto contexto)
     {
         var mayor_dinero = contexto.Active_Players.Select(x => contexto.Apuestas.Get_Dinero_Apostado(x)).Max();
         int apuesta = 1;

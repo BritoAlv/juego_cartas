@@ -7,7 +7,7 @@ public class Basic_Computer_Player : Player
     public Basic_Computer_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    public override int realizar_apuesta(Contexto contexto)
+    public override int realizar_apuesta(Global_Contexto contexto)
     {
         var mayor_dinero = contexto.Active_Players.Select(x => contexto.Apuestas.Get_Dinero_Apostado(x)).Max();
         int apuesta = this.Dinero/10 + 1;
@@ -32,7 +32,7 @@ public class Basic_Computer_Player : Player
         return apuesta;
     }
 
-    public override IDecision parse_decision(Contexto contexto)
+    public override IDecision parse_decision(Global_Contexto contexto)
     {
         return new Apostar(this);
     }

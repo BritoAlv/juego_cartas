@@ -21,7 +21,7 @@ public class Manager
     public void SimulateGame()
     {
         Tools.ShowColoredMessage("Comienza la partida: \n", ConsoleColor.DarkGray);
-        Contexto contexto = new Contexto(Players, Bets);
+        Global_Contexto contexto = new Global_Contexto(Players, Bets);
         while (contexto.Active_Players.Count > 1)
         {
             contexto.Apuestas = new Bet(contexto.Active_Players);

@@ -7,7 +7,7 @@ public class Human_Player : Player
     public Human_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    public override int realizar_apuesta(Contexto contexto)
+    public override int realizar_apuesta(Global_Contexto contexto)
     {
         Console.Write("Apuesta > ");
         var line = Console.ReadLine();
@@ -21,7 +21,7 @@ public class Human_Player : Player
         }
         return value;
     }
-    public override IDecision parse_decision(Contexto contexto)
+    public override IDecision parse_decision(Global_Contexto contexto)
     {
         var decision = Console.ReadLine();
         if (string.IsNullOrEmpty(decision))

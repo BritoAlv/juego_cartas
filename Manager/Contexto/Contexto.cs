@@ -3,9 +3,9 @@ namespace Poker;
 /// This class represent the Context that a player may use to determine its decision. From the Player point the Context
 /// is an immutable object.
 /// </summary>
-public class Contexto
+public class Global_Contexto
 {
-    internal Contexto(IEnumerable<Player> players, int[] Bets_Rounds)
+    internal Global_Contexto(IEnumerable<Player> players, int[] Bets_Rounds)
     {
         Players = players;
         this.Bets_Rounds = Bets_Rounds;
