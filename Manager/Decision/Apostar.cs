@@ -32,8 +32,8 @@ internal class Apostar : IDecision
         {
             return false;
         }
-        contexto.Apuestas.Apostar(player, apuesta_jugador);
-        Tools.ShowColoredMessage($"{player.Id} apostó {contexto.Apuestas.Get_Last_Apuesta(player)} \n", ConsoleColor.Yellow);
+        contexto.Ronda_Context.Apuestas.Apostar(player, apuesta_jugador);
+        Tools.ShowColoredMessage($"{player.Id} apostó { contexto.Ronda_Context.Apuestas.Get_Last_Apuesta(player)} \n", ConsoleColor.Yellow);
         return true;
     }
     public string Help => "La apuesta debe ser <= tu dinero y mayor que 0";

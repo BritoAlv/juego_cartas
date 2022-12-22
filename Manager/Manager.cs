@@ -9,25 +9,29 @@ public class Manager
     /// so passing [5,1,1] will make a round composed by three mini_round of bets, receiving
     /// 5,1,1 respectively cards in each round</param>
     /// <param name="players"> Well literally the players of the game</param>
-    public Manager(Scorer scorer, int[] bets , params Player[] players)
+    public Manager(Scorer scorer, Global_Contexto global_Contexto)
     {
         Scorer = scorer;
-        Bets = bets;
-        Players = players;
+        Global_Contexto = global_Contexto;
     }
     private Scorer Scorer { get; }
-    public int[] Bets { get; }
-    internal IEnumerable<Player> Players { get; private set; }
+    public Global_Contexto Global_Contexto { get; }
+    internal IEnumerable<Player> Players
+    {
+        get
+        {
+            return Global_Contexto.Players;
+        }
+    }
     public void SimulateGame()
     {
         Tools.ShowColoredMessage("Comienza la partida: \n", ConsoleColor.DarkGray);
-        Global_Contexto contexto = new Global_Contexto(Players, Bets);
-        while (contexto.Active_Players.Count > 1)
+        while (Global_Contexto.Active_Players.Count > 1)
         {
-            contexto.Apuestas = new Bet(contexto.Active_Players);
-            Ronda ronda = new Ronda(Scorer, contexto);
-            contexto.Active_Players = ronda.Simulate();
+            Global_Contexto.Ronda_Context.Apuestas = new Bet(Global_Contexto.Active_Players);
+            Ronda ronda = new Ronda(Scorer, Global_Contexto);
+            Global_Contexto.Active_Players = ronda.Simulate();
         }
-        Tools.ShowColoredMessage($"Winner is: {contexto.Active_Players.First().Id} \n", ConsoleColor.DarkGray);
+        Tools.ShowColoredMessage($"Winner is: {Global_Contexto.Active_Players.First().Id} \n", ConsoleColor.DarkGray);
     }
 }

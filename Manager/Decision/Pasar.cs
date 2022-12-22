@@ -8,11 +8,11 @@ internal class Pasar : IDecision
     public string Help => "Debes haber apostado alguna cantidad inicial para pasar";
     public bool DoDecision(Player player, Global_Contexto contexto)
     {
-        if (contexto.Apuestas.Get_Dinero_Apostado(player) == 0)
+        if (contexto.Ronda_Context.Apuestas.Get_Dinero_Apostado(player) == 0)
         {
             return false;
         }
-        contexto.Apuestas.Pasar(player);
+        contexto.Ronda_Context.Apuestas.Pasar(player);
         Tools.ShowColoredMessage($"{player.Id} pasó su turno \n", ConsoleColor.Yellow);
         return true;
     }

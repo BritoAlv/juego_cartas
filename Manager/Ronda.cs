@@ -6,18 +6,17 @@ internal class Ronda
 {
     internal Ronda(Scorer scorer, Global_Contexto contexto)
     {
-        Scorer = scorer;
         Global_Contexto = contexto;
+        Scorer = scorer;
     }
     public Scorer Scorer { get; }
     public Global_Contexto Global_Contexto { get; }
     public Ronda_Context Ronda_Contexto => Global_Contexto.Ronda_Context;
-    public int[] Bets => Ronda_Contexto.Bets_Rounds;
     public IEnumerable<Player> Participants => Global_Contexto.Active_Players;
     internal List<Player> Simulate()
     {
         StartRonda();
-        ExecuteMiniRondas(Bets);
+        ExecuteMiniRondas(Ronda_Contexto.Contextos);
         GetWinners();
         ShowRondaFinalState();
         return Participants.Where(x => x.Dinero > 0).ToList();
@@ -41,16 +40,16 @@ internal class Ronda
         var winners = Participants.Where(x => x.Hand == best_hand).ToList();
         foreach (var winner in winners)
         {
-            winner.Dinero = winner.Dinero + Global_Contexto.Apuestas.Get_Dinero_Total_Apostado()/winners.Count;
+            winner.Dinero = winner.Dinero + Global_Contexto.Ronda_Context.Apuestas.Get_Dinero_Total_Apostado()/winners.Count;
             Tools.ShowColoredMessage($"{winner.Id} con ${winner.Dinero}, ", ConsoleColor.DarkGray);
         }
         Console.WriteLine();
     }
-    void ExecuteMiniRondas(params int[] cartas_repartir)
+    void ExecuteMiniRondas(List<Mini_Ronda_Contexto> contextos)
     {
-        foreach (var cant_cartas in cartas_repartir)
+        foreach (var contexto_config in contextos)
         {
-            var mini_ronda = new MiniRonda(this.Global_Contexto, cant_cartas);
+            var mini_ronda = new MiniRonda(this.Global_Contexto, contexto_config);
             mini_ronda.Execute();
         }
     }

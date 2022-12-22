@@ -2,13 +2,10 @@ namespace Poker;
 public class Ronda_Context
 {
     private Bet? _apuestas;
-
-    internal Ronda_Context(IEnumerable<Player> players, int[] bets_Rounds)
+    public Ronda_Context(List<Mini_Ronda_Contexto> contextos)
     {
-        _apuestas = new Bet(players);
-        Bets_Rounds = bets_Rounds;
+        Contextos = contextos;
     }
-
     public Bet Apuestas
     {
         get
@@ -24,5 +21,5 @@ public class Ronda_Context
             _apuestas = value;
         }
     }
-    public int[] Bets_Rounds { get; }
+    public List<Mini_Ronda_Contexto> Contextos { get; }
 }

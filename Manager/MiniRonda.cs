@@ -6,17 +6,19 @@ internal class MiniRonda
 {
     private IEnumerable<Player> Participants => Global_Contexto.Active_Players;
     private readonly int cant_Cartas;
-    public MiniRonda(Global_Contexto contexto, int cant_cartas)
+    public MiniRonda(Global_Contexto contexto, Mini_Ronda_Contexto mini_contexto)
     {
         Global_Contexto = contexto;
-        cant_Cartas = cant_cartas;
+        Mini_Contexto = mini_contexto;
     }
     public Global_Contexto Global_Contexto { get; }
+    public Mini_Ronda_Contexto Mini_Contexto { get; }
+
     internal void Execute()
     {
         foreach (var player in Participants)
         {
-            RepartCards(cant_Cartas, player, random.generate_random_card);
+            RepartCards(player);
             EmpezarJugada(player);
             if (player.Dinero > 0)
             {
@@ -29,7 +31,13 @@ internal class MiniRonda
         Console.WriteLine();
     }
 
-
+    private void RepartCards(Player player)
+    {
+        for (int i = 0; i < Mini_Contexto.Cant_Cartas; i++)
+        {
+            RepartCard(player, Mini_Contexto.Card_Generator(player));
+        }
+    }
 
     void EmpezarJugada(Player player)
     {
@@ -71,12 +79,5 @@ internal class MiniRonda
     void RepartCard(Player player, Card card)
     {
         player.Hand.Draw(card);
-    }
-    void RepartCards(int cant_Cartas, Player player, Func<Card> generate_random_card)
-    {
-        for (int i = 0; i < cant_Cartas; i++)
-        {
-            RepartCard(player, generate_random_card());
-        }
     }
 }

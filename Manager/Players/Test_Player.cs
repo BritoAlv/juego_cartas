@@ -7,7 +7,7 @@ public sealed class Test_Player : Player
     }
     public override IDecision parse_decision(Global_Contexto contexto)
     {
-        if (Hand.rank.Priority == 0 && contexto.Apuestas.Get_Dinero_Apostado(this) != 0)
+        if (Hand.rank.Priority == 0 && contexto.Ronda_Context.Apuestas.Get_Dinero_Apostado(this) != 0)
         {
             return new Pasar();
         }
@@ -18,7 +18,7 @@ public sealed class Test_Player : Player
     }
     public override int realizar_apuesta(Global_Contexto contexto)
     {
-        var mayor_dinero = contexto.Active_Players.Select(x => contexto.Apuestas.Get_Dinero_Apostado(x)).Max();
+        var mayor_dinero = contexto.Active_Players.Select(x => contexto.Ronda_Context.Apuestas.Get_Dinero_Apostado(x)).Max();
         int apuesta = 1;
         if (Hand.rank.Priority > 2) apuesta = Math.Min(mayor_dinero, this.Dinero);
         if (mayor_dinero > this.Dinero / 2)
