@@ -39,7 +39,7 @@ namespace AnálisisCodigo
             {
                 return new EvaluationResult(diagnostics, null);
             }
-            var evaluator = new Evaluator(GlobalScope.Expresion, variables);
+            var evaluator = new Evaluator(GlobalScope.Statement, variables);
             var value = evaluator.Evaluate();
             return new EvaluationResult(Array.Empty<Diagnostics>(), value);
         }

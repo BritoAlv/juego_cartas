@@ -6,21 +6,52 @@ namespace AnálisisCodigo
     /// </summary>
     internal sealed class Evaluator
     {
-        private readonly ExpresionTipada _root;
+        private readonly StatementTipado _root;
+        private object _lastValue;
         private readonly Dictionary<VariableSymbol, object> _variables;
-        public Evaluator(ExpresionTipada root, Dictionary<VariableSymbol, object> variables)
+        public Evaluator(StatementTipado root, Dictionary<VariableSymbol, object> variables)
         {
             this._root = root;
             this._variables = variables;
         }
         public object Evaluate()
         {
-            return EvaluateExpresion(_root);
+            EvaluateStatement(_root);
+            return _lastValue;
         }
         /*
         Evaluate method can be implemented recursively because the way the ast,
         was build it has the operation ordered by priority. 
         */
+
+        private void EvaluateStatement(StatementTipado node)
+        {
+            switch (node.tipo)
+            {
+                case TipoNodoTipado.BlockStatement:
+                    EvaluateBlockStatement((ExpresionBlockTipada)node);
+                    break;
+                case TipoNodoTipado.ExpresionStatement:
+                    EvaluateExpressionStatement((ExpresionStatementTipada)node);
+                    break;
+                default:
+                    throw new Exception($"Unexpected node {node.tipo}");
+            }
+        }
+
+        private void EvaluateExpressionStatement(ExpresionStatementTipada node)
+        {
+            _lastValue = EvaluateExpresion(node.Expresion);
+        }
+
+        private void EvaluateBlockStatement(ExpresionBlockTipada node)
+        {
+            foreach (var statement in node.Statements)
+            {
+                EvaluateStatement(statement);
+            }
+        }
+
         private object EvaluateExpresion(ExpresionTipada node)
         {
             switch (node)

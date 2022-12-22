@@ -5,7 +5,4 @@ namespace AnálisisCodigo.Tipado
         // refers to the type of its structure.
         public abstract TipoNodoTipado tipo { get; }
     }
-
-
-
 }

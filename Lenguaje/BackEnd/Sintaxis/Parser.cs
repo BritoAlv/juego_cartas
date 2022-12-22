@@ -170,6 +170,33 @@ namespace AnálisisCodigo.Sintaxis
 
         }
 
+        private Statement ParseStatement()
+        {
+            if(Current.tipo == Tipo.OpenBraceToken)
+            {
+                return ParseBlockStatement();
+            }
+            return ParseExpresionStatement();
+        }
+
+        private Statement ParseExpresionStatement()
+        {
+            var expresion = ParseExpresion();
+            return new ExpresionStatement(expresion);
+        }
+
+        private BlockStatementExpresion ParseBlockStatement()
+        {
+            var statements = new List<Statement>();
+            var OpenBraceToken = Match(Tipo.OpenBraceToken);
+            while (Current.tipo != Tipo.EndOfFileToken && Current.tipo != Tipo.CloseBraceToken)
+            {
+                var statement = ParseStatement();
+                statements.Add(statement);
+            }
+            var ClosedBraceToken = Match(Tipo.CloseBraceToken);
+            return new BlockStatementExpresion(OpenBraceToken, statements, ClosedBraceToken);
+        }
 
         private Expresion ParseNumberLiteral()
         {
@@ -200,9 +227,9 @@ namespace AnálisisCodigo.Sintaxis
 
         public CompilationunitSyntax ParseCompilationUnit()
         {
-            var expresion = ParseExpresion();
+            var statement = ParseStatement();
             var endOfFileToken = Match(Tipo.EndOfFileToken);
-            return new CompilationunitSyntax(expresion, endOfFileToken);
+            return new CompilationunitSyntax(statement, endOfFileToken);
         }
     }
 }

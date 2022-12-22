@@ -68,6 +68,14 @@ namespace AnálisisCodigo.Sintaxis
                     _kind = Tipo.CloseParenthesisToken;
                     _position++;
                     break;
+                case '{':
+                    _kind = Tipo.OpenBraceToken;
+                    _position++;
+                    break;
+                case '}':
+                    _kind = Tipo.CloseBraceToken;
+                    _position++;
+                    break;
                 case '&':
                     if (LookAhead == '&')
                     {

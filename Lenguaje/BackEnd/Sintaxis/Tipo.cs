@@ -58,5 +58,7 @@ namespace AnálisisCodigo.Sintaxis
         While,
         Coma,
         CompilacionUnit,
+        BlockStatement,
+        ExpresionStatement,
     }
 }

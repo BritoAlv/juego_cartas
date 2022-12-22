@@ -7,6 +7,8 @@ namespace AnálisisCodigo.Tipado
         ExpresionLiteral,
         ExpresionVariable,
         ExpresionAsignación,
+        BlockStatement,
+        ExpresionStatement,
     }
 
 

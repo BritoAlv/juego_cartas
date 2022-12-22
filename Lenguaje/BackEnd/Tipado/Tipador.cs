@@ -13,7 +13,7 @@ namespace AnálisisCodigo.Tipado
         {
             var parentScope = CreateParentScope(previous);
             var binder = new Tipado(parentScope);
-            var expression = binder.Tipador(syntax.Expresion);
+            var statement = binder.TiparStatement(syntax.Statement);
             var variables = binder._scope.GetDeclaredVariables();
             var diagnostics = binder._diagnostics.ToList();
 
@@ -21,9 +21,41 @@ namespace AnálisisCodigo.Tipado
             {
                 diagnostics.InsertRange(0, previous.Diagnostics);
             }
-            return new BoundGlobalScope(previous, diagnostics, variables, expression);
+            return new BoundGlobalScope(previous, diagnostics, variables, statement);
         }
         public DiagnosticBag Diagnostics => _diagnostics;
+
+        public StatementTipado TiparStatement(Statement syntax)
+        {
+            switch(syntax.tipo)
+            {
+                case Tipo.BlockStatement:
+                    return TiparBlockStatement((BlockStatementExpresion)syntax);
+                case Tipo.ExpresionStatement:
+                    return TiparExpresionStatement((ExpresionStatement)syntax);
+                default:
+                    throw new Exception("IDK");
+            }
+        }
+
+        private StatementTipado TiparExpresionStatement(ExpresionStatement syntax)
+        {
+            var expresion = Tipador(syntax.Expresion);
+            return new ExpresionStatementTipada(expresion);
+        }
+
+        private StatementTipado TiparBlockStatement(BlockStatementExpresion syntax)
+        {
+            var statements = new List<StatementTipado>();
+            foreach (var statement in syntax.Statements)
+            {
+                var tipadostatement = TiparStatement(statement);
+                statements.Add(tipadostatement);
+            }
+            return new ExpresionBlockTipada(statements);
+
+        }
+
         public ExpresionTipada Tipador(Expresion A)
         {
             switch (A.tipo)
@@ -121,4 +153,6 @@ namespace AnálisisCodigo.Tipado
             return new ExpresionLiteralTipada(value);
         }
     }
+
+
 }
