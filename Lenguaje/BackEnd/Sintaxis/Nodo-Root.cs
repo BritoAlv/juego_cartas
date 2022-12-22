@@ -5,18 +5,19 @@ namespace AnálisisCodigo.Sintaxis
     /// </summary>
     public sealed class NodoRoot
     {
-        public NodoRoot(SourceText text, DiagnosticBag diagnostics, Expresion root, Token endOfFileToken)
+        private NodoRoot(SourceText text)
         {
+            var parser = new Parser(text);
+            var root = parser.ParseCompilationUnit();
+            var diagnostics = parser.Diagnostics;
             Text = text;
             Diagnostics = diagnostics;
             Root = root;
-            EndOfFileToken = endOfFileToken;
         }
 
         public SourceText Text { get; }
         public DiagnosticBag Diagnostics { get; }
-        public Expresion Root { get; }
-        public Token EndOfFileToken { get; }
+        public CompilationunitSyntax Root { get; }
         public static NodoRoot Parse(string text)
         {
             var sourceText = SourceText.From(text);
@@ -24,8 +25,7 @@ namespace AnálisisCodigo.Sintaxis
         }
         public static NodoRoot Parse(SourceText text)
         {
-            var parser = new Parser(text);
-            return parser.Parse();
+            return new NodoRoot(text);
         }
 
     }

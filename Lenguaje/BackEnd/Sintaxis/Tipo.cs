@@ -57,5 +57,6 @@ namespace AnálisisCodigo.Sintaxis
         Var,
         While,
         Coma,
+        CompilacionUnit,
     }
 }

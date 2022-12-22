@@ -69,7 +69,7 @@ namespace AnálisisCodigo
                 }
             }
 
-            if (position > linestart)
+            if (position >= linestart)
             {
                 AddLine(result, sourceText, position, linestart, 0);
             }

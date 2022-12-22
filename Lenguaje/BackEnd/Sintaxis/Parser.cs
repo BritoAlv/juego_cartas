@@ -8,6 +8,7 @@ namespace AnálisisCodigo.Sintaxis
         private readonly Token[] _tokens;
         private int _position;
         private DiagnosticBag _diagnostics = new DiagnosticBag();
+        private SourceText Text { get; }
 
         public Parser(SourceText text)
         {
@@ -50,7 +51,6 @@ namespace AnálisisCodigo.Sintaxis
         }
         private Token Current => Peek(0);
 
-        public SourceText Text { get; }
 
         /// <summary>
         /// Return the actual Token and move the Pointer.
@@ -90,14 +90,6 @@ namespace AnálisisCodigo.Sintaxis
         /// The Method Parse, will return an Abstract Syntax Tree.
         /// </summary>
         /// <returns></returns>
-        public NodoRoot Parse()
-        {
-            var expression = ParseExpresion();
-            // notice that after parse the expression should be an endOfFileToken at the end.
-            var endOfFileToken = Match(Tipo.EndOfFileToken);
-            // The tree is made up of ExpressionSyntax objects,
-            return new NodoRoot(Text, _diagnostics, expression, endOfFileToken);
-        }
         public Expresion ParseExpresion()
         {
             return ParseAsignacion();
@@ -204,6 +196,13 @@ namespace AnálisisCodigo.Sintaxis
         {
             var identificador = Match(Tipo.IdentifierToken);
             return new ExpresionNombre(identificador);
+        }
+
+        public CompilationunitSyntax ParseCompilationUnit()
+        {
+            var expresion = ParseExpresion();
+            var endOfFileToken = Match(Tipo.EndOfFileToken);
+            return new CompilationunitSyntax(expresion, endOfFileToken);
         }
     }
 }

@@ -57,13 +57,25 @@ namespace AnálisisCodigo
 
         internal void ReportUndefinedBinaryOperator(TextSpan operator_span, string operator_text, Type typeleft, Type typeright)
         {
-           var message = $"Binary operator is '{operator_text}' is not defined for types {typeleft}, {typeright}";
+            var message = $"Binary operator is '{operator_text}' is not defined for types {typeleft}, {typeright}";
             Report(operator_span, message);
         }
 
         internal void ReportUndefinedName(TextSpan span, string name)
         {
             var message = $"Variable {name} no existe";
+            Report(span, message);
+        }
+
+        internal void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        {
+            var message = $"La variable {name} está ya declarada";
+            Report(span, message);
+        }
+
+        internal void ReportCannotConvert(TextSpan span, Type fromType, Type toType)
+        {
+            var message = $"Cannot convert type '{fromType}' to '{toType}'.";
             Report(span, message);
         }
     }

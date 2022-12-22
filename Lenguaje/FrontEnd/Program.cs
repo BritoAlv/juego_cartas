@@ -7,8 +7,10 @@ public class Test
     {
         var variables = new Dictionary<VariableSymbol, object>();
         var textBuilder = new StringBuilder();
+        Compilacion previous = null;
         while (true)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             if (textBuilder.Length == 0)
             {
                 Console.Write("> ");
@@ -17,6 +19,7 @@ public class Test
             {
                 Console.Write("| ");
             }
+            Console.ResetColor();
 
             var input = Console.ReadLine();
             var isBlank = string.IsNullOrWhiteSpace(input);
@@ -42,16 +45,19 @@ public class Test
                 continue;
             }
 
-            var compilacion = new Compilacion(syntaxtree);
+            var compilacion = (previous == null) ? new Compilacion(syntaxtree) : previous.ContinueWith(syntaxtree);
             var result = compilacion.Evaluate(variables);
             var diagnostics = result.Diagnostics;
             var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkRed;
             print_tree.print(syntaxtree.Root);
             Console.ForegroundColor = color;
-            if (!diagnostics.Any())
+            if (!result.Diagnostics.Any())
             {
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine(result.Value);
+                Console.ResetColor();
+                previous = compilacion;
             }
             else
             {
