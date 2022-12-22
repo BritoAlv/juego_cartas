@@ -28,11 +28,14 @@ public class Human_Player : Player
         {
             return new InvalidDecision();    
         }
-
         if (decision.TrimEnd() == "Apostar")
         {
             return new Apostar(this);
             // notice that we can pase an IApostador here, not necessary the player.
+        }
+        if (decision.TrimEnd() == "Pasar")
+        {
+            return new Pasar();
         }
         return new InvalidDecision();
     }
