@@ -12,7 +12,7 @@ internal class FourKindRank : Rank
     {
         CardValue Transform(IEnumerable<Card> C)
         {
-            return C.GroupBy(x => x.Value).Where(x => x.Count() == 4).First().First().Value;
+            return C.GroupBy(x => x.Value).Where(x => x.Count() >= 4).First().First().Value;
         }
         var result = Transform(A).CompareTo(Transform(B));
         if (result == 0)
