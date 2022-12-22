@@ -1,5 +1,5 @@
 namespace Poker;
-public class Card
+public class Card : ICloneable
 {
     public Card(CardValue value, CardSuit suit)
     {
@@ -8,6 +8,12 @@ public class Card
     }
     public CardValue Value { get; }
     public CardSuit Suit { get; }
+
+    public object Clone()
+    {
+        return new Card(this.Value, this.Suit);
+    }
+
     public override string ToString()
     {
         int numero = ((int)this.Value);

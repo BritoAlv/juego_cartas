@@ -14,15 +14,21 @@ internal class MiniRonda
     public Mini_Ronda_Contexto Mini_Contexto { get; }
     internal void Execute()
     {
-        Dictionary<Ideable,List<Card>> cards_by_player = Mini_Contexto.AssignCards(Participants);
+        var cartas_asignadas = new Dictionary<Ideable, List<Card>>();
         foreach (var player in Participants)
         {
-            if(cards_by_player.ContainsKey(player))
+            cartas_asignadas[player] = new List<Card>();
+        }
+        foreach (var player in Participants)
+        {
+            var card_result = Mini_Contexto.RepartirCartas(player, in cartas_asignadas);
+            foreach (var cartas_asignada in card_result)
             {
-                foreach (var card in cards_by_player[player])
-                {
-                    player.Hand.Draw(card);
-                }
+                cartas_asignadas[player].Add(cartas_asignada);
+            }
+            foreach (var card in card_result)
+            {
+                player.Hand.Draw(card);
             }
             EmpezarJugada(player);
             if (player.Dinero > 0)
