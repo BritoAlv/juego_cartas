@@ -28,10 +28,13 @@ public class Human_Player : Player
         {
             return new InvalidDecision();    
         }
-
         if (decision.TrimEnd() == "Apostar")
         {
             return new Apostar(this);
+        }
+        if (decision.TrimEnd() == "Pasar")
+        {
+            return new Pasar();
         }
         return new InvalidDecision();
     }
