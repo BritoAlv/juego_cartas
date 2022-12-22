@@ -31,6 +31,9 @@ namespace AnálisisCodigo
                 case TipoNodoTipado.BlockStatement:
                     EvaluateBlockStatement((ExpresionBlockTipada)node);
                     break;
+                case TipoNodoTipado.VariableDeclaration:
+                    EvaluateVariableDeclaration((VariableDeclarationTipada)node);
+                    break;
                 case TipoNodoTipado.ExpresionStatement:
                     EvaluateExpressionStatement((ExpresionStatementTipada)node);
                     break;
@@ -39,11 +42,16 @@ namespace AnálisisCodigo
             }
         }
 
+        private void EvaluateVariableDeclaration(VariableDeclarationTipada node)
+        {
+            var value = EvaluateExpresion(node.Initializer);
+            _variables[node.Variable] = value;
+            _lastValue = value;
+        }
         private void EvaluateExpressionStatement(ExpresionStatementTipada node)
         {
             _lastValue = EvaluateExpresion(node.Expresion);
         }
-
         private void EvaluateBlockStatement(ExpresionBlockTipada node)
         {
             foreach (var statement in node.Statements)
@@ -108,7 +116,6 @@ namespace AnálisisCodigo
             _variables[r.VariableSymbol] = value;
             return value;
         }
-
         private object EvaluateUnaryExpression(ExpresionUnariaTipada u)
         {
             var operand = EvaluateExpresion(u.Operand);

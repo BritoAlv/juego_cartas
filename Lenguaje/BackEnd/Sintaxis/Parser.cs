@@ -172,11 +172,25 @@ namespace AnálisisCodigo.Sintaxis
 
         private Statement ParseStatement()
         {
-            if(Current.tipo == Tipo.OpenBraceToken)
+            switch (Current.tipo)
             {
-                return ParseBlockStatement();
+                case Tipo.OpenBraceToken:
+                    return ParseBlockStatement();
+                case Tipo.Let:
+                case Tipo.Var:
+                    return ParseVariableDeclaration();
             }
             return ParseExpresionStatement();
+        }
+
+        private Statement ParseVariableDeclaration()
+        {
+            var expected = Current.tipo == Tipo.Let ? Tipo.Let : Tipo.Var;
+            var keyword = Match(expected);
+            var identifier = Match(Tipo.IdentifierToken);
+            var equals = Match(Tipo.AsignacionToken);
+            var initializer = ParseExpresion();
+            return new ExpresionVariableDeclaration(keyword, identifier, equals, initializer);
         }
 
         private Statement ParseExpresionStatement()

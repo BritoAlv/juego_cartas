@@ -9,6 +9,7 @@ namespace AnálisisCodigo.Tipado
         ExpresionAsignación,
         BlockStatement,
         ExpresionStatement,
+        VariableDeclaration,
     }
 
 

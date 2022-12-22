@@ -27,15 +27,30 @@ namespace AnálisisCodigo.Tipado
 
         public StatementTipado TiparStatement(Statement syntax)
         {
-            switch(syntax.tipo)
+            switch (syntax.tipo)
             {
                 case Tipo.BlockStatement:
                     return TiparBlockStatement((BlockStatementExpresion)syntax);
+                case Tipo.VariableDeclaration:
+                    return TiparVariableDeclaration((ExpresionVariableDeclaration)syntax);
                 case Tipo.ExpresionStatement:
                     return TiparExpresionStatement((ExpresionStatement)syntax);
                 default:
                     throw new Exception("IDK");
             }
+        }
+
+        private StatementTipado TiparVariableDeclaration(ExpresionVariableDeclaration syntax)
+        {
+            var name = syntax.Identifier.Text;
+            var isReadOnly = syntax.Keyword.tipo == Tipo.Let;
+            var initializer = Tipador(syntax.Initializer);
+            var variable = new VariableSymbol(name, isReadOnly, initializer.Type);
+            if (!_scope.TryDeclare(variable))
+            {
+                _diagnostics.ReportVariableAlreadyDeclared(syntax.Identifier.Span, name);
+            }
+            return new VariableDeclarationTipada(variable, initializer);
         }
 
         private StatementTipado TiparExpresionStatement(ExpresionStatement syntax)
@@ -47,6 +62,7 @@ namespace AnálisisCodigo.Tipado
         private StatementTipado TiparBlockStatement(BlockStatementExpresion syntax)
         {
             var statements = new List<StatementTipado>();
+            _scope = new BoundScope(_scope);
             foreach (var statement in syntax.Statements)
             {
                 var tipadostatement = TiparStatement(statement);
@@ -79,7 +95,7 @@ namespace AnálisisCodigo.Tipado
         private static BoundScope CreateParentScope(BoundGlobalScope previous)
         {
             var stack = new Stack<BoundGlobalScope>();
-            while(previous != null)
+            while (previous != null)
             {
                 stack.Push(previous);
                 previous = previous.Previous;
@@ -104,8 +120,13 @@ namespace AnálisisCodigo.Tipado
             var expresiontipada = Tipador(a.Expresion);
             if (!_scope.TryLookUp(name, out var variable))
             {
-                variable = new VariableSymbol(name, expresiontipada.Type);
-                _scope.TryDeclare(variable);
+                _diagnostics.ReportUndefinedName(a.Identificador.Span, name);
+                return expresiontipada;
+            }
+
+            if (variable.IsReadOnly)
+            {
+                _diagnostics.ReportCannotAssign(a.AsignacionToken.Span, name);
             }
             if (expresiontipada.Type != variable.Type)
             {

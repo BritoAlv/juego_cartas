@@ -112,6 +112,10 @@ namespace AnálisisCodigo.Sintaxis
                     return Tipo.TrueKeyword;
                 case "false":
                     return Tipo.FalseKeyword;
+                case "let":
+                    return Tipo.Let;
+                case "var":
+                    return Tipo.Var;
                 default:
                     return Tipo.IdentifierToken;
             }

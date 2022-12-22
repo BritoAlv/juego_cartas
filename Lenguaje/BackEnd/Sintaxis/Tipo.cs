@@ -60,5 +60,6 @@ namespace AnálisisCodigo.Sintaxis
         CompilacionUnit,
         BlockStatement,
         ExpresionStatement,
+        VariableDeclaration,
     }
 }

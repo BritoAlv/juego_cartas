@@ -2,15 +2,15 @@ namespace AnálisisCodigo.Sintaxis
 {
     public sealed class ExpresionAsignacion : Expresion
     {
-        public ExpresionAsignacion(Token identificador, Token equalsToken, Expresion expresion)
+        public ExpresionAsignacion(Token identificador, Token asignacionToken, Expresion expresion)
         {
             Identificador = identificador;
-            EqualsToken = equalsToken;
+            AsignacionToken = asignacionToken;
             Expresion = expresion;
         }
 
         public Token Identificador { get; }
-        public Token EqualsToken { get; }
+        public Token AsignacionToken { get; }
         public Expresion Expresion { get; }
 
         public override Tipo tipo => Tipo.ExpresionAsignacion;
@@ -18,7 +18,7 @@ namespace AnálisisCodigo.Sintaxis
         public override IEnumerable<Nodo> Hijos()
         {
             yield return Identificador;
-            yield return EqualsToken;
+            yield return AsignacionToken;
             yield return Expresion;
         }
 
