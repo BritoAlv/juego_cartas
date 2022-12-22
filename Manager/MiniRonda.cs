@@ -16,7 +16,7 @@ internal class MiniRonda
     {
         foreach (var player in Participants)
         {
-            RepartCards(cant_Cartas, player);
+            RepartCards(cant_Cartas, player, random.generate_random_card);
             EmpezarJugada(player);
             if (player.Dinero > 0)
             {
@@ -28,6 +28,9 @@ internal class MiniRonda
         Console.WriteLine("-----------------------------------------------------------------");
         Console.WriteLine();
     }
+
+
+
     void EmpezarJugada(Player player)
     {
         Console.Write("Esta es la mano de ");
@@ -65,11 +68,15 @@ internal class MiniRonda
         } while (decision.Id == "InvalidDecision");
         // at this point the player bets a reasonable number.
     }
-    void RepartCards(int v, Player player)
+    void RepartCard(Player player, Card card)
     {
-        for (int i = 0; i < v; i++)
+        player.Hand.Draw(card);
+    }
+    void RepartCards(int cant_Cartas, Player player, Func<Card> generate_random_card)
+    {
+        for (int i = 0; i < cant_Cartas; i++)
         {
-            player.Hand.Draw(random.generate_random_card());
+            RepartCard(player, generate_random_card());
         }
     }
 }

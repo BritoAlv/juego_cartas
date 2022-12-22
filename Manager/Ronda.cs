@@ -11,7 +11,8 @@ internal class Ronda
     }
     public Scorer Scorer { get; }
     public Global_Contexto Global_Contexto { get; }
-    public int[] Bets => Global_Contexto.Bets_Rounds;
+    public Ronda_Context Ronda_Contexto => Global_Contexto.Ronda_Context;
+    public int[] Bets => Ronda_Contexto.Bets_Rounds;
     public IEnumerable<Player> Participants => Global_Contexto.Active_Players;
     internal List<Player> Simulate()
     {

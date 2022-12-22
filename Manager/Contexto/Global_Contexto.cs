@@ -8,27 +8,23 @@ public class Global_Contexto
     internal Global_Contexto(IEnumerable<Player> players, int[] Bets_Rounds)
     {
         Players = players;
-        this.Bets_Rounds = Bets_Rounds;
-        _apuestas = new Bet(players);
         Active_Players = Players.ToList();
+        Ronda_Context = new Ronda_Context(players, Bets_Rounds);
     }
-    private Bet? _apuestas;
+
     public Bet Apuestas
-    { 
+    {
         get
         {
-            if (_apuestas is null)
-            {
-                throw new Exception("IDK");
-            }
-            return _apuestas;
+            return Ronda_Context.Apuestas;
         }
         internal set
         {
-            _apuestas = value;
-        } 
-    }
+            Ronda_Context.Apuestas = value;
+        }
+    } 
     public IEnumerable<Player> Players { get;}
+    public Ronda_Context Ronda_Context { get; }
     public List<Player> Active_Players{ get; internal set;}
-    public int[] Bets_Rounds { get; }
+
 }

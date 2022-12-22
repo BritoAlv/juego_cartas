@@ -19,12 +19,12 @@ public static class random
     {
         return new Card(generate_random_value(), generate_random_suit());
     }
-    private static CardSuit generate_random_suit()
+    public static CardSuit generate_random_suit()
     {
         var rnd = new Random();
         return rnd.NextEnum<CardSuit>();
     }
-    private static CardValue generate_random_value()
+    public static CardValue generate_random_value()
     {
         var rnd = new Random();
         return rnd.NextEnum<CardValue>();
