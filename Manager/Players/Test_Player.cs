@@ -1,6 +1,6 @@
 namespace Poker;
 
-public sealed class Test_Player : Computer_Player
+public sealed class Test_Player : Player
 {
     public Test_Player(string id, int dinero) : base(id, dinero)
     {
@@ -11,7 +11,10 @@ public sealed class Test_Player : Computer_Player
         {
             return new Pasar();
         }
-        else return new Apostar(this);
+        else
+        {
+            return new Apostar(this);
+        }
     }
     public override int realizar_apuesta(Contexto contexto)
     {

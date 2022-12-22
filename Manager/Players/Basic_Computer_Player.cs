@@ -2,9 +2,9 @@ namespace Poker;
 /// <summary>
 /// This represent a basic computer player who knows by default how to Bet.
 /// </summary>
-public class Computer_Player : Player
+public class Basic_Computer_Player : Player
 {
-    public Computer_Player(string id, int dinero) : base(id, dinero)
+    public Basic_Computer_Player(string id, int dinero) : base(id, dinero)
     {
     }
     public override int realizar_apuesta(Contexto contexto)

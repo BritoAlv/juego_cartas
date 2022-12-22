@@ -24,7 +24,7 @@ public class Bet
         Bets[A].Add(dinero);
     }
     internal void Pasar(Player A){
-        Bets[A].Add(0);
+        Apostar(A, 0);
     }
     internal List<int> this[Ideable index]
     {
