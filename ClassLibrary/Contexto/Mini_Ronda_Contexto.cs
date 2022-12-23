@@ -1,27 +1,24 @@
 namespace Poker;
 public class Mini_Ronda_Contexto
 {
+    private IRepartidor? _repartidor;
     public Mini_Ronda_Contexto(int cant_cartas, IRepartidor? repartidor)
     {
         Cant_Cartas = cant_cartas;
-        _Repartidor = repartidor;
+        _repartidor = repartidor;
     }
-    public Mini_Ronda_Contexto(int cant_cartas) : this(cant_cartas, null){}
+
+    public Mini_Ronda_Contexto(int cant_cartas) : this(cant_cartas, null) { }
     public int Cant_Cartas { get; }
-    private IRepartidor? _Repartidor;
     public IRepartidor Repartidor
     {
         get
         {
-            if (_Repartidor == null)
+            if (_repartidor is null)
             {
-                return new RandomRepartidor();
+                _repartidor = new Repartidor();
             }
-            return _Repartidor;
-        }
-        internal set
-        {
-            _Repartidor = value;
+            return _repartidor;
         }
     }
 }

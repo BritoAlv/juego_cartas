@@ -8,10 +8,10 @@ internal class Pasar : IDecision
     {
     }
     public string Id => "Pasar";
-    public string Help => "Debes haber apostado alguna cantidad inicial para pasar";
+    public string Help => "Para pasar debes debes haber apostado una cantidad >= a la de los demás jugadores";
     public bool DoDecision(Player player, IGlobal_Contexto contexto)
     {
-        if (contexto.Apuestas.Get_Dinero_Apostado(player) == 0)
+        if (contexto.Apuestas.Get_Dinero_Apostado(player) < contexto.Apuestas.Get_Max_Sum_Apuesta())
         {
             return false;
         }

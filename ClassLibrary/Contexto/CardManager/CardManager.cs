@@ -10,16 +10,24 @@ public class CardManager
             Cards[player] = new List<Card>();
         }
     }
-    internal void AñadirCarta(Player A, Card card)
+    private void AñadirCarta(Player A, Card card)
     {
         Cards[A].Add(card);
         A.Hand.Draw(card);
     }
-    internal void RepartirCartas(Player player, int cant_Cartas, IRepartidor repartidor)
+    internal void AñadirCartas(IRepartidor repartidor, Player A, int cant_Cartas)
     {
-        for (int i = 0; i < cant_Cartas; i++)
+        List<Card> cards = repartidor.Repartir_Cartas(A, cant_Cartas, Cards.AsEnumerable());
+        if (cant_Cartas > cards.Count)
         {
-            AñadirCarta(player, repartidor.RepartirCarta(player));
+            throw new Exception("Me la estas jugando");
+        }
+        else
+        {
+            foreach (var card in cards)
+            {
+                AñadirCarta(A, card);
+            }
         }
     }
 }
