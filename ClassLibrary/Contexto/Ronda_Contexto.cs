@@ -38,4 +38,6 @@ public class Ronda_Context : IRonda_Context
         }
     }
     public List<Mini_Ronda_Contexto> Contextos { get; }
+
+    public IEnumerable<Player> Participants{ get; set; }
 }

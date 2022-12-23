@@ -11,20 +11,19 @@ internal class Ronda
     }
     public Scorer Scorer { get; }
     public IGlobal_Contexto Global_Contexto { get; }
-    public IEnumerable<Player> Participants => Global_Contexto.Active_Players;
+    public IEnumerable<Player> Participants => Global_Contexto.Ronda_Contexto.Participants;
     internal List<Player> Simulate()
     {
         StartRonda();
         ExecuteMiniRondas(Global_Contexto.Ronda_Contexto.Contextos);
         GetWinners();
         ShowRondaFinalState();
-        return Participants.Where(x => x.Dinero > 0).ToList();
+        return Global_Contexto.Active_Players.Where(x => x.Dinero > 0).ToList();
     }
 
     void StartRonda()
     {
         Tools.ShowColoredMessage("Comienza Una Nueva Ronda con los jugadores :", ConsoleColor.DarkRed);
-
         foreach (var player in Participants)
         {
             Tools.ShowColoredMessage(" " + player.Id + ", ", ConsoleColor.Blue);
@@ -44,7 +43,6 @@ internal class Ronda
     {
         var best_hand = this.Participants.Select(x => x.Hand).OrderDescending().First();
         Tools.ShowColoredMessage("La ronda fue ganada por: ", ConsoleColor.DarkGray);
-
         var winners = Participants.Where(x => x.Hand.Equals(best_hand)).ToList();
         foreach (var winner in winners)
         {
@@ -53,7 +51,6 @@ internal class Ronda
         }
         Console.WriteLine();
     }
-
     void ShowRondaFinalState()
     {
         foreach (var participant in Participants)
@@ -65,6 +62,4 @@ internal class Ronda
             player.Hand = new Hand(this.Scorer);
         }
     }
-
-
 }

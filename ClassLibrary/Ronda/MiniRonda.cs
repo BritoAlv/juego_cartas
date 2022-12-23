@@ -4,7 +4,7 @@ namespace Poker;
 /// </summary>
 internal class MiniRonda
 {
-    private IEnumerable<Player> Participants => Global_Contexto.Active_Players;
+    private IEnumerable<Player> Participants => Global_Contexto.Ronda_Contexto.Participants;
     public MiniRonda(IGlobal_Contexto contexto, Mini_Ronda_Contexto mini_contexto)
     {
         Global_Contexto = contexto;
@@ -16,6 +16,10 @@ internal class MiniRonda
     {
         foreach (var player in Participants)
         {
+            if (this.Participants.Count() == 1)
+            {
+                return;
+            }
             Global_Contexto.Ronda_Contexto.CardsManager.AñadirCartas(Mini_Contexto.Repartidor, player, Mini_Contexto.Cant_Cartas);
             EmpezarJugada(player);
             if (player.Dinero > 0)

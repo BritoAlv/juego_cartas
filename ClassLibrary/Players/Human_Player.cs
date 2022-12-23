@@ -26,7 +26,7 @@ public class Human_Player : Player
         var decision = Console.ReadLine();
         if (string.IsNullOrEmpty(decision))
         {
-            return new InvalidDecision();    
+            return new InvalidDecision();
         }
         if (decision.TrimEnd() == "Apostar")
         {
@@ -36,6 +36,10 @@ public class Human_Player : Player
         if (decision.TrimEnd() == "Pasar")
         {
             return new Pasar();
+        }
+        if (decision.TrimEnd() == "Abandonar")
+        {
+            return new Abandonar();
         }
         return new InvalidDecision();
     }

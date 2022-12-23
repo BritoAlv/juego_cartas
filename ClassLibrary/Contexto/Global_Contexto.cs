@@ -12,12 +12,12 @@ public class Global_Contexto : IGlobal_Contexto
         Active_Players = Players.ToList();
     }
     public IEnumerable<Player> Players { get; }
-    private Ronda_Context Ronda_Context { get; }
     public List<Player> Active_Players { get; set; }
     public IRonda_Context Ronda_Contexto{ get; }
     public void Config()
     {
         Ronda_Contexto.Apuestas = new Bet(this.Active_Players);
         Ronda_Contexto.CardsManager = new CardManager(this.Active_Players);
+        Ronda_Contexto.Participants = this.Active_Players;
     }
 }
