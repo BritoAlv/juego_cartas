@@ -23,4 +23,4 @@ dotnet run
 
 - Create some new decision that implements a mini-parser.
 - A more sophisticated IA player.
-- Extend more the Context.
+- 

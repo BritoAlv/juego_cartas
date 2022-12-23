@@ -1,5 +1,4 @@
 namespace Poker;
-
 /// <summary>
 /// Contract for a player to know how to bet. 
 /// </summary>
@@ -11,7 +10,6 @@ public interface IApostador
 {
     int realizar_apuesta(IGlobal_Contexto contexto);
 }
-
 /// <summary>
 /// To define an IDecision we implement a class and a public interface that players that will implement this IDecision should
 /// have.
@@ -28,7 +26,7 @@ internal class Apostar : IDecision
     {
         var apuesta_jugador = 0;
         apuesta_jugador = Apostador.realizar_apuesta(contexto);
-        if (apuesta_jugador > player.Dinero || apuesta_jugador == 0)
+        if (apuesta_jugador > player.Dinero || apuesta_jugador == 0 || apuesta_jugador < contexto.Apuestas.Get_Max_Apuesta())
         {
             return false;
         }
@@ -36,5 +34,5 @@ internal class Apostar : IDecision
         Tools.ShowColoredMessage($"{player.Id} apostó { contexto.Apuestas.Get_Last_Apuesta(player)} \n", ConsoleColor.Yellow);
         return true;
     }
-    public string Help => "La apuesta debe ser <= tu dinero y mayor que 0";
+    public string Help => "La apuesta debe ser <= tu dinero , mayor que 0 y al menos igual a la mayor cantidad apostada anteriormente";
 }

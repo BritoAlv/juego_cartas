@@ -6,4 +6,6 @@ public interface IGlobal_Contexto
     Bet Apuestas { get; internal set; }
     List<Player> Active_Players { get; internal set;}
     List<Mini_Ronda_Contexto> Contextos { get; }
+    CardManager CardsManager { get; internal set; }
+    void Config();
 }

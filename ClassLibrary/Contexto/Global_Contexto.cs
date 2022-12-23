@@ -24,6 +24,22 @@ public class Global_Contexto : IGlobal_Contexto
             Ronda_Context.Apuestas = value;
         }
     }
-    public List<Player> Active_Players{ get; set; }
+    public List<Player> Active_Players { get; set; }
     public List<Mini_Ronda_Contexto> Contextos => Ronda_Context.Contextos;
+    public CardManager CardsManager
+    {
+        get
+        {
+            return Ronda_Context.CardsManager;
+        }
+        set
+        {
+            Ronda_Context.CardsManager = value;
+        }
+    }
+    public void Config()
+    {
+        this.Apuestas = new Bet(this.Active_Players);
+        this.CardsManager = new CardManager(this.Active_Players);
+    }
 }

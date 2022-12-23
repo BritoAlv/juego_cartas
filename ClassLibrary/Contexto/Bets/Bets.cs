@@ -44,4 +44,14 @@ public class Bet
         // other way of do the same process. 
         // return Bets.Values.Select(x => x.Sum()).Sum();
     }
+
+    public int Get_Max_Apuesta()
+    {
+        IEnumerable<List<int>> result = Bets.Values.Where(x => x.Count > 0);
+        if (result.Count() == 0)
+        {
+            return 0;
+        }
+        return result.Select(x => x.Max()).Max();
+    }
 }

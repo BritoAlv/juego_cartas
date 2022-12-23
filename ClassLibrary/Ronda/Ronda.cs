@@ -20,27 +20,15 @@ internal class Ronda
         ShowRondaFinalState();
         return Participants.Where(x => x.Dinero > 0).ToList();
     }
-    void ShowRondaFinalState()
+
+    void StartRonda()
     {
-        foreach (var participant in Participants)
-        {
-            Console.WriteLine($"{participant.Id}".PadLeft(Participants.Select(x => x.Id.Length).Max()) + " " + participant.Hand + $" {participant.Hand.rank}");
-        }
+        Tools.ShowColoredMessage("Comienza Una Nueva Ronda con los jugadores :", ConsoleColor.DarkRed);
+
         foreach (var player in Participants)
         {
+            Tools.ShowColoredMessage(" " + player.Id + ", ", ConsoleColor.Blue);
             player.Hand = new Hand(this.Scorer);
-        }
-    }
-    void GetWinners()
-    {
-        var best_hand = this.Participants.Select(x => x.Hand).OrderDescending().First();
-        Tools.ShowColoredMessage("La ronda fue ganada por: ", ConsoleColor.DarkGray);
-
-        var winners = Participants.Where(x => x.Hand.Equals(best_hand)).ToList();
-        foreach (var winner in winners)
-        {
-            winner.Dinero = winner.Dinero + Global_Contexto.Apuestas.Get_Dinero_Total_Apostado()/winners.Count;
-            Tools.ShowColoredMessage($"{winner.Id} con ${winner.Dinero}, ", ConsoleColor.DarkGray);
         }
         Console.WriteLine();
     }
@@ -52,14 +40,31 @@ internal class Ronda
             mini_ronda.Execute();
         }
     }
-    void StartRonda()
+    void GetWinners()
     {
-        Tools.ShowColoredMessage("Comienza Una Nueva Ronda con los jugadores :", ConsoleColor.DarkRed);
-        foreach (var player in Participants)
+        var best_hand = this.Participants.Select(x => x.Hand).OrderDescending().First();
+        Tools.ShowColoredMessage("La ronda fue ganada por: ", ConsoleColor.DarkGray);
+
+        var winners = Participants.Where(x => x.Hand.Equals(best_hand)).ToList();
+        foreach (var winner in winners)
         {
-            Tools.ShowColoredMessage(" " + player.Id + ", ", ConsoleColor.Blue);
-            player.Hand = new Hand(this.Scorer);
+            winner.Dinero = winner.Dinero + Global_Contexto.Apuestas.Get_Dinero_Total_Apostado() / winners.Count;
+            Tools.ShowColoredMessage($"{winner.Id} con ${winner.Dinero}, ", ConsoleColor.DarkGray);
         }
         Console.WriteLine();
     }
+
+    void ShowRondaFinalState()
+    {
+        foreach (var participant in Participants)
+        {
+            Console.WriteLine($"{participant.Id}".PadLeft(Participants.Select(x => x.Id.Length).Max()) + " " + participant.Hand + $" {participant.Hand.rank}");
+        }
+        foreach (var player in Participants)
+        {
+            player.Hand = new Hand(this.Scorer);
+        }
+    }
+
+
 }

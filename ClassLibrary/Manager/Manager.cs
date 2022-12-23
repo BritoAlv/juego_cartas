@@ -28,7 +28,7 @@ public class Manager
         Tools.ShowColoredMessage("Comienza la partida: \n", ConsoleColor.DarkGray);
         while (Global_Contexto.Active_Players.Count > 1)
         {
-            Global_Contexto.Apuestas = new Bet(Global_Contexto.Active_Players);
+            Global_Contexto.Config();
             Ronda ronda = new Ronda(Scorer, Global_Contexto);
             Global_Contexto.Active_Players = ronda.Simulate();
         }
