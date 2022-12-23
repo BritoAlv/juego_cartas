@@ -21,7 +21,7 @@ public class Program
             new Mini_Ronda_Contexto(2),
             new Mini_Ronda_Contexto(3,  new CommonCardRepartidor()),
              new Mini_Ronda_Contexto(1,  new CommonCardRepartidor()),
-             new Mini_Ronda_Contexto(1, new CommonCardRepartidor()),
+             new Mini_Ronda_Contexto(1),
         };
 
         // Define settings for the rounds. 

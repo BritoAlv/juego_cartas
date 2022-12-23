@@ -1,13 +1,4 @@
 namespace Poker;
-
-public interface IGlobal_Contexto
-{
-    IEnumerable<Player> Players { get; }
-    Bet Apuestas { get; internal set; }
-    List<Player> Active_Players { get; internal set;}
-    List<Mini_Ronda_Contexto> Contextos { get; }
-}
-
 /// <summary>
 /// This class represent the Context that a player may use to determine its decision. From the Player point the Context
 /// is an immutable object.
