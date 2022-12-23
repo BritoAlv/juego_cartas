@@ -37,7 +37,7 @@ internal class Ronda
         var best_hand = this.Participants.Select(x => x.Hand).OrderDescending().First();
         Tools.ShowColoredMessage("La ronda fue ganada por: ", ConsoleColor.DarkGray);
 
-        var winners = Participants.Where(x => x.Hand == best_hand).ToList();
+        var winners = Participants.Where(x => x.Hand.Equals(best_hand)).ToList();
         foreach (var winner in winners)
         {
             winner.Dinero = winner.Dinero + Global_Contexto.Ronda_Context.Apuestas.Get_Dinero_Total_Apostado()/winners.Count;

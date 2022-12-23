@@ -46,4 +46,18 @@ public class Hand : IComparable<Hand>
         }
     }
     public void Draw(Card card) => _cards.Add(card);
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is Hand other)
+        {
+            if (this.Cards.Count() != other.Cards.Count())
+            {
+                return false;
+            }
+            IEnumerable<bool> comparer = this.Cards.Zip(other.Cards, (x, y) => x.Equals(y));
+            return comparer.All(x => x == true);
+        }
+        return false;
+    }
 }

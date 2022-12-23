@@ -10,7 +10,6 @@ public class Mini_Ronda_Contexto
         _repartidor = repartidor;
     }
     public Mini_Ronda_Contexto(int cant_cartas, IRepartidor repartidor) : this(cant_cartas, repartidor, null) { }
-
     public Mini_Ronda_Contexto(int cant_cartas) : this(cant_cartas, null, null) { }
     public Func<Player, Card> Card_Generator
     {
@@ -27,7 +26,6 @@ public class Mini_Ronda_Contexto
             _card_generator = value;
         }
     }
-
     public IRepartidor Repartidor
     {
         get
@@ -40,7 +38,6 @@ public class Mini_Ronda_Contexto
         }
     }
     public int Cant_Cartas { get; }
-
     public static Card generate_random_card(Player A)
     {
         return random.generate_random_card();

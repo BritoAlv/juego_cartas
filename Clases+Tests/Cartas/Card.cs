@@ -13,7 +13,14 @@ public class Card : ICloneable
     {
         return new Card(this.Value, this.Suit);
     }
-
+    public override bool Equals(object? obj)
+    {
+        if (obj is Card other)
+        {
+            return this.Suit == other.Suit && this.Value == other.Value;
+        }
+        return false;
+    }
     public override string ToString()
     {
         int numero = ((int)this.Value);
