@@ -3,7 +3,6 @@ namespace Poker;
 public class Repartidor : IRepartidor
 {
     private Func<Player, Card>? _card_generator;
-
     public Repartidor(): this(null)
     {
 

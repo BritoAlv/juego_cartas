@@ -1,5 +1,4 @@
 namespace Poker;
-
 public interface IRonda_Context
 {
     Bet Apuestas { get; internal set;}

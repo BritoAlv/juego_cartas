@@ -7,7 +7,6 @@ public class Mini_Ronda_Contexto
         Cant_Cartas = cant_cartas;
         _repartidor = repartidor;
     }
-
     public Mini_Ronda_Contexto(int cant_cartas) : this(cant_cartas, null) { }
     public int Cant_Cartas { get; }
     public IRepartidor Repartidor

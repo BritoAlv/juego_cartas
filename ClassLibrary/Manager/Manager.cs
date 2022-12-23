@@ -20,18 +20,18 @@ public class Manager
     {
         get
         {
-            return Global_Contexto.Players;
+            return Global_Contexto.PlayerManager.Players;
         }
     }
     public void SimulateGame()
     {
         Tools.ShowColoredMessage("Comienza la partida: \n", ConsoleColor.DarkGray);
-        while (Global_Contexto.Active_Players.Count > 1)
+        while (Global_Contexto.PlayerManager.Active_Players.Count > 1)
         {
             Global_Contexto.Config();
             Ronda ronda = new Ronda(Scorer, Global_Contexto);
-            Global_Contexto.Active_Players = ronda.Simulate();
+            Global_Contexto.PlayerManager.Active_Players = ronda.Simulate();
         }
-        Tools.ShowColoredMessage($"Winner is: {Global_Contexto.Active_Players.First().Id} \n", ConsoleColor.DarkGray);
+        Tools.ShowColoredMessage($"Winner is: {Global_Contexto.PlayerManager.Active_Players.First().Id} \n", ConsoleColor.DarkGray);
     }
 }

@@ -18,7 +18,7 @@ internal class Ronda
         ExecuteMiniRondas(Global_Contexto.Ronda_Contexto.Contextos);
         GetWinners();
         ShowRondaFinalState();
-        return Global_Contexto.Active_Players.Where(x => x.Dinero > 0).ToList();
+        return Global_Contexto.PlayerManager.Active_Players.Where(x => x.Dinero > 0).ToList();
     }
 
     void StartRonda()
