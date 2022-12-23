@@ -1,5 +1,4 @@
 namespace Poker;
-
 public interface IBaneador
 {
     (int, Player) dinero_a_pagar(IGlobal_Contexto contexto);

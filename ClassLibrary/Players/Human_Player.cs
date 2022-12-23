@@ -51,6 +51,22 @@ public class Human_Player : Player, IBaneador
 
     public (int, Player) dinero_a_pagar(IGlobal_Contexto contexto)
     {
-        return (this.Dinero-1, contexto.PlayerManager.Get_Active_Players(2)[0]);
+        Console.Write("Sacrifica > ");
+        var Money = Console.ReadLine();
+        if (string.IsNullOrEmpty(Money))
+        {
+            return (0, this);
+        }
+        if (!int.TryParse(Money, out var value))
+        {
+            return (0, this);
+        }
+        Console.Write("Que jugador deseas banear: ");
+        var player_name = Console.ReadLine().TrimEnd().TrimStart();
+        if (contexto.PlayerManager.Get_Active_Players(1).Any(x => x.Id == player_name))
+        {
+            return (value, contexto.PlayerManager.Get_Active_Players(1).First(x => x.Id == player_name));
+        }
+        return (0, this);
     }
 }

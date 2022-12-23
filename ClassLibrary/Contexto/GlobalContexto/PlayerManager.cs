@@ -67,19 +67,31 @@ public class PlayerManager
             _filtro_mini_ronda = value;
         }
     }
-    public List<Player> Get_Active_Players(int level)
+    public IEnumerable<Player> Get_Active_Players(int level)
     {
         if (level == 1)
         {
-            return this.Active_Players.Where(x => Filtro_Partida(x)).ToList();
+            foreach (var player in Active_Players.Where(x => Filtro_Partida(x)))
+            {
+                yield return player;
+            }
+            yield break;
         }
         if (level == 2)
         {
-            return Get_Active_Players(1).Where(x => Filtro_Ronda(x)).ToList();
+            foreach (var player in Get_Active_Players(1).Where(x => Filtro_Ronda(x)))
+            {
+                yield return player;
+            }
+            yield break;
         }
         if (level == 3)
         {
-            return Get_Active_Players(2).Where(x => Filtro_Mini_Ronda(x)).ToList();
+            foreach (var player in Get_Active_Players(2).Where(x => Filtro_Mini_Ronda(x)))
+            {
+                yield return player;
+            }
+            yield break;
         }
         throw new Exception("IDK");
     }
