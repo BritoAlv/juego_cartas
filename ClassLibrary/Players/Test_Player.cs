@@ -17,7 +17,7 @@ public sealed class Test_Player : Player
     }
     public override int realizar_apuesta(IGlobal_Contexto contexto)
     {
-        var mayor_dinero = contexto.PlayerManager.Active_Players.Select(x => contexto.Ronda_Contexto.Apuestas.Get_Dinero_Apostado(x)).Max();
+        var mayor_dinero = contexto.PlayerManager.Get_Active_Players(1).Select(x => contexto.Ronda_Contexto.Apuestas.Get_Dinero_Apostado(x)).Max();
         int apuesta = 1;
         if (Hand.rank.Priority > 2) apuesta = Math.Min(mayor_dinero, this.Dinero);
         if (mayor_dinero > this.Dinero / 2)

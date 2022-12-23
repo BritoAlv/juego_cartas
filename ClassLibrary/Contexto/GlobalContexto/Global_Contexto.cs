@@ -14,8 +14,8 @@ public class Global_Contexto : IGlobal_Contexto
     public IRonda_Context Ronda_Contexto { get; }
     public void Config()
     {
-        Ronda_Contexto.Apuestas = new Bet(this.PlayerManager.Active_Players);
-        Ronda_Contexto.CardsManager = new CardManager(this.PlayerManager.Active_Players);
-        Ronda_Contexto.Participants = this.PlayerManager.Active_Players;
+        Ronda_Contexto.Apuestas = new Bet(this.PlayerManager.Get_Active_Players(1));
+        Ronda_Contexto.CardsManager = new CardManager(this.PlayerManager.Get_Active_Players(1));
+        Ronda_Contexto.Participants = this.PlayerManager.Get_Active_Players(1);
     }
 }

@@ -2,7 +2,7 @@ namespace Poker;
 /// <summary>
 /// This represent a basic Human Player who knows by default how to bet.
 /// </summary>
-public class Human_Player : Player
+public class Human_Player : Player, IBaneador
 {
     public Human_Player(string id, int dinero) : base(id, dinero)
     {
@@ -41,6 +41,16 @@ public class Human_Player : Player
         {
             return new Abandonar();
         }
+
+        if (decision.TrimEnd() == "Banear")
+        {
+            return new Banear(this);
+        }
         return new InvalidDecision();
+    }
+
+    public (int, Player) dinero_a_pagar(IGlobal_Contexto contexto)
+    {
+        return (this.Dinero-1, contexto.PlayerManager.Get_Active_Players(2)[0]);
     }
 }

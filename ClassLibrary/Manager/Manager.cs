@@ -26,12 +26,13 @@ public class Manager
     public void SimulateGame()
     {
         Tools.ShowColoredMessage("Comienza la partida: \n", ConsoleColor.DarkGray);
-        while (Global_Contexto.PlayerManager.Active_Players.Count > 1)
+        while (Global_Contexto.PlayerManager.Get_Active_Players(1).Count > 1)
         {
             Global_Contexto.Config();
             Ronda ronda = new Ronda(Scorer, Global_Contexto);
-            Global_Contexto.PlayerManager.Active_Players = ronda.Simulate();
+            Global_Contexto.PlayerManager.Set_Active_Players(ronda.Simulate());
         }
-        Tools.ShowColoredMessage($"Winner is: {Global_Contexto.PlayerManager.Active_Players.First().Id} \n", ConsoleColor.DarkGray);
+        Tools.ShowColoredMessage($"Winner is: {Global_Contexto.PlayerManager.Get_Player_By_Pos(0).Id} \n", ConsoleColor.DarkGray);
+        Global_Contexto.PlayerManager.Filtro_Partida = null;
     }
 }

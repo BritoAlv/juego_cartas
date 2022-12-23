@@ -11,14 +11,16 @@ internal class Ronda
     }
     public Scorer Scorer { get; }
     public IGlobal_Contexto Global_Contexto { get; }
-    public IEnumerable<Player> Participants => Global_Contexto.Ronda_Contexto.Participants;
+    public IEnumerable<Player> Participants => Global_Contexto.PlayerManager.Get_Active_Players(2);
     internal List<Player> Simulate()
     {
+        Global_Contexto.PlayerManager.Filtro_Ronda = null;
         StartRonda();
         ExecuteMiniRondas(Global_Contexto.Ronda_Contexto.Contextos);
         GetWinners();
         ShowRondaFinalState();
-        return Global_Contexto.PlayerManager.Active_Players.Where(x => x.Dinero > 0).ToList();
+        Global_Contexto.PlayerManager.Filtro_Ronda = null;
+        return Global_Contexto.PlayerManager.Get_Active_Players(2).Where(x => x.Dinero > 0).ToList();
     }
 
     void StartRonda()
