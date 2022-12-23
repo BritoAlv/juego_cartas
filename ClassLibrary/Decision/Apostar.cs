@@ -26,7 +26,7 @@ internal class Apostar : IDecision
     {
         var apuesta_jugador = 0;
         apuesta_jugador = Apostador.realizar_apuesta(contexto);
-        if (apuesta_jugador < player.Dinero && contexto.Apuestas.Get_Dinero_Apostado(player) + apuesta_jugador < contexto.Apuestas.Get_Max_Sum_Apuesta())
+        if (apuesta_jugador < player.Dinero && contexto.Ronda_Contexto.Apuestas.Get_Dinero_Apostado(player) + apuesta_jugador < contexto.Ronda_Contexto.Apuestas.Get_Max_Sum_Apuesta())
         {
             return false;
         }
@@ -34,8 +34,8 @@ internal class Apostar : IDecision
         {
             return false;
         }
-        contexto.Apuestas.Apostar(player, apuesta_jugador);
-        Tools.ShowColoredMessage($"{player.Id} apostó { contexto.Apuestas.Get_Last_Apuesta(player)} \n", ConsoleColor.Yellow);
+        contexto.Ronda_Contexto.Apuestas.Apostar(player, apuesta_jugador);
+        Tools.ShowColoredMessage($"{player.Id} apostó { contexto.Ronda_Contexto.Apuestas.Get_Last_Apuesta(player)} \n", ConsoleColor.Yellow);
         return true;
     }
     public string Help => "La apuesta debe ser <= tu dinero , mayor que 0 y al menos igual a la mayor cantidad apostada por un jugador anteriormente a excepción de que quieras apostar todo tu dinero";

@@ -16,7 +16,7 @@ internal class MiniRonda
     {
         foreach (var player in Participants)
         {
-            Global_Contexto.CardsManager.AñadirCartas(Mini_Contexto.Repartidor, player, Mini_Contexto.Cant_Cartas);
+            Global_Contexto.Ronda_Contexto.CardsManager.AñadirCartas(Mini_Contexto.Repartidor, player, Mini_Contexto.Cant_Cartas);
             EmpezarJugada(player);
             if (player.Dinero > 0)
             {

@@ -11,11 +11,11 @@ internal class Pasar : IDecision
     public string Help => "Para pasar debes debes haber apostado una cantidad >= a la de los demás jugadores";
     public bool DoDecision(Player player, IGlobal_Contexto contexto)
     {
-        if (contexto.Apuestas.Get_Dinero_Apostado(player) < contexto.Apuestas.Get_Max_Sum_Apuesta())
+        if (contexto.Ronda_Contexto.Apuestas.Get_Dinero_Apostado(player) < contexto.Ronda_Contexto.Apuestas.Get_Max_Sum_Apuesta())
         {
             return false;
         }
-        contexto.Apuestas.Pasar(player);
+        contexto.Ronda_Contexto.Apuestas.Pasar(player);
         Tools.ShowColoredMessage($"{player.Id} pasó su turno \n", ConsoleColor.Yellow);
         return true;
     }

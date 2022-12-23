@@ -1,5 +1,5 @@
 namespace Poker;
-public class Ronda_Context
+public class Ronda_Context : IRonda_Context
 {
     private Bet? _apuestas;
     private CardManager? _CardsManager;
@@ -17,7 +17,7 @@ public class Ronda_Context
             }
             return _apuestas;
         }
-        internal set
+        set
         {
             _apuestas = value;
         }
@@ -32,7 +32,7 @@ public class Ronda_Context
             }
             return _CardsManager;
         }
-        internal set
+        set
         {
             _CardsManager = value;
         }
