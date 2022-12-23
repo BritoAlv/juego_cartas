@@ -23,7 +23,8 @@ public class Bet
         A.Dinero -= dinero;
         Bets[A].Add(dinero);
     }
-    internal void Pasar(Player A){
+    internal void Pasar(Player A)
+    {
         Apostar(A, 0);
     }
     internal List<int> this[Ideable index]
@@ -53,5 +54,15 @@ public class Bet
             return 0;
         }
         return result.Select(x => x.Max()).Max();
+    }
+
+    public int Get_Max_Sum_Apuesta()
+    {
+        IEnumerable<List<int>> result = Bets.Values.Where(x => x.Count > 0);
+        if (result.Count() == 0)
+        {
+            return 0;
+        }
+        return this.Bets.Keys.Select(x => this.Get_Dinero_Apostado(x)).Max();
     }
 }

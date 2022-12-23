@@ -15,11 +15,11 @@ public class CardManager
         Cards[A].Add(card);
         A.Hand.Draw(card);
     }
-    internal void RepartirCartas(Player player, int cant_Cartas)
+    internal void RepartirCartas(Player player, int cant_Cartas, IRepartidor repartidor)
     {
         for (int i = 0; i < cant_Cartas; i++)
         {
-            AñadirCarta(player, random.generate_random_card());
+            AñadirCarta(player, repartidor.RepartirCarta(player));
         }
     }
 }

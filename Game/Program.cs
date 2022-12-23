@@ -10,8 +10,8 @@ public class Program
         Scorer scorer = new Scorer();
         // Define PLayers
         Player A = new Human_Player("Alvaro", 120);
-        Player B = new Test_Player("Miguel", 100);
-        Player C = new Basic_Computer_Player("PC", 500);
+        Player B = new Human_Player("Miguel", 100);
+        Player C = new Human_Player("PC", 500);
         // Define settings for the Mini_Rounds. Generate Random Cards by Default.
         List<Mini_Ronda_Contexto> mini_rondas_contexto = new List<Mini_Ronda_Contexto>(){
             new Mini_Ronda_Contexto(2),
