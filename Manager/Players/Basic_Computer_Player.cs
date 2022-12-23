@@ -7,9 +7,9 @@ public class Basic_Computer_Player : Player
     public Basic_Computer_Player(string id, int dinero) : base(id, dinero)
     {
     }
-    public override int realizar_apuesta(Global_Contexto contexto)
+    public override int realizar_apuesta(IGlobal_Contexto contexto)
     {
-        var mayor_dinero = contexto.Active_Players.Select(x => contexto.Ronda_Context.Apuestas.Get_Dinero_Apostado(x)).Max();
+        var mayor_dinero = contexto.Active_Players.Select(x => contexto.Apuestas.Get_Dinero_Apostado(x)).Max();
         int apuesta = this.Dinero/10 + 1;
         if(Hand.rank.Id == "Una Pareja") // has pair.
         {
@@ -32,7 +32,7 @@ public class Basic_Computer_Player : Player
         return apuesta;
     }
 
-    public override IDecision parse_decision(Global_Contexto contexto)
+    public override IDecision parse_decision(IGlobal_Contexto contexto)
     {
         return new Apostar(this);
     }

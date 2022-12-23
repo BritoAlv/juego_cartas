@@ -9,13 +9,13 @@ public class Manager
     /// so passing [5,1,1] will make a round composed by three mini_round of bets, receiving
     /// 5,1,1 respectively cards in each round</param>
     /// <param name="players"> Well literally the players of the game</param>
-    public Manager(Scorer scorer, Global_Contexto global_Contexto)
+    public Manager(Scorer scorer, IGlobal_Contexto global_Contexto)
     {
         Scorer = scorer;
         Global_Contexto = global_Contexto;
     }
     private Scorer Scorer { get; }
-    public Global_Contexto Global_Contexto { get; }
+    public IGlobal_Contexto Global_Contexto { get; }
     internal IEnumerable<Player> Players
     {
         get
@@ -28,7 +28,7 @@ public class Manager
         Tools.ShowColoredMessage("Comienza la partida: \n", ConsoleColor.DarkGray);
         while (Global_Contexto.Active_Players.Count > 1)
         {
-            Global_Contexto.Ronda_Context.Apuestas = new Bet(Global_Contexto.Active_Players);
+            Global_Contexto.Apuestas = new Bet(Global_Contexto.Active_Players);
             Ronda ronda = new Ronda(Scorer, Global_Contexto);
             Global_Contexto.Active_Players = ronda.Simulate();
         }

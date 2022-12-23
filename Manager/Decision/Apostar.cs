@@ -9,7 +9,7 @@ namespace Poker;
 /// </summary>
 public interface IApostador
 {
-    int realizar_apuesta(Global_Contexto contexto);
+    int realizar_apuesta(IGlobal_Contexto contexto);
 }
 
 /// <summary>
@@ -24,7 +24,7 @@ internal class Apostar : IDecision
     }
     public string Id => "Apostar";
     public IApostador Apostador { get; }
-    public bool DoDecision(Player player, Global_Contexto contexto)
+    public bool DoDecision(Player player, IGlobal_Contexto contexto)
     {
         var apuesta_jugador = 0;
         apuesta_jugador = Apostador.realizar_apuesta(contexto);
@@ -32,8 +32,8 @@ internal class Apostar : IDecision
         {
             return false;
         }
-        contexto.Ronda_Context.Apuestas.Apostar(player, apuesta_jugador);
-        Tools.ShowColoredMessage($"{player.Id} apostó { contexto.Ronda_Context.Apuestas.Get_Last_Apuesta(player)} \n", ConsoleColor.Yellow);
+        contexto.Apuestas.Apostar(player, apuesta_jugador);
+        Tools.ShowColoredMessage($"{player.Id} apostó { contexto.Apuestas.Get_Last_Apuesta(player)} \n", ConsoleColor.Yellow);
         return true;
     }
     public string Help => "La apuesta debe ser <= tu dinero y mayor que 0";

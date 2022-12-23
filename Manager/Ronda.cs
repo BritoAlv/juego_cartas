@@ -4,19 +4,18 @@ namespace Poker;
 /// </summary>
 internal class Ronda
 {
-    internal Ronda(Scorer scorer, Global_Contexto contexto)
+    internal Ronda(Scorer scorer, IGlobal_Contexto contexto)
     {
         Global_Contexto = contexto;
         Scorer = scorer;
     }
     public Scorer Scorer { get; }
-    public Global_Contexto Global_Contexto { get; }
-    public Ronda_Context Ronda_Contexto => Global_Contexto.Ronda_Context;
+    public IGlobal_Contexto Global_Contexto { get; }
     public IEnumerable<Player> Participants => Global_Contexto.Active_Players;
     internal List<Player> Simulate()
     {
         StartRonda();
-        ExecuteMiniRondas(Ronda_Contexto.Contextos);
+        ExecuteMiniRondas(Global_Contexto.Contextos);
         GetWinners();
         ShowRondaFinalState();
         return Participants.Where(x => x.Dinero > 0).ToList();
@@ -40,7 +39,7 @@ internal class Ronda
         var winners = Participants.Where(x => x.Hand.Equals(best_hand)).ToList();
         foreach (var winner in winners)
         {
-            winner.Dinero = winner.Dinero + Global_Contexto.Ronda_Context.Apuestas.Get_Dinero_Total_Apostado()/winners.Count;
+            winner.Dinero = winner.Dinero + Global_Contexto.Apuestas.Get_Dinero_Total_Apostado()/winners.Count;
             Tools.ShowColoredMessage($"{winner.Id} con ${winner.Dinero}, ", ConsoleColor.DarkGray);
         }
         Console.WriteLine();
