@@ -11,7 +11,7 @@ namespace AnálisisCodigo.Sintaxis
         }
 
         public override Tipo tipo => Tipo.VariableDeclaration;
-        public override object value => Initializer.value;
+        public override object value => "Declaración Variable";
         public Token Keyword { get; }
         public Token Identifier { get; }
         public Token Equaltoken { get; }
@@ -19,6 +19,7 @@ namespace AnálisisCodigo.Sintaxis
 
         public override IEnumerable<Nodo> Hijos()
         {
+            yield return Keyword;
             yield return Identifier;
             yield return Equaltoken;
             yield return Initializer;

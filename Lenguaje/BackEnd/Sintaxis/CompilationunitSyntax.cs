@@ -12,12 +12,11 @@ namespace AnálisisCodigo.Sintaxis
         public Statement Statement { get; }
         public Token EndOfFileToken { get; }
 
+        public override object value => "Root"; 
+
         public override IEnumerable<Nodo> Hijos()
         {
-            foreach (var hijo in Statement.Hijos())
-            {
-                yield return hijo;
-            }
+            yield return Statement;
         }
     }
 }

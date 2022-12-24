@@ -7,7 +7,7 @@ namespace AnálisisCodigo.Sintaxis
     {
         public abstract Tipo tipo { get; }
         public abstract object value { get; }
-        public string valor => value.ToString();
+        public virtual string valor => value.ToString();
         public IEnumerable<Iprintable> GetChildrenIprintables()
         {
             return Hijos();

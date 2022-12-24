@@ -30,7 +30,7 @@ namespace AnálisisCodigo.Sintaxis
             {
                 if (Value is null)
                 {
-                    return String.Empty;
+                    return " " + Text;
                 }
                 return Value;
             }

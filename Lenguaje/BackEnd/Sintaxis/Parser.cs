@@ -143,7 +143,6 @@ namespace AnálisisCodigo.Sintaxis
                 var right = ParseExpresionBinaria(prioridad);
                 left = new ExpresionBinaria(left, operatorToken, right);
             }
-
             return left;
         }
 

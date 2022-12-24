@@ -12,7 +12,7 @@ namespace AnálisisCodigo.Sintaxis
         public Nodo OpenBrace { get; }
         public List<Statement> Statements { get; }
         public Nodo ClosedBrace { get; }
-        public override object value => throw new NotImplementedException();
+        public override object value => "Block Statement";
         public override IEnumerable<Nodo> Hijos()
         {
             yield return OpenBrace;

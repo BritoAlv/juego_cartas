@@ -13,6 +13,6 @@ namespace AnálisisCodigo.Sintaxis
         {
             yield return Identificador;
         }
-        public override object value => $"Variable:  ";
+        public override object value => $"Variable: {Identificador.Text} ";
     }
 }
