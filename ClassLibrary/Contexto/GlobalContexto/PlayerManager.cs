@@ -9,6 +9,8 @@ public class PlayerManager
         Players = players;
         Active_Players = Players.ToList();
         _filtro_ronda = null;
+        _filtro_mini_ronda = null;
+        _filtro_partida = null;
     }
     /// <summary>
     /// This are the players that started the game.

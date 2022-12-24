@@ -23,14 +23,14 @@ internal class Banear : IDecision
         if (sacrificio >= player.Dinero / 1.5)
         {
             contexto.PlayerManager.Filtro_Ronda += (x => x.Id != decision.Item2.Id);
-            Tools.ShowColoredMessage($"{player.Id} baneó a {decision.Item2.Id} durante una ronda \n", ConsoleColor.Yellow);
+            Tools.ShowColoredMessage($"{player.Id} baneó a {decision.Item2.Id} durante esta ronda \n", ConsoleColor.Yellow);
             player.Dinero -= sacrificio;
             return true;
         }
         else if (sacrificio >= player.Dinero / 2)
         {
             contexto.PlayerManager.Filtro_Mini_Ronda += (x => x.Id != decision.Item2.Id);
-            Tools.ShowColoredMessage($"{player.Id} baneó a {decision.Item2.Id} durante una mini_ronda \n", ConsoleColor.Yellow);
+            Tools.ShowColoredMessage($"{player.Id} baneó a {decision.Item2.Id} durante esta mini_ronda \n", ConsoleColor.Yellow);
             player.Dinero -= sacrificio;
             return true;
         }
