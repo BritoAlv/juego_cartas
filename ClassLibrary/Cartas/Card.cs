@@ -8,7 +8,6 @@ public class Card : ICloneable
     }
     public CardValue Value { get; }
     public CardSuit Suit { get; }
-
     public object Clone()
     {
         return new Card(this.Value, this.Suit);

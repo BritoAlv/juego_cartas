@@ -1,5 +1,4 @@
 namespace Poker;
-
 internal sealed class Abandonar : IDecision
 {
     public string Id => "Abandonar";
