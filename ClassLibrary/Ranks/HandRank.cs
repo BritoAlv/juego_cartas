@@ -6,10 +6,8 @@ public class HandRank : IComparable<HandRank>
         Id = id;
         Priority = priority;
     }
-
     public string Id { get; }
     public double Priority { get; }
-
     public int CompareTo(HandRank? other)
     {
         if (other == null)
@@ -18,7 +16,6 @@ public class HandRank : IComparable<HandRank>
         }
         return this.Priority.CompareTo(other.Priority);
     }
-
     public override bool Equals(object? obj)
     {
         if (obj is HandRank other)
@@ -30,7 +27,6 @@ public class HandRank : IComparable<HandRank>
         }
         return false;
     }
-
     public override string ToString()
     {
         return this.Id;

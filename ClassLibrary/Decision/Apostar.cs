@@ -14,7 +14,7 @@ public interface IApostador
 /// To define an IDecision we implement a class and a public interface that players that will implement this IDecision should
 /// have.
 /// </summary>
-internal class Apostar : IDecision
+internal sealed class Apostar : IDecision
 {
     public Apostar(IApostador apostador)
     {

@@ -1,5 +1,4 @@
 namespace Poker;
-
 public interface IGlobal_Contexto
 {
     PlayerManager PlayerManager { get; }

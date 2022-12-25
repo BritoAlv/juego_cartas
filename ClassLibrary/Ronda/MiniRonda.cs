@@ -13,14 +13,14 @@ internal class MiniRonda
 
     public IEnumerable<Player> Participants => Global_Contexto.PlayerManager.Get_Active_Players(3);
     public Mini_Ronda_Contexto Mini_Contexto { get; }
-    internal void Execute()
+    internal IEnumerable<Player> Execute()
     {
         Global_Contexto.PlayerManager.Filtro_Mini_Ronda = null;
         foreach (var player in Participants)
         {
-            if (Participants.Count() == 1)
+            if (Participants.Count() <= 1)
             {
-                return;
+                break;
             }
             Global_Contexto.Ronda_Contexto.CardsManager.AñadirCartas(Mini_Contexto.Repartidor, player, Mini_Contexto.Cant_Cartas);
             EmpezarJugada(player);
@@ -33,7 +33,8 @@ internal class MiniRonda
         Console.WriteLine("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
         Console.WriteLine("-----------------------------------------------------------------");
         Console.WriteLine();
-        Global_Contexto.PlayerManager.Filtro_Mini_Ronda = null;
+        return Participants;
+        
     }
     void EmpezarJugada(Player player)
     {

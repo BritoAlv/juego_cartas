@@ -29,7 +29,6 @@ public class Card : ICloneable
             numero = 1;
         }
         string number = numero.ToString();
-
         string suit = this.Suit.GetEmoji().ToString();
         if (number.Length == 1)
         {

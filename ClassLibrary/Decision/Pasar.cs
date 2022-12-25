@@ -2,7 +2,7 @@ namespace Poker;
 /// <summary>
 /// This represent the decision of not doing anything or pass. All the players pass in the same way so we don't need a custom interface.
 /// </summary>
-internal class Pasar : IDecision
+internal sealed class Pasar : IDecision
 {
     public Pasar()
     {

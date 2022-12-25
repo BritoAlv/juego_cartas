@@ -5,19 +5,15 @@ public class PairRank : Rank
     public PairRank(string id) : base(id)
     {
     }
-
     public override double Priority => 1;
-
     public override int CommonRanker(IEnumerable<Card> A, IEnumerable<Card> B)
     {
         return RankByPareja(A, B);
     }
-
     public override bool HasThisRank(IEnumerable<Card> cards)
     {
         return EvalExtensions.HasOfAKind(cards, 2);
     }
-
     public static int RankByPareja(IEnumerable<Card> A, IEnumerable<Card> B)
     {
         IEnumerable<CardValue> Transform(IEnumerable<Card> C)

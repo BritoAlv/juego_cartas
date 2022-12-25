@@ -3,7 +3,7 @@ public interface IBaneador
 {
     (int, Player) dinero_a_pagar(IGlobal_Contexto contexto);
 }
-internal class Banear : IDecision
+internal sealed class Banear : IDecision
 {
     public Banear(IBaneador baneador)
     {
@@ -22,14 +22,14 @@ internal class Banear : IDecision
         }
         if (sacrificio >= player.Dinero / 1.5)
         {
-            contexto.PlayerManager.Filtro_Ronda += (x => x.Id != decision.Item2.Id);
+            contexto.PlayerManager.Filtro_Ronda.Add(x => x.Id != decision.Item2.Id);
             Tools.ShowColoredMessage($"{player.Id} baneó a {decision.Item2.Id} durante esta ronda \n", ConsoleColor.Yellow);
             player.Dinero -= sacrificio;
             return true;
         }
         else if (sacrificio >= player.Dinero / 2)
         {
-            contexto.PlayerManager.Filtro_Mini_Ronda += (x => x.Id != decision.Item2.Id);
+            contexto.PlayerManager.Filtro_Mini_Ronda.Add(x => x.Id != decision.Item2.Id);
             Tools.ShowColoredMessage($"{player.Id} baneó a {decision.Item2.Id} durante esta mini_ronda \n", ConsoleColor.Yellow);
             player.Dinero -= sacrificio;
             return true;

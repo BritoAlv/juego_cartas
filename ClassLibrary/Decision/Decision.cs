@@ -23,7 +23,7 @@ public interface IDecision
 /// <summary>
 /// Default Decision which is the wrong one.
 /// </summary>
-internal class InvalidDecision : IDecision
+internal sealed class InvalidDecision : IDecision
 {
     public string Id => "InvalidDecision";
     public bool DoDecision(Player player, IGlobal_Contexto contexto)
