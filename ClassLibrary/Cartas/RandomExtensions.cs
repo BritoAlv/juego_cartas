@@ -1,10 +1,10 @@
 namespace Poker;
-public static class random
+public static class Random_Utils
 {
     public static T NextEnum<T>(this Random random)
     {
         var values = Enum.GetValues(typeof(T));
-        return (T)values.GetValue(random.Next(values.Length));
+        return (T)values.GetValue(random.Next(values.Length))!;
     }
     public static Hand generate_random_hand(Scorer scorer)
     {

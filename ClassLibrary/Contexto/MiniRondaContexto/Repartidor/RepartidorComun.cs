@@ -10,7 +10,7 @@ public sealed class RepartidorComun : Repartidor
             common_cards = new List<Card>();
             for (int i = 0; i < cant_Cartas; i++)
             {
-                common_cards.Add(random.generate_random_card());
+                common_cards.Add(Random_Utils.generate_random_card());
             }
         }
         return common_cards;

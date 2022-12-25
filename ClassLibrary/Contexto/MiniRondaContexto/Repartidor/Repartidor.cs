@@ -37,6 +37,6 @@ public class Repartidor : IRepartidor
     }
     private static Card random_generator(Player A)
     {
-        return random.generate_random_card();
+        return Random_Utils.generate_random_card();
     }
 }

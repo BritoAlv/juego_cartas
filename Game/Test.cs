@@ -35,8 +35,8 @@ public class Test
         var scorer = new Scorer();
         while (true)
         {
-            Hand A = random.generate_random_hand(scorer);
-            Hand B = random.generate_random_hand(scorer);
+            Hand A = Random_Utils.generate_random_hand(scorer);
+            Hand B = Random_Utils.generate_random_hand(scorer);
             Console.WriteLine(A.ToStringWithRank());
             Console.WriteLine(B.ToStringWithRank());
             int result = A.CompareTo(B);

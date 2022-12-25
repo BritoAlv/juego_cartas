@@ -8,9 +8,9 @@ public class PlayerManager
     {
         Players = players;
         Active_Players = Players.ToList();
-        _filtro_ronda = null;
-        _filtro_mini_ronda = null;
-        _filtro_partida = null;
+        _filtro_ronda = new List<Filtrar>();
+        _filtro_mini_ronda = new List<Filtrar>();
+        _filtro_partida = new List<Filtrar>();
     }
     /// <summary>
     /// This are the players that started the game.

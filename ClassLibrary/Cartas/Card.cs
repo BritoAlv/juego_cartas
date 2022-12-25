@@ -12,7 +12,7 @@ public class Card : ICloneable
     {
         return new Card(this.Value, this.Suit);
     }
-    public override bool Equals(object? obj)
+    public bool Iguales(object? obj)
     {
         if (obj is Card other)
         {

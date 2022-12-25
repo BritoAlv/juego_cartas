@@ -11,7 +11,7 @@ public enum CardSuit
     Diamante,
 }
 
-internal static class tool
+internal static class Extensor
 {
     public static NeoSmart.Unicode.SingleEmoji GetEmoji(this CardSuit suit)
     {

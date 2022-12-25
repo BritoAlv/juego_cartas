@@ -14,7 +14,7 @@ internal class MiniRonda
     public Mini_Ronda_Contexto Mini_Contexto { get; }
     internal IEnumerable<Player> Execute()
     {
-        Global_Contexto.PlayerManager.Filtro_Mini_Ronda = null;
+        Global_Contexto.PlayerManager.Filtro_Mini_Ronda = new List<PlayerManager.Filtrar>();
         foreach (var player in Participants)
         {
             if (Participants.Count() <= 1)

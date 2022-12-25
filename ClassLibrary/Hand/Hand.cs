@@ -47,7 +47,7 @@ public class Hand : IComparable<Hand>
     }
     public void Draw(Card card) => _cards.Add(card);
 
-    public override bool Equals(object? obj)
+    public bool Igual(object? obj)
     {
         if (obj is Hand other)
         {
@@ -55,7 +55,7 @@ public class Hand : IComparable<Hand>
             {
                 return false;
             }
-            IEnumerable<bool> comparer = this.Cards.Zip(other.Cards, (x, y) => x.Equals(y));
+            IEnumerable<bool> comparer = this.Cards.Zip(other.Cards, (x, y) => x.Iguales(y));
             return comparer.All(x => x == true);
         }
         return false;

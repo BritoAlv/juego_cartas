@@ -16,7 +16,7 @@ public class HandRank : IComparable<HandRank>
         }
         return this.Priority.CompareTo(other.Priority);
     }
-    public override bool Equals(object? obj)
+    public bool Igual(object? obj)
     {
         if (obj is HandRank other)
         {

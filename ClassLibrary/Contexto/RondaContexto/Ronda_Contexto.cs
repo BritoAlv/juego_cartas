@@ -6,6 +6,7 @@ public class Ronda_Context : IRonda_Context
     public Ronda_Context(List<Mini_Ronda_Contexto> contextos)
     {
         Contextos = contextos;
+        Participants = Enumerable.Empty<Player>();
     }
     public Bet Apuestas
     {
