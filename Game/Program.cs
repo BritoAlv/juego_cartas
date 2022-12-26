@@ -16,8 +16,8 @@ public class Program
         List<Mini_Ronda_Contexto> mini_rondas_contexto = new List<Mini_Ronda_Contexto>(){
             new Mini_Ronda_Contexto(2),
             new Mini_Ronda_Contexto(3, new RepartidorComun()),
-             new Mini_Ronda_Contexto(1,  new RepartidorComun()),
-             new Mini_Ronda_Contexto(1, new RepartidorComun()),
+            new Mini_Ronda_Contexto(1, new RepartidorComun()),
+            new Mini_Ronda_Contexto(1, new RepartidorComun()),
         };
         // Define settings for the rounds. 
         Ronda_Context ronda = new Ronda_Context(mini_rondas_contexto);

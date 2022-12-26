@@ -14,7 +14,6 @@ internal class Ronda
     public IGlobal_Contexto Global_Contexto { get; }
     internal List<Player> Simulate()
     {        
-        // 
         StartRonda();
         IEnumerable<Player> finalist_round = ExecuteMiniRondas(Global_Contexto.Ronda_Contexto.Contextos);
         List<Player> winners = GetWinners(finalist_round);
@@ -25,7 +24,6 @@ internal class Ronda
     void StartRonda()
     {
         Global_Contexto.PlayerManager.Filtro_Ronda = new List<PlayerManager.Filtrar>();
-        Global_Contexto.PlayerManager.Shufle_Players();
         Tools.ShowColoredMessage("Comienza Una Nueva Ronda con los jugadores :", ConsoleColor.DarkRed);
         foreach (var player in Participants)
         {
