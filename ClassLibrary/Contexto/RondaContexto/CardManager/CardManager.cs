@@ -30,4 +30,10 @@ public class CardManager
             }
         }
     }
+
+    internal Card RemoverCarta(Player A, Func<Player, Card> function)
+    {
+        A.Hand.Remove(function(A));
+        return function(A);
+    }
 }

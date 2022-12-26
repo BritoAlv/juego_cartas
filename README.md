@@ -1,7 +1,7 @@
-# Implementing Something That Look Almost Like A Poker Game. Based on:
+# Implementing Something That Looks Almost Like A Poker Game. Based on:
 
  https://edcharbeneau.com/csharp-functional-workshop-instructions/
- 
+
  https://github.com/terrajobst/minsk/
 
 ## Run
@@ -29,6 +29,7 @@ dotnet run
 │   └── Tools
 ├── Game
 ```
+
 ## Game:
 
 La carpeta *Game* representa una aplicación de consola que apoyada en la librería de clases ejecuta el juego. Además es posible definir nuevas clases y objetos para extender las reglas / jugabilidad del juego, según cada estructura del juego lo permita.
@@ -41,7 +42,7 @@ Contiene la definición de Carta, dada por el *Suit* y el *Value*. Análogamente
 
 ### Contexto:
 
-Los contextos representam la información de la partida que se está ejecutando tanto como los jugadores activos como las apuestas realizadas, se supone que esta parte de la librería de clases, defina lo que un jugador pueda acceder y revisar el estado del juego, y a partir de esto determinar decisiones como *banear* a un jugador o regalar dinero, está dividido en el contexto de la partida, de las rondas, y el de las minirondas que quede explicito donde es útil cada estructura. Además lo que la lógica del juego necesita del *Contexto* es a través de interfaces para garantizar que cambios en la estructura interna de el Contexto no afecte a el código exterior a él que depende de él mientras que se cumpla el contrato.
+Los contextos representan la información de la partida que se está ejecutando tanto como los jugadores activos como las apuestas realizadas, se supone que esta parte de la librería de clases, defina lo que un jugador pueda acceder y revisar el estado del juego, y a partir de esto determinar decisiones como *banear* a un jugador o regalar dinero, está dividido en el contexto de la partida, de las rondas, y el de las minirondas que quede explicito donde es útil cada estructura. Además lo que la lógica del juego necesita del *Contexto* es a través de interfaces para garantizar que cambios en la estructura interna de el Contexto no afecte a el código exterior a él que depende de él mientras que se cumpla el contrato.
 
 - Contexto de la Partida: Contiene un Manager de Jugadores a través del cual se pueden aplicar acciones como banear a un jugador de una ronda.
 

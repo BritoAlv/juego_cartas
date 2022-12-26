@@ -41,6 +41,10 @@ public class Human_Player : Player
         {
             return new Abandonar();
         }
+        if(decision.TrimEnd() == "Efecto")
+        {
+            return new Efecto();
+        }
         return new InvalidDecision();
     }
 }

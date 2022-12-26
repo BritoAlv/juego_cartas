@@ -45,8 +45,8 @@ public class Hand : IComparable<Hand>
             return this.rank.CompareTo(other.rank);
         }
     }
-    public void Draw(Card card) => _cards.Add(card);
-
+    internal void Draw(Card card) => _cards.Add(card);
+    internal void Remove(Card card) => _cards.Remove(card);
     public bool Igual(object? obj)
     {
         if (obj is Hand other)
