@@ -1,6 +1,7 @@
 # Implementing Something That Look Almost Like A Poker Game. Based on:
 
  https://edcharbeneau.com/csharp-functional-workshop-instructions/
+ 
  https://github.com/terrajobst/minsk/
 
 ## Run
@@ -14,6 +15,7 @@ dotnet run
 
 ## Carptetas dentro del Proyecto:
 
+```bash
 ├── ClassLibrary
 │   ├── Cartas
 │   ├── Contexto
@@ -26,18 +28,7 @@ dotnet run
 │   ├── Tests
 │   └── Tools
 ├── Game
-└── Lenguaje
-
-## Lenguaje:
-
-Contiene *con el propósito de aprender* una implementación de un minilenguaje, con un *Lexer*, *Parser* que son implementados a través de C#, para ver que es posibe lograr con el se puede ejecutar:
-
-```bash
-cd Lenguaje
-cd FrontEnd
-dotnet run
 ```
-
 ## Game:
 
 La carpeta *Game* representa una aplicación de consola que apoyada en la librería de clases ejecuta el juego. Además es posible definir nuevas clases y objetos para extender las reglas / jugabilidad del juego, según cada estructura del juego lo permita.

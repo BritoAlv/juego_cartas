@@ -14,10 +14,12 @@ internal class Ronda
     public IGlobal_Contexto Global_Contexto { get; }
     internal List<Player> Simulate()
     {        
+        // 
         StartRonda();
-        GetWinners( ExecuteMiniRondas(Global_Contexto.Ronda_Contexto.Contextos) );
-        Global_Contexto.PlayerManager.Filtro_Ronda = new List<PlayerManager.Filtrar>();
-        ShowRondaFinalState();        
+        IEnumerable<Player> finalist_round = ExecuteMiniRondas(Global_Contexto.Ronda_Contexto.Contextos);
+        List<Player> winners = GetWinners(finalist_round);
+        Show_Winners(winners);
+        EndRonda();        
         return Participants.Where(x => x.Dinero > 0).ToList();
     }
     void StartRonda()
@@ -47,17 +49,27 @@ internal class Ronda
         }
         return result;
     }
-    void GetWinners(IEnumerable<Player> finalist)
+    List<Player> GetWinners(IEnumerable<Player> round_finalist)
     {
-        var best_hand = finalist.Select(x => x.Hand).OrderDescending().FirstOrDefault();
+        var best_hand = round_finalist.Select(x => x.Hand).OrderDescending().FirstOrDefault();
         if (best_hand is null)
         {
             Console.WriteLine("Nadie ganó la ronda");
             Console.WriteLine();
+            return new List<Player>();
+        }
+        var winners = round_finalist.Where(x => x.Hand.Igual(best_hand)).ToList();
+        return winners;
+    }
+
+    void Show_Winners(List<Player> winners)
+    {
+        if (winners.Count == 0)
+        {
+            Tools.ShowColoredMessage($"Nadie ganó la partida", ConsoleColor.DarkGray);
             return;
         }
         Tools.ShowColoredMessage("La ronda fue ganada por: ", ConsoleColor.DarkGray);
-        var winners = finalist.Where(x => x.Hand.Igual(best_hand)).ToList();
         foreach (var winner in winners)
         {
             winner.Dinero = winner.Dinero + Global_Contexto.Ronda_Contexto.Apuestas.Get_Dinero_Total_Apostado() / winners.Count;
@@ -65,8 +77,9 @@ internal class Ronda
         }
         Console.WriteLine();
     }
-    void ShowRondaFinalState()
+    void EndRonda()
     {
+        Global_Contexto.PlayerManager.Filtro_Ronda = new List<PlayerManager.Filtrar>();        
         foreach (var participant in Participants)
         {
             Console.WriteLine($"{participant.Id}".PadLeft(Participants.Select(x => x.Id.Length).Max()) + " " + participant.Hand + $" {participant.Hand.rank}");
