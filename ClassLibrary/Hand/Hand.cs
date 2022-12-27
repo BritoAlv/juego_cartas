@@ -46,7 +46,19 @@ public class Hand : IComparable<Hand>
         }
     }
     internal void Draw(Card card) => _cards.Add(card);
-    internal void Remove(Card card) => _cards.Remove(card);
+    internal Card Remove(Predicate<Card> pred)
+    {
+        for (int i = 0; i < _cards.Count; i++)
+        {
+            if (pred(_cards[i]))
+            {
+                var card = _cards[i];
+                _cards.RemoveAt(i);
+                return card;
+            }
+        }
+        return _cards[0];
+    }
     public bool Igual(object? obj)
     {
         if (obj is Hand other)

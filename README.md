@@ -1,7 +1,6 @@
-# Implementing Something That Looks Almost Like A Poker Game. Based on:
+# Implementing Something That Looks Almost Like A Mix Between A Poker Game And The "UNO Game". Based on:
 
  https://edcharbeneau.com/csharp-functional-workshop-instructions/
-
  https://github.com/terrajobst/minsk/
 
 ## Run
@@ -22,6 +21,7 @@ dotnet run
 │   ├── Decision
 │   ├── Hand
 │   ├── Manager
+│   ├── Minilenguaje
 │   ├── Players
 │   ├── Ranks
 │   ├── Ronda
@@ -57,6 +57,10 @@ Esto representa acciones que puede realizar un jugador como *Apostar*, *Pasar*, 
 ### Manager:
 
 La clase Manager se encarga de recibir toda la configuración que el usuario desea ponerle a la partida de *Poker* , pasándole los jugadores, la información a los *Contextos* como que clase de repartidor usar, o cuantas cartas repartir por ronda.
+
+### MiniLenguaje:
+
+Contiene la implementación de los *efectos* en nuestro juego. 
 
 ### Player:
 
