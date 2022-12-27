@@ -1,29 +1,26 @@
 namespace Poker;
 public abstract class LiteralExpression : Iprintable
 {
-    public LiteralExpression(Token open, List<Token> tokens, Token closed)
+    public LiteralExpression(Token open, LiteralArguments arguments, Token closed)
     {
         Open = open;
-        Tokens = tokens;
+        Arguments = arguments;
         Closed = closed;
     }
     public Token Open { get; }
+    public LiteralArguments Arguments { get; }
     public Token Closed { get; }
-    public List<Token> Tokens { get; }
-    public abstract string valor { get; }    
+    public abstract string valor { get; }
     public virtual IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open;
-        foreach (var token in Tokens)
-        {
-            yield return token;
-        }
+        yield return Arguments;
         yield return Closed;
     }
 }
 public class LiteralDescribeCard : LiteralExpression, IFindCard
 {
-    public LiteralDescribeCard(Token open_corchete, List<Token> tokens, Token closed_corchete) : base(open_corchete, tokens, closed_corchete)
+    public LiteralDescribeCard(Token open_corchete, CardArguments arguments, Token closed_corchete) : base(open_corchete, arguments, closed_corchete)
     {
     }
     public override string valor => "CartaDescritaLiteral";
@@ -33,7 +30,7 @@ public class LiteralDescribeCard : LiteralExpression, IFindCard
 
 public class LiteralDescribePlayer : LiteralExpression, IFindPlayer
 {
-    public LiteralDescribePlayer(Token open_corchete, List<Token> tokens, Token closed_corchete) : base(open_corchete, tokens, closed_corchete)
+    public LiteralDescribePlayer(Token open_corchete, PlayerArguments playerArguments, Token closed_corchete) : base(open_corchete, playerArguments , closed_corchete)
     {
     }
     public override string valor => "PlayerDescritoLiteral";
@@ -41,7 +38,9 @@ public class LiteralDescribePlayer : LiteralExpression, IFindPlayer
 
 public interface IFindPlayer : Iprintable
 {
+
 }
 public interface IFindCard : Iprintable
 {
+
 }

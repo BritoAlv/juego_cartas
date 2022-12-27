@@ -37,22 +37,13 @@ public class Parser
         return new SyntaxToken(Tipo.Wrong, "\0");
     }
 
-    // the actions defined here will be predefined by myself.
-
-    // first differentiate between parse a card action or a player action. 
+    // public API Parse.
     public Iprintable Parse()
     {
         var verb_action = LookAhead(1);
-        switch (verb_action.Text)
-        {
-            case "$añadircarta":
-            case "$robarcarta":
-            case "$banearjugador":
-                return ParseAction(verb_action.Text);
-            default:
-                throw new Exception();
-        }
+        return ParseAction(verb_action.Text);
     }
+
     private CompoundAction ParseAction(string v)
     {
         switch (v)
@@ -66,6 +57,7 @@ public class Parser
                 throw new Exception();
         }
     }
+
     private ActionCard ParseCardAction()
     {
         var open_parenthesis = Match(Tipo.ParéntesisAbierto);
@@ -96,11 +88,8 @@ public class Parser
             position++;
         }
         Token closed_brace = Match(Tipo.CorcheteCerrado);
-        return new LiteralDescribeCard(open_brace, tokens_description, closed_brace);
+        return new LiteralDescribeCard(open_brace, new CardArguments(tokens_description), closed_brace);
     }
-
-
-
 
     private LiteralDescribePlayer ParseLiteralPlayer()
     {
@@ -112,7 +101,7 @@ public class Parser
             position++;
         }
         Token closed_llave = Match(Tipo.LLaveCerrada);
-        return new LiteralDescribePlayer(open_llave, tokens_description, closed_llave);
+        return new LiteralDescribePlayer(open_llave, new PlayerArguments(tokens_description), closed_llave);
     }
 
     private IFindPlayer ParseArgumentPlayer()
