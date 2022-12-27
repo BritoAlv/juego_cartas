@@ -7,7 +7,7 @@ public class Program
         Lexer lexer = new Lexer(test_string);
         List<Token> tokens = lexer.Lex();
         Parser parser = new Parser(tokens);
-        var tree = (CompoundActionCard)parser.Parse();
+        var tree = parser.Parse();
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine(test_string);
         Console.ResetColor();

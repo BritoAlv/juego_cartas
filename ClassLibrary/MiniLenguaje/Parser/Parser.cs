@@ -26,7 +26,6 @@ public class Parser
         }
         return Current;
     }
-
     Token Match(Tipo tipo)
     {
         if (Current.Tipo == tipo)
@@ -39,55 +38,55 @@ public class Parser
     }
 
     // the actions defined here will be predefined by myself.
-    public object Parse()
+
+    // first differentiate between parse a card action or a player action. 
+    public Iprintable Parse()
     {
         var verb_action = LookAhead(1);
         switch (verb_action.Text)
         {
             case "$añadircarta":
-                return ParseCard(verb_action.Text);
+            case "$robarcarta":
+            case "$banearjugador":
+                return ParseAction(verb_action.Text);
             default:
                 throw new Exception();
         }
     }
-
-
-    private FindObject<Card> ParseCard(string v)
+    private CompoundAction ParseAction(string v)
     {
         switch (v)
         {
             case "$robarcarta":
-                return ParseRobarCard();
             case "$añadircarta":
-                return ParseAñadirCarta();
+                return ParseCardAction();
+            case "$banearjugador":
+                return ParsePlayerAction();
             default:
-                return ParseLiteralCard();
+                throw new Exception();
         }
     }
-
-    private FindObject<Card> ParseAñadirCarta()
+    private ActionCard ParseCardAction()
     {
         var open_parenthesis = Match(Tipo.ParéntesisAbierto);
         var signature = Match(Tipo.Accion);
         var find_card = ParseArgumentCard();
         var find_player = ParseArgumentPlayer();
         var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
-        return new CompoundActionCard(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
-
+        return new ActionCard(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
     }
 
-    private FindObject<Player> ParsePlayer(string v)
+    private ActionPlayer ParsePlayerAction()
     {
-        switch (v)
-        {
-            case "banear":
-                return ParseBanearPlayer();
-            default:
-                return ParseLiteralPlayer();
-        }
+        var open_parenthesis = Match(Tipo.ParéntesisAbierto);
+        var signature = Match(Tipo.Accion);
+        var find_card = ParseArgumentCard();
+        var find_player = ParseArgumentPlayer();
+        var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
+        return new ActionPlayer(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
     }
-
-    private FindObject<Card> ParseLiteralCard()
+    
+    private LiteralDescribeCard ParseLiteralCard()
     {
         Token open_brace = Match(Tipo.CorcheteAbierto);
         List<Token> tokens_description = new List<Token>();
@@ -100,7 +99,10 @@ public class Parser
         return new LiteralDescribeCard(open_brace, tokens_description, closed_brace);
     }
 
-    private FindObject<Player> ParseLiteralPlayer()
+
+
+
+    private LiteralDescribePlayer ParseLiteralPlayer()
     {
         Token open_llave = Match(Tipo.LLaveAbierta);
         List<Token> tokens_description = new List<Token>();
@@ -113,51 +115,33 @@ public class Parser
         return new LiteralDescribePlayer(open_llave, tokens_description, closed_llave);
     }
 
-    private FindObject<Player> ParseBanearPlayer()
+    private IFindPlayer ParseArgumentPlayer()
     {
-        throw new NotImplementedException();
-    }
-    private FindObject<Card> ParseRobarCard()
-    {
-        var open_parenthesis = Match(Tipo.ParéntesisAbierto);
-        var signature = Match(Tipo.Accion);
-        FindObject<Card> find_card = ParseArgumentCard();
-        FindObject<Player> find_player = ParseArgumentPlayer();
-        var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
-        return new CompoundActionCard(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
-    }
-
-    private FindObject<Player> ParseArgumentPlayer()
-    {
-        FindObject<Player> find_player;
         if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
         {
             var open_llave = Match(Tipo.LLaveAbierta);
-            find_player = ParsePlayer(LookAhead(1).Text);
+            var find_player = ParsePlayerAction();
             var closed_llave = Match(Tipo.LLaveCerrada);
+            return find_player;
         }
         else
         {
-            find_player = ParsePlayer("");
+            return ParseLiteralPlayer();
         }
-
-        return find_player;
     }
 
-    private FindObject<Card> ParseArgumentCard()
+    private IFindCard ParseArgumentCard()
     {
-        FindObject<Card> find_card;
         if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
         {
             var open_corchete = Match(Tipo.CorcheteAbierto);
-            find_card = ParseCard(LookAhead(1).Text);
+            var find_card = ParseCardAction();
             var closed_corchete = Match(Tipo.CorcheteCerrado);
+            return find_card;
         }
         else
         {
-            find_card = ParseCard("");
+            return ParseLiteralCard();
         }
-
-        return find_card;
     }
 }
