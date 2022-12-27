@@ -22,12 +22,3 @@ public class Mini_Lenguaje
     }
 }
 
-internal class Parser
-{
-    public Parser(List<Token> tokens)
-    {
-        Tokens = tokens;
-    }
-
-    public List<Token> Tokens { get; }
-}
