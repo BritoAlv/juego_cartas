@@ -113,7 +113,6 @@ public class PlayerManager
         }
         throw new Exception("IDK");
     }
-
     private bool Eval_Filtro_Mini_Ronda(Player player)
     {
         foreach (var filter in this.Filtro_Mini_Ronda)
@@ -125,7 +124,6 @@ public class PlayerManager
         }
         return true;
     }
-
     private bool Eval_Filtro_Ronda(Player player)
     {
         foreach (var filter in this.Filtro_Ronda)
@@ -137,7 +135,6 @@ public class PlayerManager
         }
         return true;
     }
-
     private bool Eval_Filtro_Partida(Player player)
     {
         foreach (var filter in this.Filtro_Partida)
@@ -149,7 +146,6 @@ public class PlayerManager
         }
         return true;
     }
-
     internal void Set_Active_Players(List<Player> players)
     {
         this.Active_Players = players;

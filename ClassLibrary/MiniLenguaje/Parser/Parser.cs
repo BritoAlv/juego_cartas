@@ -47,34 +47,24 @@ public class Parser
     // differentiate between parse an action player or an action card.
     private CompoundAction ParseAction(string v)
     {
-        switch (v)
+        var open_parenthesis = Match(Tipo.ParéntesisAbierto);
+        var signature = Match(Tipo.Accion);
+        var find_card = ParseArgumentCard();
+        var find_player = ParseArgumentPlayer();
+        var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
+        if (v.EndsWith("$añadircarta"))
         {
-            case "$robarcarta":
-            case "$añadircarta":
-                return ParseCardAction();
-            case "$banearjugador":
-                return ParsePlayerAction();
-            default:
-                throw new Exception();
+            return new CompoundAction(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
         }
-    }
-    private ActionCard ParseCardAction()
-    {
-        var open_parenthesis = Match(Tipo.ParéntesisAbierto);
-        var signature = Match(Tipo.Accion);
-        var find_card = ParseArgumentCard();
-        var find_player = ParseArgumentPlayer();
-        var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
-        return new ActionCard(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
-    }
-    private ActionPlayer ParsePlayerAction()
-    {
-        var open_parenthesis = Match(Tipo.ParéntesisAbierto);
-        var signature = Match(Tipo.Accion);
-        var find_card = ParseArgumentCard();
-        var find_player = ParseArgumentPlayer();
-        var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
-        return new ActionPlayer(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
+        if (v.EndsWith("carta"))
+        {
+            return new ActionCard(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
+        }
+        if (v.EndsWith("jugador"))
+        {
+            return new ActionPlayer(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
+        }
+        throw new Exception("Un acción debe acabar en carta o jugador");
     }
     private LiteralDescribeCard ParseLiteralCard()
     {
@@ -105,9 +95,9 @@ public class Parser
         if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
         {
             var open_llave = Match(Tipo.LLaveAbierta);
-            var find_player = ParsePlayerAction();
+            var find_player = ParseAction(LookAhead(1).Text);
             var closed_llave = Match(Tipo.LLaveCerrada);
-            return find_player;
+            return (IFindPlayer)find_player;
         }
         else
         {
@@ -119,9 +109,9 @@ public class Parser
         if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
         {
             var open_corchete = Match(Tipo.CorcheteAbierto);
-            var find_card = ParseCardAction();
+            var find_card = ParseAction(LookAhead(1).Text);
             var closed_corchete = Match(Tipo.CorcheteCerrado);
-            return find_card;
+            return (IFindCard)find_card;
         }
         else
         {

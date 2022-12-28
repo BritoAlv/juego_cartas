@@ -1,16 +1,21 @@
 namespace Poker;
-public static class Func_Generator
+public class Func_Generator
 {
-    internal static List<Func<IEnumerable<Card>, Card?>> GetCardFunction(LiteralArguments arguments)
+    public IGlobal_Contexto Contexto { get; }
+    public Func_Generator(IGlobal_Contexto contexto)
     {
-        List<Func<IEnumerable<Card>, Card?>> result = new List<Func<IEnumerable<Card>, Card?>>();
+        Contexto = contexto;
+    }
+    public List<Func<IEnumerable<Card>, Card?>> GetCardFunction(LiteralArguments arguments)
+    {
+       List<Func<IEnumerable<Card>, Card?>> result = new List<Func<IEnumerable<Card>, Card?>>();
         foreach (var argument in arguments.Descriptions)
         {
             if (argument is UnaryDescriptionArgument unary)
             {
                 result.Add(get_card_func(unary));
             }
-            if (argument is BinaryDescriptionArgument binary)
+            else if (argument is BinaryDescriptionArgument binary)
             {
                 result.Add(get_card_func(binary));
             }
@@ -18,7 +23,7 @@ public static class Func_Generator
         return result;
     }
 
-    private static Func<IEnumerable<Card>, Card?> get_card_func(BinaryDescriptionArgument binary)
+    private Func<IEnumerable<Card>, Card?> get_card_func(BinaryDescriptionArgument binary)
     {
         if (binary.Operador.Text == "&&")
         {
@@ -31,12 +36,12 @@ public static class Func_Generator
         return x => null;
     }
 
-    private static Func<IEnumerable<Card>, Card?> get_card_func(UnaryDescriptionArgument unary)
+    private Func<IEnumerable<Card>, Card?> get_card_func(UnaryDescriptionArgument unary)
     {
         throw new NotImplementedException();
     }
 
-    internal static List<Func<IEnumerable<Player>, Player?>> GetPlayerFunction(LiteralArguments arguments)
+    internal  List<Func<IEnumerable<Player>, Player?>> GetPlayerFunction(LiteralArguments arguments)
     {
         List<Func<IEnumerable<Player>, Player?>> result = new List<Func<IEnumerable<Player>, Player?>>();
         foreach (var argument in arguments.Descriptions)
@@ -45,7 +50,7 @@ public static class Func_Generator
             {
                 result.Add(get_player_func(unary));
             }
-            if (argument is BinaryDescriptionArgument binary)
+            else if (argument is BinaryDescriptionArgument binary)
             {
                 result.Add(get_player_func(binary));
             }
@@ -53,11 +58,11 @@ public static class Func_Generator
         return result;
     }
 
-    private static Func<IEnumerable<Player>, Player?> get_player_func(BinaryDescriptionArgument binary)
+    private  Func<IEnumerable<Player>, Player?> get_player_func(BinaryDescriptionArgument binary)
     {
         throw new NotImplementedException();
     }
-    private static Func<IEnumerable<Player>, Player?> get_player_func(UnaryDescriptionArgument unary)
+    private  Func<IEnumerable<Player>, Player?> get_player_func(UnaryDescriptionArgument unary)
     {
         switch (unary.Objeto.Text)
         {

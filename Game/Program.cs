@@ -24,6 +24,5 @@ public class Program
 
         manager.SimulateGame();
         var test_string = "( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazón rojo] {Jugador PC}) ]  {Dinero mayor})";
-
     }
 }

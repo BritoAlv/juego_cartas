@@ -1,7 +1,6 @@
 using Poker;
 public class Test
 {
-
     public static void SomePLay()
     {
         Scorer scorer = new Scorer();
