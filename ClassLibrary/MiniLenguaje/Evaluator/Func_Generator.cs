@@ -22,7 +22,6 @@ public class Func_Generator
         }
         return result;
     }
-
     private Func<IEnumerable<Card>, Card?> get_card_func(BinaryDescriptionArgument binary)
     {
         if (binary.Operador.Text == "&&")
@@ -35,12 +34,10 @@ public class Func_Generator
         }
         return x => null;
     }
-
     private Func<IEnumerable<Card>, Card?> get_card_func(UnaryDescriptionArgument unary)
     {
         throw new NotImplementedException();
     }
-
     internal  List<Func<IEnumerable<Player>, Player?>> GetPlayerFunction(LiteralArguments arguments)
     {
         List<Func<IEnumerable<Player>, Player?>> result = new List<Func<IEnumerable<Player>, Player?>>();

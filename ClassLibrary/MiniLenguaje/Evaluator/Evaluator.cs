@@ -45,7 +45,7 @@ public partial class Evaluator
     {
         switch (action.Signature.Text)
         {
-            case "$añadircarta":
+            case $"void_añadircarta":
                 return EvaluateAñadirCarta(action.Find_Player, action.Find_Card);
             default:
                 return 0;
@@ -65,7 +65,7 @@ public partial class Evaluator
     {
         switch (action.Signature.Text)
         {
-            case "$robarcarta":
+            case "$carta_robar":
                 return EvaluateRobarCarta(action.Find_Player, action.Find_Card);
             default:
                 return null;

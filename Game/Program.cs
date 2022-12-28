@@ -23,6 +23,6 @@ public class Program
         Manager manager = new Manager(scorer, context);
 
         manager.SimulateGame();
-        var test_string = "( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazón rojo] {Jugador PC}) ]  {Dinero mayor})";
+        var test_string = "( $void_añadircarta [ ( $carta_robar [Valor mayor && Suit corazón rojo] {Jugador PC}) ]  {Dinero mayor})";
     }
 }
