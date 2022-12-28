@@ -1,5 +1,8 @@
 namespace Poker;
-public abstract class CompoundAction : Iprintable
+/// <summary>
+/// A Compound Action is an Effect that returns Void.
+/// </summary>
+public class CompoundAction : Iprintable
 {
     public CompoundAction(Token open_parenthesis, Token signature, IFindCard? find_card, IFindPlayer? find_player, Token closed_parenthesis)
     {
@@ -14,7 +17,7 @@ public abstract class CompoundAction : Iprintable
     public IFindCard? Find_Card { get; }
     public IFindPlayer? Find_Player { get; }
     public Token Closed_Parenthesis { get; }
-    public abstract string valor { get; }
+    public virtual string valor => "Acción Void  " + Signature.Text;
     public IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open_Parenthesis;
@@ -29,19 +32,28 @@ public abstract class CompoundAction : Iprintable
         yield return Closed_Parenthesis;
     }
 }
+
+/// <summary>
+/// An Action Card is an Effect that also returns a Card? when applied.
+/// </summary>
 public class ActionCard : CompoundAction, IFindCard
 {
     public ActionCard(Token open_parenthesis, Token signature, IFindCard? find_card, IFindPlayer? find_player, Token closed_parenthesis) : base(open_parenthesis, signature, find_card, find_player, closed_parenthesis)
     {
-
     }
     public override string valor => "Acción Carta : " + Signature.Text;
+    public Card? obtained_card { get; }
+    public Func<IEnumerable<Player>, Card?> get_card => throw new NotImplementedException();
 }
+
+/// <summary>
+/// An Action Player is an Effect that also returns a Player? when applied.
+/// </summary>
 public class ActionPlayer : CompoundAction, IFindPlayer
 {
     public ActionPlayer(Token open_parenthesis, Token signature, IFindCard? find_card, IFindPlayer? find_player, Token closed_parenthesis) : base(open_parenthesis, signature, find_card, find_player, closed_parenthesis)
     {
-
     }
     public override string valor => "Acción Player : " + Signature.Text;
+    public Func<IEnumerable<Player>, Player?> get_player => throw new NotImplementedException();
 }

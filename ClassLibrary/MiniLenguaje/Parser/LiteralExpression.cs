@@ -24,23 +24,24 @@ public class LiteralDescribeCard : LiteralExpression, IFindCard
     {
     }
     public override string valor => "CartaDescritaLiteral";
+
+    public Func<IEnumerable<Player>, Card?> get_card => throw new NotImplementedException();
 }
-
-
-
 public class LiteralDescribePlayer : LiteralExpression, IFindPlayer
 {
-    public LiteralDescribePlayer(Token open_corchete, PlayerArguments playerArguments, Token closed_corchete) : base(open_corchete, playerArguments , closed_corchete)
+    public LiteralDescribePlayer(Token open_corchete, PlayerArguments playerArguments, Token closed_corchete) : base(open_corchete, playerArguments, closed_corchete)
     {
     }
     public override string valor => "PlayerDescritoLiteral";
+
+    public Func<IEnumerable<Player>, Player?> get_player => throw new NotImplementedException();
 }
 
 public interface IFindPlayer : Iprintable
 {
-
+    Func<IEnumerable<Player>, Player?> get_player { get; }
 }
 public interface IFindCard : Iprintable
 {
-
+    Func<IEnumerable<Player>, Card?> get_card { get; }
 }

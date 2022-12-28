@@ -3,34 +3,54 @@ public abstract class LiteralArguments : Iprintable
 {
     protected LiteralArguments(List<Token> tokens)
     {
-        Tokens = tokens;
+        Descriptions = ParseDescription(tokens);
     }
-
     public abstract string valor { get; }
+    public List<DescriptionArgument> Descriptions { get; private set; }
+
     public IEnumerable<Iprintable> GetChildrenIprintables()
     {
-        foreach (var token in Tokens)
+        foreach (var description in Descriptions)
         {
-            yield return token;
+            yield return description;
         }
     }
-    public List<Token> Tokens { get; }
-}
-
-public class CardArguments : LiteralArguments
-{
-    public CardArguments(List<Token> tokens) : base(tokens)
+    private List<DescriptionArgument> ParseDescription(List<Token> tokens)
     {
-    }
+        List<DescriptionArgument> result = new List<DescriptionArgument>();
+        int position = 0;
+        Token Current()
+        {
+            if (position < tokens.Count)
+            {
+                return tokens[position];
+            }
+            return new SyntaxToken(Tipo.Wrong, "\0");
+        }
+        UnaryDescriptionArgument ParseUnaryDescription()
+        {
+            var objeto = Current();
+            position = position + 1;
+            var description = Current();
+            position = position + 1;
+            return new UnaryDescriptionArgument(objeto, description);
+        }
 
-    public override string valor => "Argumentos Carta";
-}
 
-public class PlayerArguments : LiteralArguments
-{
-    public PlayerArguments(List<Token> tokens) : base(tokens)
-    {
+        while (Current().Tipo != Tipo.Wrong)
+        {
+            var left = ParseUnaryDescription();
+            if (Current().Text == "&&" || Current().Text == "||")
+            {
+                var operador = Current();
+                position++;
+                var right = ParseUnaryDescription();
+                result.Add(new BinaryDescriptionArgument(left, operador, right));
+                continue;
+            }
+            result.Add(left);
+        }
+        return result;
     }
-    public override string valor => "Argumentos Player";
 }
 

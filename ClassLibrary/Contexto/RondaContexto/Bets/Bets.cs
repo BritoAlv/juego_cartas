@@ -65,4 +65,9 @@ public class Bet
         }
         return this.Bets.Keys.Select(x => this.Get_Dinero_Apostado(x)).Max();
     }
+
+    public Player? Get_Mayor_Apostador()
+    {
+        return (Player?)Bets.Keys.OrderByDescending(x => Bets[x].Sum()).FirstOrDefault();
+    }
 }

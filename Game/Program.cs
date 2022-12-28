@@ -13,6 +13,4 @@ public class Program
         Console.ResetColor();
         print_tree.print(tree);
     }
-
-
 }

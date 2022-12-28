@@ -68,7 +68,6 @@ public class Parser
         var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
         return new ActionCard(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
     }
-
     private ActionPlayer ParsePlayerAction()
     {
         var open_parenthesis = Match(Tipo.ParéntesisAbierto);
@@ -82,12 +81,7 @@ public class Parser
     private LiteralDescribeCard ParseLiteralCard()
     {
         Token open_brace = Match(Tipo.CorcheteAbierto);
-        List<Token> tokens_description = new List<Token>();
-        while (Current.Tipo != Tipo.CorcheteCerrado)
-        {
-            tokens_description.Add(Current);
-            position++;
-        }
+        var tokens_description = ParseDescriptionTokens(Tipo.CorcheteCerrado);
         Token closed_brace = Match(Tipo.CorcheteCerrado);
         return new LiteralDescribeCard(open_brace, new CardArguments(tokens_description), closed_brace);
     }
@@ -95,14 +89,20 @@ public class Parser
     private LiteralDescribePlayer ParseLiteralPlayer()
     {
         Token open_llave = Match(Tipo.LLaveAbierta);
+        var tokens_description = ParseDescriptionTokens(Tipo.LLaveCerrada);
+        Token closed_llave = Match(Tipo.LLaveCerrada);
+        return new LiteralDescribePlayer(open_llave, new PlayerArguments(tokens_description), closed_llave);
+    }
+
+    private List<Token> ParseDescriptionTokens(Tipo tipo)
+    {
         List<Token> tokens_description = new List<Token>();
-        while (Current.Tipo != Tipo.LLaveCerrada)
+        while (Current.Tipo != tipo)
         {
             tokens_description.Add(Current);
             position++;
         }
-        Token closed_llave = Match(Tipo.LLaveCerrada);
-        return new LiteralDescribePlayer(open_llave, new PlayerArguments(tokens_description), closed_llave);
+        return tokens_description;
     }
 
     private IFindPlayer ParseArgumentPlayer()
