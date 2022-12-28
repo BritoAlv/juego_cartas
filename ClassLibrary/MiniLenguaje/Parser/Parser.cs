@@ -38,12 +38,13 @@ public class Parser
     }
 
     // public API Parse.
-    public Iprintable Parse()
+    public CompoundAction Parse()
     {
         var verb_action = LookAhead(1);
         return ParseAction(verb_action.Text);
     }
 
+    // differentiate between parse an action player or an action card.
     private CompoundAction ParseAction(string v)
     {
         switch (v)
@@ -77,7 +78,7 @@ public class Parser
         var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
         return new ActionPlayer(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
     }
-    
+
     private LiteralDescribeCard ParseLiteralCard()
     {
         Token open_brace = Match(Tipo.CorcheteAbierto);

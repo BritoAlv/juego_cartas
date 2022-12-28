@@ -32,4 +32,5 @@ public class PlayerArguments : LiteralArguments
     {
     }
     public override string valor => "Argumentos Player";
-} 
+}
+
