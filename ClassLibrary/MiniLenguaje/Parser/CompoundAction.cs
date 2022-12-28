@@ -43,7 +43,7 @@ public class ActionCard : CompoundAction, IFindCard
     }
     public override string valor => "Acción Carta : " + Signature.Text;
     public Card? obtained_card { get; }
-    public Func<IEnumerable<Player>, Card?> get_card => throw new NotImplementedException();
+    public List<Func<IEnumerable<Card>, Card?>> get_card { get; set; } = new List<Func<IEnumerable<Card>, Card?>>();
 }
 
 /// <summary>
@@ -55,5 +55,5 @@ public class ActionPlayer : CompoundAction, IFindPlayer
     {
     }
     public override string valor => "Acción Player : " + Signature.Text;
-    public Func<IEnumerable<Player>, Player?> get_player => throw new NotImplementedException();
+    public List<Func<IEnumerable<Player>, Player?>> get_player { get; set; } = new List<Func<IEnumerable<Player>, Player?>>();
 }

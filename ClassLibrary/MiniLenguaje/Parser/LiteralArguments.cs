@@ -7,7 +7,6 @@ public abstract class LiteralArguments : Iprintable
     }
     public abstract string valor { get; }
     public List<DescriptionArgument> Descriptions { get; private set; }
-
     public IEnumerable<Iprintable> GetChildrenIprintables()
     {
         foreach (var description in Descriptions)
@@ -35,8 +34,6 @@ public abstract class LiteralArguments : Iprintable
             position = position + 1;
             return new UnaryDescriptionArgument(objeto, description);
         }
-
-
         while (Current().Tipo != Tipo.Wrong)
         {
             var left = ParseUnaryDescription();

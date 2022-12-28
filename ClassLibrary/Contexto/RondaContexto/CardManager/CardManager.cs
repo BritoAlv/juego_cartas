@@ -10,11 +10,18 @@ public class CardManager
             Cards[player] = new List<Card>();
         }
     }
-    private void AñadirCarta(Player A, Card card)
+    internal void AñadirCarta(Player A, Card card)
     {
         Cards[A].Add(card);
         A.Hand.Draw(card);
     }
+
+    internal void RemoverCarta(Player A, Card card)
+    {
+        Cards[A].Remove(card);
+        A.Hand.Remove(x => x.Value == card.Value && x.Suit == card.Suit);
+    }
+
     internal void AñadirCartas(IRepartidor repartidor, Player A, int cant_Cartas)
     {
         List<Card> cards = repartidor.Repartir_Cartas(A, cant_Cartas, Cards.AsEnumerable());

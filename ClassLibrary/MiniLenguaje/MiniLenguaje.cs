@@ -19,8 +19,13 @@ public class Mini_Lenguaje
         Lexer lexer = new Lexer(line);
         List<Token> tokens = lexer.Lex();
         Parser parser = new Parser(tokens);
-        
-        
+        var tree = parser.Parse();
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine(line);
+        Console.ResetColor();
+        print_tree.print(tree);
+        Evaluator evaluator = new Evaluator(tree, Contexto);
+        evaluator.Evaluate();
     }
 }
 

@@ -25,7 +25,7 @@ public class LiteralDescribeCard : LiteralExpression, IFindCard
     }
     public override string valor => "CartaDescritaLiteral";
 
-    public Func<IEnumerable<Player>, Card?> get_card => throw new NotImplementedException();
+    public List<Func<IEnumerable<Card>, Card?>> get_card => Func_Generator.GetCardFunction(Arguments);
 }
 public class LiteralDescribePlayer : LiteralExpression, IFindPlayer
 {
@@ -33,15 +33,13 @@ public class LiteralDescribePlayer : LiteralExpression, IFindPlayer
     {
     }
     public override string valor => "PlayerDescritoLiteral";
-
-    public Func<IEnumerable<Player>, Player?> get_player => throw new NotImplementedException();
+    public List<Func<IEnumerable<Player>, Player?>> get_player => Func_Generator.GetPlayerFunction(Arguments);
 }
-
 public interface IFindPlayer : Iprintable
 {
-    Func<IEnumerable<Player>, Player?> get_player { get; }
+    List<Func<IEnumerable<Player>, Player?>> get_player { get; }
 }
 public interface IFindCard : Iprintable
 {
-    Func<IEnumerable<Player>, Card?> get_card { get; }
+    List<Func<IEnumerable<Card>, Card?>> get_card { get; }
 }
