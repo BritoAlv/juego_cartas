@@ -1,4 +1,6 @@
-# Implementing Something That Looks Almost Like A Mix Between A Poker Game And The "UNO Game". Based on:
+# Implementing Something That Looks Almost Like A Poker :
+
+# Based on:
 
  https://edcharbeneau.com/csharp-functional-workshop-instructions/
  https://github.com/terrajobst/minsk/
@@ -12,7 +14,19 @@ cd Game
 dotnet run
 ```
 
-## Carptetas dentro del Proyecto:
+## Instrucciones para jugarlo:
+
+En tu turno debes escribir que Decisión decides realizar, las posibles decisiones serían:
+
+- Apostar : escribe la cantidad de dinero que deseas apostar
+
+- Pasar : no apostar en la mini-ronda.
+
+- Abandondar : salir de la ronda, no de la partida.
+
+- Efecto: puedes escribir que efecto deseas realizar basado en las reglas del lenguaje descrito a continuación.
+
+## Estructura de la librería de clases :
 
 ```bash
 ├── ClassLibrary
@@ -116,3 +130,9 @@ Implementación de como dadas varias manos es decidido cual gana el juego, esto 
 ### Ronda:
 
 Define la lógica de lo que ocurre en una ronda de nuestro juego, además una ronda está compuesta por mini_rondas que también están implementadas aquí. 
+
+## Mejoras, Ideas, Bugs :
+
+- implementar la acción de banar al jugador.
+
+- aclarar bien las abstracciones que intentan representar *IFindPlayer*, *IFindPlayer*.
