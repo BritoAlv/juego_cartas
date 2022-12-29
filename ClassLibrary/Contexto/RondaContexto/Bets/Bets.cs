@@ -11,6 +11,7 @@ public class Bet
         foreach (var participant in participants)
         {
             Bets[participant] = new List<int>();
+            participant.Apuestas = new List<int>();
         }
     }
     /*
@@ -22,6 +23,7 @@ public class Bet
     {
         A.Dinero -= dinero;
         Bets[A].Add(dinero);
+        A.Apuestas.Add(dinero);
     }
     internal void Pasar(Player A)
     {

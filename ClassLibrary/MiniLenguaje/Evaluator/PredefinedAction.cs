@@ -1,7 +1,6 @@
 namespace Poker;
 public partial class Evaluator
 {
-
     private int EvaluateAñadirCarta(IFindPlayer? find_Player, IFindCard? find_Card)
     {
         Player? player = GetPlayer(find_Player);
@@ -17,8 +16,6 @@ public partial class Evaluator
         Contexto.Ronda_Contexto.CardsManager.AñadirCarta(player, card);
         return 1;
     }
-
-
     private Card? EvaluateRobarCarta(IFindPlayer? find_Player, IFindCard? find_Card)
     {
         Player? player = GetPlayer(find_Player);
@@ -34,7 +31,6 @@ public partial class Evaluator
         Contexto.Ronda_Contexto.CardsManager.RemoverCarta(player, card);
         return card;
     }
-
     private Card? GetCard(IFindCard? find_Card, Player player)
     {
         if (find_Card is null)
@@ -46,7 +42,7 @@ public partial class Evaluator
             Card? obtained_card = null;
             foreach (var Func in Generator.GetCardFunction(describeCard.Arguments))
             {
-                obtained_card = Func(Contexto.Ronda_Contexto.CardsManager.Cards[player]);
+                obtained_card = Func(Contexto.Ronda_Contexto.CardsManager.Cards[player]).FirstOrDefault(x => x != null);
                 if (obtained_card is not null)
                 {
                     Current_Card = obtained_card;
@@ -61,10 +57,7 @@ public partial class Evaluator
             return Current_Card;
         }
         return null;
-
-
     }
-
     private Player? GetPlayer(IFindPlayer? find_Player)
     {
         if (find_Player is null)
@@ -76,7 +69,7 @@ public partial class Evaluator
             Player? obtained_player = null;
             foreach (var Func in Generator.GetPlayerFunction(describePlayer.Arguments))
             {
-                obtained_player = Func(Contexto.PlayerManager.Get_Active_Players(2));
+                obtained_player = Func(Contexto.PlayerManager.Get_Active_Players(2)).FirstOrDefault(x => x != null);
                 if (obtained_player is not null)
                 {
                     Current_Player = obtained_player;

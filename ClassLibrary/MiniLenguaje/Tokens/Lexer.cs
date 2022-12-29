@@ -1,5 +1,4 @@
 namespace Poker;
-
 public class Lexer
 {
     int position = 0;
@@ -67,10 +66,14 @@ public class Lexer
                 result.Add(new SyntaxToken(Tipo.CorcheteCerrado, "]"));
                 position++;
             }
-
             else if (LookAhead(2) == "&&")
             {
                 result.Add(new SyntaxToken(Tipo.And, "&&"));
+                position = position + 2;
+            }
+            else if (LookAhead(2) == "||")
+            {
+                result.Add(new SyntaxToken(Tipo.And, "||"));
                 position = position + 2;
             }
             else if (Current == '$')
@@ -89,8 +92,7 @@ public class Lexer
                 }
                 result.Add(new ObjetoToken(Tipo.Objeto, text));
             }
-
-            else if (char.IsAsciiLetterLower(Current))
+            else if (char.IsAsciiLetterLower(Current) || char.IsAsciiDigit(Current) || Current == '>' || Current == '<')
             {
                 result.Add(new DescriptionToken(Tipo.Descripcion, LexDescription()));
             }
@@ -101,22 +103,20 @@ public class Lexer
         }
         return result;
     }
-
     string LexWord()
     {
         var text = "";
-        while (char.IsLetter(Current))
+        while (char.IsLetter(Current) || Current == '_')
         {
             text = text + Current;
             position++;
         }
         return text;
     }
-
     string LexDescription()
     {
         var text = "";
-        while (char.IsLetter(Current) || Current == ' ')
+        while (char.IsLetterOrDigit(Current) || Current == '>' || Current == '<')
         {
             text = text + Current;
             position++;
@@ -124,4 +124,3 @@ public class Lexer
         return text.TrimEnd().TrimStart();
     }
 }
-

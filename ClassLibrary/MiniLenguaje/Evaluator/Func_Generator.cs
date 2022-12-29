@@ -1,14 +1,14 @@
 namespace Poker;
-public class Func_Generator
+public partial class Func_Generator
 {
     public IGlobal_Contexto Contexto { get; }
     public Func_Generator(IGlobal_Contexto contexto)
     {
         Contexto = contexto;
     }
-    public List<Func<IEnumerable<Card>, Card?>> GetCardFunction(LiteralArguments arguments)
+    public List<Func<IEnumerable<Card>, IEnumerable<Card?>>> GetCardFunction(LiteralArguments arguments)
     {
-       List<Func<IEnumerable<Card>, Card?>> result = new List<Func<IEnumerable<Card>, Card?>>();
+        List<Func<IEnumerable<Card>, IEnumerable<Card?>>> result = new List<Func<IEnumerable<Card>, IEnumerable<Card?>>>();
         foreach (var argument in arguments.Descriptions)
         {
             if (argument is UnaryDescriptionArgument unary)
@@ -22,25 +22,26 @@ public class Func_Generator
         }
         return result;
     }
-    private Func<IEnumerable<Card>, Card?> get_card_func(BinaryDescriptionArgument binary)
+    private Func<IEnumerable<Card>, IEnumerable<Card?>> get_card_func(BinaryDescriptionArgument binary)
     {
         if (binary.Operador.Text == "&&")
         {
-            return x => x.OrderByDescending(x => x.Value).FirstOrDefault();
+            Func<IEnumerable<Card>, IEnumerable<Card?>> card1 = get_card_func(binary.Izq);
+            Func<IEnumerable<Card>, IEnumerable<Card?>> card2 = get_card_func(binary.Der);
+            return x => card1(x).Intersect(card2(x));
+
         }
         else if (binary.Operador.Text == "||")
         {
-            
+            Func<IEnumerable<Card>, IEnumerable<Card?>> card1 = get_card_func(binary.Izq);
+            Func<IEnumerable<Card>, IEnumerable<Card?>> card2 = get_card_func(binary.Der);
+            return x => card1(x).Union(card2(x));
         }
-        return x => null;
+        return x => new List<Card?>();
     }
-    private Func<IEnumerable<Card>, Card?> get_card_func(UnaryDescriptionArgument unary)
+    internal List<Func<IEnumerable<Player>, IEnumerable<Player?>>> GetPlayerFunction(LiteralArguments arguments)
     {
-        throw new NotImplementedException();
-    }
-    internal  List<Func<IEnumerable<Player>, Player?>> GetPlayerFunction(LiteralArguments arguments)
-    {
-        List<Func<IEnumerable<Player>, Player?>> result = new List<Func<IEnumerable<Player>, Player?>>();
+        List<Func<IEnumerable<Player>, IEnumerable<Player?>>> result = new List<Func<IEnumerable<Player>, IEnumerable<Player?>>>();
         foreach (var argument in arguments.Descriptions)
         {
             if (argument is UnaryDescriptionArgument unary)
@@ -54,21 +55,21 @@ public class Func_Generator
         }
         return result;
     }
-
-    private  Func<IEnumerable<Player>, Player?> get_player_func(BinaryDescriptionArgument binary)
+    private Func<IEnumerable<Player>, IEnumerable<Player?>> get_player_func(BinaryDescriptionArgument binary)
     {
-        throw new NotImplementedException();
-    }
-    private  Func<IEnumerable<Player>, Player?> get_player_func(UnaryDescriptionArgument unary)
-    {
-        switch (unary.Objeto.Text)
+        if (binary.Operador.Text == "&&")
         {
-            case "Jugador":
-                return x => x.FirstOrDefault(m => m.Id == unary.Description.Text);
-            case "Dinero":
-                return x => x.OrderByDescending(m => m.Dinero).FirstOrDefault();
-            default:
-                return x => null;
+            Func<IEnumerable<Player>, IEnumerable<Player?>> player1 = get_player_func(binary.Izq);
+            Func<IEnumerable<Player>, IEnumerable<Player?>> player2 = get_player_func(binary.Der);
+            return x => player1(x).Intersect(player2(x));
+
         }
+        else if (binary.Operador.Text == "||")
+        {
+            Func<IEnumerable<Player>, IEnumerable<Player?>> player1 = get_player_func(binary.Izq);
+            Func<IEnumerable<Player>, IEnumerable<Player?>> player2 = get_player_func(binary.Der);
+            return x => player1(x).Union(player2(x));
+        }
+        return x => Enumerable.Empty<Player?>();
     }
 }

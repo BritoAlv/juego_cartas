@@ -1,5 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Poker;
-public class Card : ICloneable
+public class Card : ICloneable, IEqualityComparer<Card>
 {
     public Card(CardValue value, CardSuit suit)
     {
@@ -12,6 +14,17 @@ public class Card : ICloneable
     {
         return new Card(this.Value, this.Suit);
     }
+
+    public bool Equals(Card? x, Card? y)
+    {
+        return this.Iguales(y);
+    }
+
+    public int GetHashCode([DisallowNull] Card obj)
+    {
+        return obj.Suit.GetHashCode() + obj.Value.GetHashCode();
+    }
+
     public bool Iguales(object? obj)
     {
         if (obj is Card other)
@@ -34,5 +47,14 @@ public class Card : ICloneable
             number = " " + number;
         }
         return number + suit + "   ";
+    }
+
+    public int get_value()
+    {
+        if (this.Value == CardValue.As)
+        {
+            return 1;
+        }
+        return (int)this.Value;
     }
 }

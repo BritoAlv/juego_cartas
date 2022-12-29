@@ -52,19 +52,19 @@ public class Parser
         var find_card = ParseArgumentCard();
         var find_player = ParseArgumentPlayer();
         var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
-        if (v.StartsWith("void_"))
+        if (v.StartsWith("$void_"))
         {
             return new CompoundAction(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
         }
-        if (v.StartsWith("carta_"))
+        if (v.StartsWith("$carta_"))
         {
             return new ActionCard(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
         }
-        if (v.StartsWith("jugador_"))
+        if (v.StartsWith("$jugador_"))
         {
             return new ActionPlayer(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
         }
-        throw new Exception("Un acción debe acabar en carta o jugador");
+        throw new Exception("Un acción debe empezar especificando el tipo de retorno");
     }
     private LiteralDescribeCard ParseLiteralCard()
     {

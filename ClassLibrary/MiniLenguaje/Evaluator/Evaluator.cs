@@ -45,7 +45,7 @@ public partial class Evaluator
     {
         switch (action.Signature.Text)
         {
-            case $"void_añadircarta":
+            case "$void_añadircarta":
                 return EvaluateAñadirCarta(action.Find_Player, action.Find_Card);
             default:
                 return 0;
@@ -55,8 +55,6 @@ public partial class Evaluator
     {
         switch (action.Signature.Text)
         {
-            case "$banearjugador":
-                return null;
             default:
                 return null;
         }
