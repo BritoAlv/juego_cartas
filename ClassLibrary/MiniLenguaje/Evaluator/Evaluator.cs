@@ -18,7 +18,7 @@ public partial class Evaluator
     }
     private int ExecuteAction(CompoundAction action)
     {
-        if (action is IFindCard)
+        if (action is IArgument<Card>)
         {
             Current_Card = EvaluateFind_Card((ActionCard)action);
             if (Current_Card is null)
@@ -27,7 +27,7 @@ public partial class Evaluator
             }
             return 1;
         }
-        if (action is IFindPlayer)
+        if (action is IArgument<Player>)
         {
             Current_Player = EvaluateFind_PLayer((ActionPlayer)action);
             if (Current_Player is null)

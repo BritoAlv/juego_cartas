@@ -1,11 +1,11 @@
 namespace Poker;
-public abstract class LiteralArguments : Iprintable
+public class LiteralArguments : Iprintable
 {
-    protected LiteralArguments(List<Token> tokens)
+    public LiteralArguments(List<Token> tokens)
     {
         Descriptions = ParseDescription(tokens);
     }
-    public abstract string valor { get; }
+    public string valor => "Literal Arguments: ";
     public List<DescriptionArgument> Descriptions { get; private set; }
     public IEnumerable<Iprintable> GetChildrenIprintables()
     {

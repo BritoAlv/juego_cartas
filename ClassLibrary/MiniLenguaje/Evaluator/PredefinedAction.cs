@@ -1,7 +1,7 @@
 namespace Poker;
 public partial class Evaluator
 {
-    private int EvaluateAñadirCarta(IFindPlayer? find_Player, IFindCard? find_Card)
+    private int EvaluateAñadirCarta( IArgument<Player>? find_Player, IArgument<Card>? find_Card)
     {
         Player? player = GetPlayer(find_Player);
         if (player is null)
@@ -16,7 +16,7 @@ public partial class Evaluator
         Contexto.Ronda_Contexto.CardsManager.AñadirCarta(player, card);
         return 1;
     }
-    private Card? EvaluateRobarCarta(IFindPlayer? find_Player, IFindCard? find_Card)
+    private Card? EvaluateRobarCarta( IArgument<Player>? find_Player, IArgument<Card>? find_Card)
     {
         Player? player = GetPlayer(find_Player);
         if (player is null)
@@ -31,7 +31,7 @@ public partial class Evaluator
         Contexto.Ronda_Contexto.CardsManager.RemoverCarta(player, card);
         return card;
     }
-    private Card? GetCard(IFindCard? find_Card, Player player)
+    private Card? GetCard(IArgument<Card>? find_Card, Player player)
     {
         if (find_Card is null)
         {
@@ -58,7 +58,7 @@ public partial class Evaluator
         }
         return null;
     }
-    private Player? GetPlayer(IFindPlayer? find_Player)
+    private Player? GetPlayer( IArgument<Player>? find_Player)
     {
         if (find_Player is null)
         {

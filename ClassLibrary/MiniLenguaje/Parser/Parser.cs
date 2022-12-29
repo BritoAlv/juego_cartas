@@ -71,14 +71,14 @@ public class Parser
         Token open_brace = Match(Tipo.CorcheteAbierto);
         var tokens_description = ParseDescriptionTokens(Tipo.CorcheteCerrado);
         Token closed_brace = Match(Tipo.CorcheteCerrado);
-        return new LiteralDescribeCard(open_brace, new CardArguments(tokens_description), closed_brace);
+        return new LiteralDescribeCard(open_brace, new LiteralArguments(tokens_description), closed_brace);
     }
     private LiteralDescribePlayer ParseLiteralPlayer()
     {
         Token open_llave = Match(Tipo.LLaveAbierta);
         var tokens_description = ParseDescriptionTokens(Tipo.LLaveCerrada);
         Token closed_llave = Match(Tipo.LLaveCerrada);
-        return new LiteralDescribePlayer(open_llave, new PlayerArguments(tokens_description), closed_llave);
+        return new LiteralDescribePlayer(open_llave, new LiteralArguments(tokens_description), closed_llave);
     }
     private List<Token> ParseDescriptionTokens(Tipo tipo)
     {
@@ -90,28 +90,28 @@ public class Parser
         }
         return tokens_description;
     }
-    private IFindPlayer ParseArgumentPlayer()
+    private IArgument<Player> ParseArgumentPlayer()
     {
         if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
         {
             var open_llave = Match(Tipo.LLaveAbierta);
             var find_player = ParseAction(LookAhead(1).Text);
             var closed_llave = Match(Tipo.LLaveCerrada);
-            return (IFindPlayer)find_player;
+            return (IArgument<Player>)find_player;
         }
         else
         {
             return ParseLiteralPlayer();
         }
     }
-    private IFindCard ParseArgumentCard()
+    private IArgument<Card> ParseArgumentCard()
     {
         if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
         {
             var open_corchete = Match(Tipo.CorcheteAbierto);
             var find_card = ParseAction(LookAhead(1).Text);
             var closed_corchete = Match(Tipo.CorcheteCerrado);
-            return (IFindCard)find_card;
+            return (IArgument<Card>)find_card;
         }
         else
         {

@@ -4,7 +4,7 @@ namespace Poker;
 /// </summary>
 public class CompoundAction : Iprintable
 {
-    public CompoundAction(Token open_parenthesis, Token signature, IFindCard? find_card, IFindPlayer? find_player, Token closed_parenthesis)
+    public CompoundAction(Token open_parenthesis, Token signature, IArgument<Card>? find_card, IArgument<Player>? find_player, Token closed_parenthesis)
     {
         Open_Parenthesis = open_parenthesis;
         Signature = signature;
@@ -14,8 +14,8 @@ public class CompoundAction : Iprintable
     }
     public Token Open_Parenthesis { get; }
     public Token Signature { get; }
-    public IFindCard? Find_Card { get; }
-    public IFindPlayer? Find_Player { get; }
+    public IArgument<Card>? Find_Card { get; }
+    public IArgument<Player>? Find_Player { get; }
     public Token Closed_Parenthesis { get; }
     public virtual string valor => "Acción Void  " + Signature.Text;
     public IEnumerable<Iprintable> GetChildrenIprintables()
@@ -36,9 +36,9 @@ public class CompoundAction : Iprintable
 /// <summary>
 /// An Action Card is an Effect that also returns a Card? when applied.
 /// </summary>
-public class ActionCard : CompoundAction, IFindCard
+public class ActionCard : CompoundAction, IArgument<Card>
 {
-    public ActionCard(Token open_parenthesis, Token signature, IFindCard? find_card, IFindPlayer? find_player, Token closed_parenthesis) : base(open_parenthesis, signature, find_card, find_player, closed_parenthesis)
+    public ActionCard(Token open_parenthesis, Token signature, IArgument<Card>? find_card, IArgument<Player>? find_player, Token closed_parenthesis) : base(open_parenthesis, signature, find_card, find_player, closed_parenthesis)
     {
     }
     public override string valor => "Acción Carta : " + Signature.Text;
@@ -47,9 +47,9 @@ public class ActionCard : CompoundAction, IFindCard
 /// <summary>
 /// An Action Player is an Effect that also returns a Player? when applied.
 /// </summary>
-public class ActionPlayer : CompoundAction, IFindPlayer
+public class ActionPlayer : CompoundAction, IArgument<Player>
 {
-    public ActionPlayer(Token open_parenthesis, Token signature, IFindCard? find_card, IFindPlayer? find_player, Token closed_parenthesis) : base(open_parenthesis, signature, find_card, find_player, closed_parenthesis)
+    public ActionPlayer(Token open_parenthesis, Token signature, IArgument<Card>? find_card, IArgument<Player>? find_player, Token closed_parenthesis) : base(open_parenthesis, signature, find_card, find_player, closed_parenthesis)
     {
     }
     public override string valor => "Acción Player : " + Signature.Text;
