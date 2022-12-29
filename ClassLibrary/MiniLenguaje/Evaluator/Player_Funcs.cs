@@ -1,7 +1,7 @@
 namespace Poker;
 public partial class Func_Generator
 {
-        private Func<IEnumerable<Player>, IEnumerable<Player?>> Player_Func_Jugador(string text)
+    private Func<IEnumerable<Player>, IEnumerable<Player?>> Player_Func_Jugador(string text)
     {
         return x => x.Where(m => m.Id == text);
     }
@@ -31,13 +31,13 @@ public partial class Func_Generator
         return x => Enumerable.Empty<Player?>();
     }
 
-    private Func<IEnumerable<Player>, IEnumerable<Player?>> Player_Func_Bet(string text)
+    private Func<IEnumerable<Player>, IEnumerable<Player?>> Player_Func_Apuesta(string text)
     {
         if (text == "mayorapostador")
         {
             return x => x.OrderByDescending(x => x.Apuestas.Sum());
         }
-        if (text == "mayorapuesta")
+        if (text == "mayor")
         {
             return x => x.OrderByDescending(x => x.Apuestas.Max());
         }
@@ -45,7 +45,7 @@ public partial class Func_Generator
         {
             return x => x.OrderBy(x => x.Apuestas.Sum());
         }
-        if (text == "menorapuesta")
+        if (text == "menor")
         {
             return x => x.OrderBy(x => x.Apuestas.Max());
         }

@@ -26,8 +26,8 @@ public partial class Func_Generator
                 return Player_Func_Jugador(unary.Description.Text);
             case "Dinero":
                 return Player_Func_Dinero(unary.Description.Text);
-            case "Bet":
-                return Player_Func_Bet(unary.Description.Text);
+            case "Apuesta":
+                return Player_Func_Apuesta(unary.Description.Text);
             default:
                 return x => new List<Player?>();
         }
