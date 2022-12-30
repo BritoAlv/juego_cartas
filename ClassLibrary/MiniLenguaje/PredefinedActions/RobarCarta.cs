@@ -1,5 +1,4 @@
 namespace Poker;
-
 public class RobarCarta : Return<Card>
 {
     public RobarCarta(Token open_parenthesis, Token signature, IArgument<Card> card, IArgument<Player> player, Token closed_parenthesis) : base(open_parenthesis, signature, closed_parenthesis)

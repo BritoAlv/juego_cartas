@@ -25,7 +25,7 @@ public class Test
     }
     public static void TestParser()
     {
-        Lexer lexer = new Lexer("( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazonrojo ] {Jugador Alvaro}) ]  {Bet mayor })");
+        Lexer lexer = new Lexer("( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazonrojo ] {Jugador Alvaro}) ]  {Apuesta mayor })");
         List<Token> tokens = lexer.Lex();
         Parser parser = new Parser(tokens);
         var tree = parser.Parse();
