@@ -1,35 +1,9 @@
 namespace Poker;
-public class LiteralDescribePlayer : IArgument<Player>
+public class Literal_Describe_Player : LiteralDescribe<Player>
 {
-    public LiteralDescribePlayer(Token open_llave, LiteralArguments literalArguments, Token closed_llave)
-    {
-        Open_llave = open_llave;
-        LiteralArguments = literalArguments;
-        Closed_llave = closed_llave;
-    }
-    public Token Open_llave { get; }
-    public LiteralArguments LiteralArguments { get; }
-    public Token Closed_llave { get; }
-    public string valor => "Literal Describe Player";
-    public IEnumerable<Iprintable> GetChildrenIprintables()
-    {
-        yield return Open_llave;
-        yield return LiteralArguments;
-        yield return Closed_llave;
-    }
-    public Player Get_Object(IEnumerable<Player> list, IGlobal_Contexto contexto)
-    {
-        foreach (var Func in GetPlayerFunction(LiteralArguments))
-        {
-            IEnumerable<Player> obtained_player = Func(list);
-            if (obtained_player.Count() > 0)
-            {
-                return obtained_player.First();
-            }
-        }
-        throw new Exception("No se encontró el jugador");
-    }
-    private Func<IEnumerable<Player>, IEnumerable<Player>> get_player_func(UnaryDescriptionArgument unary)
+    public Literal_Describe_Player(Token open_llave, LiteralArguments literalArguments, Token closed_llave) : base(open_llave, literalArguments, closed_llave) { }
+    public override string valor => "Literal Describe Player";
+    public override Func<IEnumerable<Player>, IEnumerable<Player>> get_T_func(UnaryDescriptionArgument unary)
     {
         var identifier = unary.Objeto.Text;
         switch (identifier)
@@ -116,45 +90,6 @@ public class LiteralDescribePlayer : IArgument<Player>
         if (text == "menor")
         {
             return x => x.OrderBy(x => x.Apuestas.Maxx());
-        }
-        return x => Enumerable.Empty<Player>();
-    }
-
-
-
-    internal List<Func<IEnumerable<Player>, IEnumerable<Player>>> GetPlayerFunction(LiteralArguments arguments)
-    {
-        List<Func<IEnumerable<Player>, IEnumerable<Player>>> result = new List<Func<IEnumerable<Player>, IEnumerable<Player>>>();
-        foreach (var argument in arguments.Descriptions)
-        {
-            if (argument is UnaryDescriptionArgument unary)
-            {
-                result.Add(get_player_func(unary));
-            }
-            else if (argument is BinaryDescriptionArgument binary)
-            {
-                result.Add(get_player_func(binary));
-            }
-        }
-        return result;
-    }
-
-
-
-    private Func<IEnumerable<Player>, IEnumerable<Player>> get_player_func(BinaryDescriptionArgument binary)
-    {
-        if (binary.Operador.Text == "&&")
-        {
-            Func<IEnumerable<Player>, IEnumerable<Player>> player1 = get_player_func(binary.Izq);
-            Func<IEnumerable<Player>, IEnumerable<Player>> player2 = get_player_func(binary.Der);
-            return x => player1(x).Intersectt(player2(x));
-
-        }
-        else if (binary.Operador.Text == "||")
-        {
-            Func<IEnumerable<Player>, IEnumerable<Player>> player1 = get_player_func(binary.Izq);
-            Func<IEnumerable<Player>, IEnumerable<Player>> player2 = get_player_func(binary.Der);
-            return x => player1(x).Unionn(player2(x));
         }
         return x => Enumerable.Empty<Player>();
     }

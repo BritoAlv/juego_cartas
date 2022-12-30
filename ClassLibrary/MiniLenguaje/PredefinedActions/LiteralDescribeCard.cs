@@ -1,37 +1,9 @@
 namespace Poker;
 
-public class LiteralDescribeCard : IArgument<Card>
+public class Literal_Describe_Card : LiteralDescribe<Card>
 {
-    public LiteralDescribeCard(Token open_brace, LiteralArguments literalArguments, Token closed_brace)
-    {
-        Open_brace = open_brace;
-        LiteralArguments = literalArguments;
-        Closed_brace = closed_brace;
-    }
-
-    public string valor => "Literal Describe Card: ";
-    public Token Open_brace { get; }
-    public LiteralArguments LiteralArguments { get; }
-    public Token Closed_brace { get; }
-    public IEnumerable<Iprintable> GetChildrenIprintables()
-    {
-        yield return Open_brace;
-        yield return LiteralArguments;
-        yield return Closed_brace;
-    }
-    public Card Get_Object(IEnumerable<Card> list, IGlobal_Contexto contexto)
-    {
-        foreach (var Func in GetCardFunction(LiteralArguments))
-        {
-            IEnumerable<Card> obtained_card = Func(list);
-            if (obtained_card.Count() > 0)
-            {
-                return obtained_card.First();
-            }
-        }
-        throw new Exception("No se encontró la carta");
-    }
-
+    public Literal_Describe_Card(Token open_brace, LiteralArguments literalArguments, Token closed_brace) : base(open_brace, literalArguments, closed_brace){}
+    public override string valor => "Literal Describe Card: ";
     private Func<IEnumerable<Card>, IEnumerable<Card>> Card_Func_Suit(string text)
     {
         switch (text)
@@ -73,25 +45,7 @@ public class LiteralDescribeCard : IArgument<Card>
         }
         return x => Enumerable.Empty<Card>();
     }
-
-    private List<Func<IEnumerable<Card>, IEnumerable<Card>>> GetCardFunction(LiteralArguments arguments)
-    {
-        List<Func<IEnumerable<Card>, IEnumerable<Card>>> result = new List<Func<IEnumerable<Card>, IEnumerable<Card>>>();
-        foreach (var argument in arguments.Descriptions)
-        {
-            if (argument is UnaryDescriptionArgument unary)
-            {
-                result.Add(get_card_func(unary));
-            }
-            else if (argument is BinaryDescriptionArgument binary)
-            {
-                result.Add(get_card_func(binary));
-            }
-        }
-        return result;
-    }
-
-    private Func<IEnumerable<Card>, IEnumerable<Card>> get_card_func(UnaryDescriptionArgument unary)
+    public override Func<IEnumerable<Card>, IEnumerable<Card>> get_T_func(UnaryDescriptionArgument unary)
     {
         var identifier = unary.Objeto.Text;
         switch (identifier)
@@ -103,21 +57,5 @@ public class LiteralDescribeCard : IArgument<Card>
             default:
                 return x => new List<Card>();
         }
-    }
-    private Func<IEnumerable<Card>, IEnumerable<Card>> get_card_func(BinaryDescriptionArgument binary)
-    {
-        if (binary.Operador.Text == "&&")
-        {
-            Func<IEnumerable<Card>, IEnumerable<Card>> card1 = get_card_func(binary.Izq);
-            Func<IEnumerable<Card>, IEnumerable<Card>> card2 = get_card_func(binary.Der);
-            return x => card1(x).Intersectt(card2(x));
-        }
-        else if (binary.Operador.Text == "||")
-        {
-            Func<IEnumerable<Card>, IEnumerable<Card>> card1 = get_card_func(binary.Izq);
-            Func<IEnumerable<Card>, IEnumerable<Card>> card2 = get_card_func(binary.Der);
-            return x => card1(x).Unionn(card2(x));
-        }
-        return x => new List<Card>();
     }
 }

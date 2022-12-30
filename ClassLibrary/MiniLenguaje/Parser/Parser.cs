@@ -62,27 +62,27 @@ public class Parser
         }
         throw new Exception("Un acción debe empezar especificando el tipo de retorno");
     }
-    private LiteralDescribeCard ParseLiteralCard()
+    private Literal_Describe_Card ParseLiteralCard()
     {
         Token open_brace = Match(Tipo.CorcheteAbierto);
         var tokens_description = ParseDescriptionTokens(Tipo.CorcheteCerrado);
         Token closed_brace = Match(Tipo.CorcheteCerrado);
-        return new LiteralDescribeCard(open_brace, new LiteralArguments(tokens_description), closed_brace);
+        return new Literal_Describe_Card(open_brace, new LiteralArguments(tokens_description), closed_brace);
     }
 
-    private LiteralDescribeHand ParseLiteralHand()
+    private Literal_Describe_Hand ParseLiteralHand()
     {
         Token open_question = Match(Tipo.QuestionAbierta);
         var tokens_description = ParseDescriptionTokens(Tipo.CorcheteCerrado);
         Token closed_question = Match(Tipo.QuestionCerrada);
-        return new LiteralDescribeHand(open_question, new LiteralArguments(tokens_description), closed_question);
+        return new Literal_Describe_Hand(open_question, new LiteralArguments(tokens_description), closed_question);
     }
-    private LiteralDescribePlayer ParseLiteralPlayer()
+    private Literal_Describe_Player ParseLiteralPlayer()
     {
         Token open_llave = Match(Tipo.LLaveAbierta);
         var tokens_description = ParseDescriptionTokens(Tipo.LLaveCerrada);
         Token closed_llave = Match(Tipo.LLaveCerrada);
-        return new LiteralDescribePlayer(open_llave, new LiteralArguments(tokens_description), closed_llave);
+        return new Literal_Describe_Player(open_llave, new LiteralArguments(tokens_description), closed_llave);
     }
     private List<Token> ParseDescriptionTokens(Tipo tipo)
     {
