@@ -13,7 +13,7 @@ public class AñadirCarta : Return<bool>
 
     public override bool Evaluate(IGlobal_Contexto contexto)
     {
-        var cards = Card.Get_Object(Enumerable.Empty<Card>(), contexto);
+        var cards = Card.Get_Object(contexto.Ronda_Contexto.CardsManager.All_Cards(), contexto);
         var player = Player.Get_Object(contexto.PlayerManager.Get_Active_Players(2), contexto);
         contexto.Ronda_Contexto.CardsManager.AñadirCarta(player, cards);
         return true ;

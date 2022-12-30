@@ -37,4 +37,15 @@ public class CardManager
             }
         }
     }
+
+    internal IEnumerable<Card> All_Cards()
+    {
+        foreach (var list_card in Cards.Values)
+        {
+            foreach (var card in list_card)
+            {
+                yield return card;
+            }
+        }
+    }
 }

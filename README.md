@@ -74,43 +74,43 @@ La clase Manager se encarga de recibir toda la configuración que el usuario des
 
 ### MiniLenguaje:
 
-Contiene la implementación de los *efectos* en nuestro juego. El lenguaje se base en acciones que pueden retornar ya sea un *jugador*, una *carta* o *void*. Un efecto en nuestro lenguaje sería el siguiente:
+Contiene la implementación de los *efectos* en nuestro juego. El lenguaje se base en acciones que pueden retornar ya sea un *jugador*, una *carta*,  o *void*. Un ejemplo de efecto en nuestro lenguaje sería el siguiente:
 
 ```bash
-( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazonrojo ] {Jugador  PC}] {Bet mayorapostador}) 
+( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazonrojo ] {Jugador  PC}] {Apuesta mayorapostador}) 
 ```
 
 ###### Lo que nos permite realizar efectos complejos aparte de todas las posibles descripciones literales descritas a continuación es la posibilidad de componer acciones.
 
-El ejemplo anterior ejecuta la acción de robarle la carta al jugador *PC* de mayor valor y a su vez de corazón rojo y después añadirsela a el jugador que más haya apostado. Notar que este efecto depende del estado actal del juego.
+El ejemplo anterior ejecuta la acción de robarle la carta al jugador *PC* de mayor valor y a su vez de corazón rojo y después añadírsela a el jugador que más haya apostado. Notar que este efecto depende del estado actual del juego.
 
 #### Syntaxis:
 
-Cada acción es definida entre parentésis,  primero contiene su nombre , después se le pasan los argumentos, una expresión dentro de [ ] al evaluarse devolverá una carta mientras que otra dentro de {} devolverá un jugador. Como se puede observar en el ejemplo dentro de [] hay una acción, esto es posble ya que esta devuelve una carta. Pero también existe syntaxis como:
+Cada acción es definida entre parentésis,  primero contiene su nombre , después se le pasan los argumentos, una expresión dentro de [ ] al evaluarse devolverá una carta mientras que otra dentro de {} devolverá un jugador. Como se puede observar en el ejemplo dentro de [] hay una acción, esto es posible ya que esta devuelve una carta. Pero también existe syntax como:
 
 ```bash
 Valor mayor && Suit corazonrojo 
 ```
 
-Esto representa una descripción literal del objeto, en este caso una carta, que debe satisfacer las dos descripciones unarias anteriores, cada descripción unaria va a estar dada por un Objeto escrito con letra mayúscula y una palabra que describe a dicho objeto. Las posibles Objetos están predefinidos en nuestro lenguaje a igual que las palabras con los que los describimos.
+Esto representa una descripción literal del objeto, en este caso una carta, que debe satisfacer las dos descripciones unarias anteriores, cada descripción unaria va a estar dada por un Objeto escrito con letra mayúscula y una palabra que describe a dicho objeto con letra minúscula. Las posibles Objetos están predefinidos en nuestro lenguaje a igual que las palabras con los que los describimos.
 
-Finalmente como dependemos de las acciones y sintaxis predefinidos he aquí un aŕbol de lo que es posible hacer con cada una.
+Finalmente como dependemos de las acciones y sintaxis predefinidos he aquí un árbol de lo que es posible hacer con cada una. Internamente ambos *lexer* y *parser* están definidos teniendo en cuenta la extensibilidad en el sentido de que si se desea añadir una  nueva acción predefinida a los efectos es posible realizarlo, sobre esto leer [Action.md](./Action.md) . Aclaro que esto no se refiere a las acciones que puede realizar el usuario, estas son las que pueda realizar a través de las acciones predefinidas, anteriormente usando descripciones literales o composición. 
 
 ```bash
 ├── Acciones ()
-│   ├── Void
+│   ├── Void
 │   │    ├── $añadircarta
-│   ├── Carta
+│   ├── Carta
 │   │    ├── $robarcarta
-│   ├── Jugador
+│   ├── Jugador
 │   │    
 ├── Descripciones
-│   ├── Carta
+│   ├── Carta []
 │   │    ├── Valor
 │   │    │   ├── >2, <3, mayor, menor, 1,2,3 ...
 │   │    ├── Suit
 │   │    │   ├── trebol, pica, ...
-│   ├── Player
+│   ├── Player {}
 │   │    ├── Jugador
 │   │    │   ├── nombre del player
 │   │    ├── Dinero
@@ -133,6 +133,10 @@ Define la lógica de lo que ocurre en una ronda de nuestro juego, además una ro
 
 ## Mejoras, Ideas, Bugs :
 
-- implementar la acción de banear al jugador.
+- Resolver el casteo que se hace implicitamente cuando se devuelve el objeto que el parser obtuvo. 
 
-- aclarar bien las abstracciones que intentan representar *IFindPlayer*, *IFindPlayer*.
+- Añadirle algunos efectos predeterminados a los jugadores, para que el ganador de una partida pueda obtener algunos efectos de los jugadores que perdieron
+
+- Realizar capturas de pantalla.
+
+- Seria ideal que cada acción predefinida tuviera una inerfaz a través de la cual definiera como parsearla, de esta forma el Parser no tuviese que saber cual es la acción específica que está parseando como lo hace en este momento.
