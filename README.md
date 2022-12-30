@@ -30,18 +30,21 @@ En tu turno debes escribir que Decisión decides realizar, las posibles decision
 
 ```bash
 ├── ClassLibrary
-│   ├── Cartas
-│   ├── Contexto
-│   ├── Decision
-│   ├── Hand
-│   ├── Manager
-│   ├── Minilenguaje
-│   ├── Players
-│   ├── Ranks
-│   ├── Ronda
-│   ├── Tests
-│   └── Tools
-├── Game
+│   ├── Cartas
+│   ├── Contexto
+│   ├── Decision
+│   ├── Hand
+│   ├── Manager
+│   ├── Minilenguaje
+│   │   ├── Lexer
+│   │   ├── Parser
+│   │   └── PredefinedActions
+│   ├── Players
+│   ├── Ranks
+│   ├── Ronda
+│   ├── Tests
+│   └── Tools
+└── Game
 ```
 
 ## Game:
@@ -74,7 +77,7 @@ La clase Manager se encarga de recibir toda la configuración que el usuario des
 
 ### MiniLenguaje:
 
-Contiene la implementación de los *efectos* en nuestro juego. El lenguaje se base en acciones que pueden retornar ya sea un *jugador*, una *carta*,  o *void*. Un ejemplo de efecto en nuestro lenguaje sería el siguiente:
+Contiene la implementación de los *efectos* en nuestro juego. El lenguaje se base en acciones que pueden retornar ya sea un *jugador*, una *carta*,  o *void* (no está limitado a estos tipos). Un ejemplo de efecto en nuestro lenguaje sería el siguiente:
 
 ```bash
 ( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazonrojo ] {Jugador  PC}] {Apuesta mayorapostador}) 
@@ -89,27 +92,33 @@ El ejemplo anterior ejecuta la acción de robarle la carta al jugador *PC* de ma
 Cada acción es definida entre parentésis,  primero contiene su nombre , después se le pasan los argumentos, una expresión dentro de [ ] al evaluarse devolverá una carta mientras que otra dentro de {} devolverá un jugador. Como se puede observar en el ejemplo dentro de [] hay una acción, esto es posible ya que esta devuelve una carta. Pero también existe syntax como:
 
 ```bash
-Valor mayor && Suit corazonrojo 
+[Valor mayor && Suit corazonrojo] 
 ```
 
-Esto representa una descripción literal del objeto, en este caso una carta, que debe satisfacer las dos descripciones unarias anteriores, cada descripción unaria va a estar dada por un Objeto escrito con letra mayúscula y una palabra que describe a dicho objeto con letra minúscula. Las posibles Objetos están predefinidos en nuestro lenguaje a igual que las palabras con los que los describimos.
+Esto representa una descripción literal del objeto, en este caso una carta, que debe satisfacer las dos descripciones unarias anteriores, cada descripción unaria va a estar dada por un Objeto escrito con letra mayúscula y una palabra que describe a dicho objeto con letra minúscula. Cada estructura de descripción literal define los objetos que entiende y sus descripciones, en el caso de Carta posee definido los objetos *Valor* y *Suit*, cada uno, respectivamente posee en sus descripciones definido a *mayor* y *corazonrojo*.
 
-Finalmente como dependemos de las acciones y sintaxis predefinidos he aquí un árbol de lo que es posible hacer con cada una. Internamente ambos *lexer* y *parser* están definidos teniendo en cuenta la extensibilidad en el sentido de que si se desea añadir una  nueva acción predefinida a los efectos es posible realizarlo, sobre esto leer [Action.md](./Action.md) . Aclaro que esto no se refiere a las acciones que puede realizar el usuario, estas son las que pueda realizar a través de las acciones predefinidas, anteriormente usando descripciones literales o composición. 
+Finalmente como dependemos de las acciones y sintaxis predefinidos he aquí un árbol de lo que es posible hacer con cada una. Internamente ambos *lexer* y *parser* están definidos teniendo en cuenta la extensibilidad en el sentido de que si se desea añadir una  nueva acción predefinida a los efectos es posible realizarlo, sobre esto leer [Action.md](./Action.md) . Aclaro que esto no se refiere a las acciones que puede realizar el usuario, estas son las que pueda realizar a través de las accionespredefinidas, anteriormente usando descripciones literales o composición. 
 
 ```bash
 ├── Acciones ()
 │   ├── Void
 │   │    ├── $añadircarta
+│   │    ├── $banearjugador
 │   ├── Carta
 │   │    ├── $robarcarta
 │   ├── Jugador
-│   │    
+│   │    ├── 
 ├── Descripciones
 │   ├── Carta []
 │   │    ├── Valor
 │   │    │   ├── >2, <3, mayor, menor, 1,2,3 ...
 │   │    ├── Suit
 │   │    │   ├── trebol, pica, ...
+│   ├── Hand ¿?
+│   │    ├── Valor
+│   │    │   ├── >2, <3, mayor, menor, 
+│   │    ├── Rank
+│   │    │   ├── trio, color, ...
 │   ├── Player {}
 │   │    ├── Jugador
 │   │    │   ├── nombre del player
