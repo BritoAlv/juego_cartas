@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 namespace Poker;
-public abstract class Player : Ideable, IApostador, IEqualityComparer<Player>
+public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>
 {
     public string Id { get; }
     internal int Dinero { get; set; }
@@ -10,7 +10,7 @@ public abstract class Player : Ideable, IApostador, IEqualityComparer<Player>
     {
         get
         {
-            if (_hand is  null)
+            if (_hand is null)
             {
                 throw new Exception("IDK");
             }
@@ -46,9 +46,4 @@ public abstract class Player : Ideable, IApostador, IEqualityComparer<Player>
     }
 
     public List<int> Apuestas { get; set; } = new List<int>();
-    protected Player(string id, int dinero)
-    {
-        Id = id;
-        Dinero = dinero;
-    }
 }

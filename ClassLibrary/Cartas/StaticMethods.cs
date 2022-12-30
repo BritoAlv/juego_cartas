@@ -1,10 +1,8 @@
 namespace Poker;
-
-public class Literal_Describe_Card : LiteralDescribe<Card>
+public partial class Card : ICloneable, IDescribable<Card>, IEqualityComparer<Card>
 {
-    public Literal_Describe_Card(Token open_brace, LiteralArguments literalArguments, Token closed_brace) : base(open_brace, literalArguments, closed_brace){}
-    public override string valor => "Literal Describe Card: ";
-    private Func<IEnumerable<Card>, IEnumerable<Card>> Card_Func_Suit(string text)
+    public static string Valor => "Carta";
+    private static Func<IEnumerable<Card>, IEnumerable<Card>> Card_Func_Suit(string text)
     {
         switch (text)
         {
@@ -19,7 +17,7 @@ public class Literal_Describe_Card : LiteralDescribe<Card>
         }
         return x => Enumerable.Empty<Card>();
     }
-    private Func<IEnumerable<Card>, IEnumerable<Card>> Card_Func_Valor(string text)
+    private static Func<IEnumerable<Card>, IEnumerable<Card>> Card_Func_Valor(string text)
     {
         if (text.StartsWith(">"))
         {
@@ -45,7 +43,7 @@ public class Literal_Describe_Card : LiteralDescribe<Card>
         }
         return x => Enumerable.Empty<Card>();
     }
-    public override Func<IEnumerable<Card>, IEnumerable<Card>> get_T_func(UnaryDescriptionArgument unary)
+    public static Func<IEnumerable<Card>, IEnumerable<Card>> get_T_func(UnaryDescriptionArgument unary)
     {
         var identifier = unary.Objeto.Text;
         switch (identifier)

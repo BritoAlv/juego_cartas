@@ -1,9 +1,15 @@
 namespace Poker;
-public class Literal_Describe_Player : LiteralDescribe<Player>
+public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>
 {
-    public Literal_Describe_Player(Token open_llave, LiteralArguments literalArguments, Token closed_llave) : base(open_llave, literalArguments, closed_llave) { }
-    public override string valor => "Literal Describe Player";
-    public override Func<IEnumerable<Player>, IEnumerable<Player>> get_T_func(UnaryDescriptionArgument unary)
+    public static string Valor => "Jugador";
+
+    protected Player(string id, int dinero)
+    {
+        Id = id;
+        Dinero = dinero;
+    }
+
+    public static Func<IEnumerable<Player>, IEnumerable<Player>> get_T_func(UnaryDescriptionArgument unary)
     {
         var identifier = unary.Objeto.Text;
         switch (identifier)
@@ -20,7 +26,7 @@ public class Literal_Describe_Player : LiteralDescribe<Player>
                 return x => new List<Player>();
         }
     }
-    private Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Mano(string text)
+    private static Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Mano(string text)
     {
         if (text == "mayor")
         {
@@ -43,11 +49,11 @@ public class Literal_Describe_Player : LiteralDescribe<Player>
         return x => x.Where(m => m.Id == text);
     }
 
-    private Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Jugador(string text)
+    private static Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Jugador(string text)
     {
         return x => x.Where(m => m.Id == text);
     }
-    private Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Dinero(string text)
+    private static Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Dinero(string text)
     {
         if (text == "mayor")
         {
@@ -73,7 +79,7 @@ public class Literal_Describe_Player : LiteralDescribe<Player>
         return x => Enumerable.Empty<Player>();
     }
 
-    private Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Apuesta(string text)
+    private static Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Apuesta(string text)
     {
         if (text == "mayorapostador")
         {

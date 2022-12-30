@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using NeoSmart.Unicode;
 namespace Poker;
 
-public class Hand : IComparable<Hand>, IEqualityComparer<Hand>
+public partial class Hand : IComparable<Hand>, IDescribable<Hand>, IEqualityComparer<Hand>
 {
     public override string ToString()
     {
@@ -30,6 +30,9 @@ public class Hand : IComparable<Hand>, IEqualityComparer<Hand>
         }
     }
     public Scorer Scorer { get; }
+
+    public static string Valor => "Mano";
+
     public int CompareTo(Hand? other)
     {
         if (other is null)

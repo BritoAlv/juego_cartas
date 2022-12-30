@@ -43,46 +43,48 @@ public class Parser
         var verb_action = LookAhead(1);
         return ParseAction(verb_action.Text);
     }
-    // differentiate between parse an action player or an action card.
+
     private Accion ParseAction(string v)
     {
         var open_parenthesis = Match(Tipo.ParéntesisAbierto);
         var signature = Match(Tipo.Accion);
         if (v == "$añadircarta")
         {
-            return new AñadirCarta(open_parenthesis, signature, ParseArgumentCard(), ParseArgumentPlayer(), Match(Tipo.ParéntesisCerrado));
+            return new AñadirCarta(open_parenthesis, signature, ParseArgument<Card>(), ParseArgument<Player>(), Match(Tipo.ParéntesisCerrado));
         }
         if (v == "$robarcarta")
         {
-            return new RobarCarta(open_parenthesis, signature, ParseArgumentCard(), ParseArgumentPlayer(), Match(Tipo.ParéntesisCerrado));
+            return new RobarCarta(open_parenthesis, signature, ParseArgument<Card>(), ParseArgument<Player>(), Match(Tipo.ParéntesisCerrado));
         }
         if (v == "$banearjugador")
         {
-            return new BanearJugador(open_parenthesis, signature, ParseArgumentPlayer(), Match(Tipo.ParéntesisCerrado));
+            return new BanearJugador(open_parenthesis, signature, ParseArgument<Player>(), Match(Tipo.ParéntesisCerrado));
         }
-        throw new Exception("Un acción debe empezar especificando el tipo de retorno");
+        throw new Exception($"El nombre de la acción {signature.Text} no se encontró entre los nombres predefinidos");
     }
-    private Literal_Describe_Card ParseLiteralCard()
+
+    private IArgument<T> ParseArgument<T>() where T: IDescribable<T>, IEqualityComparer<T>
+    {
+        if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
+        {
+            var open = Current;
+            position++;
+            var find_T = ParseAction(LookAhead(1).Text);
+            var closed = Match(Tipo.LLaveCerrada);
+            position++;
+            return (IArgument<T>)find_T;
+        }
+        else
+        {
+            return ParseLiteral<T>();
+        }
+    }
+    private LiteralDescribe<T> ParseLiteral<T>() where T: IDescribable<T>, IEqualityComparer<T>
     {
         Token open_brace = Match(Tipo.CorcheteAbierto);
         var tokens_description = ParseDescriptionTokens(Tipo.CorcheteCerrado);
         Token closed_brace = Match(Tipo.CorcheteCerrado);
-        return new Literal_Describe_Card(open_brace, new LiteralArguments(tokens_description), closed_brace);
-    }
-
-    private Literal_Describe_Hand ParseLiteralHand()
-    {
-        Token open_question = Match(Tipo.QuestionAbierta);
-        var tokens_description = ParseDescriptionTokens(Tipo.CorcheteCerrado);
-        Token closed_question = Match(Tipo.QuestionCerrada);
-        return new Literal_Describe_Hand(open_question, new LiteralArguments(tokens_description), closed_question);
-    }
-    private Literal_Describe_Player ParseLiteralPlayer()
-    {
-        Token open_llave = Match(Tipo.LLaveAbierta);
-        var tokens_description = ParseDescriptionTokens(Tipo.LLaveCerrada);
-        Token closed_llave = Match(Tipo.LLaveCerrada);
-        return new Literal_Describe_Player(open_llave, new LiteralArguments(tokens_description), closed_llave);
+        return new LiteralDescribe<T>(open_brace, new LiteralArguments(tokens_description), closed_brace);
     }
     private List<Token> ParseDescriptionTokens(Tipo tipo)
     {
@@ -93,33 +95,5 @@ public class Parser
             position++;
         }
         return tokens_description;
-    }
-    private IArgument<Player> ParseArgumentPlayer()
-    {
-        if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
-        {
-            var open_llave = Match(Tipo.LLaveAbierta);
-            var find_player = ParseAction(LookAhead(1).Text);
-            var closed_llave = Match(Tipo.LLaveCerrada);
-            return (IArgument<Player>)find_player;
-        }
-        else
-        {
-            return ParseLiteralPlayer();
-        }
-    }
-    private IArgument<Card> ParseArgumentCard()
-    {
-        if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
-        {
-            var open_corchete = Match(Tipo.CorcheteAbierto);
-            var find_card = ParseAction(LookAhead(1).Text);
-            var closed_corchete = Match(Tipo.CorcheteCerrado);
-            return (IArgument<Card>)find_card;
-        }
-        else
-        {
-            return ParseLiteralCard();
-        }
     }
 }

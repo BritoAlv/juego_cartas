@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 namespace Poker;
-public class Card : ICloneable, IEqualityComparer<Card>
+public partial class Card : ICloneable, IDescribable<Card>, IEqualityComparer<Card>
 {
     public Card(CardValue value, CardSuit suit)
     {
@@ -9,6 +9,7 @@ public class Card : ICloneable, IEqualityComparer<Card>
         Suit = suit;
     }
     public CardValue Value { get; }
+    
     public CardSuit Suit { get; }
     public object Clone()
     {
@@ -57,4 +58,5 @@ public class Card : ICloneable, IEqualityComparer<Card>
         }
         return (int)this.Value;
     }
+
 }
