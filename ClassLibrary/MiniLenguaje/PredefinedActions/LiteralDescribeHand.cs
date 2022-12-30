@@ -1,5 +1,4 @@
 namespace Poker;
-
 public class LiteralDescribeHand : IArgument<Hand>
 {
     private readonly Token open_Question;
@@ -10,11 +9,9 @@ public class LiteralDescribeHand : IArgument<Hand>
         LiteralArguments = literalArguments;
         Closed_Question = closed_question;
     }
-
     public string valor => "Literal Describe Hand: ";
     public LiteralArguments LiteralArguments { get; }
     public Token Closed_Question { get; }
-
     public IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return open_Question;
@@ -33,7 +30,6 @@ public class LiteralDescribeHand : IArgument<Hand>
         }
         throw new Exception("No se encontró la mano");
     }
-
     private Func<IEnumerable<Hand>, IEnumerable<Hand>> Hand_Func_Rank(string text)
     {
         return x => x.Where(x => x.rank.Id == text);

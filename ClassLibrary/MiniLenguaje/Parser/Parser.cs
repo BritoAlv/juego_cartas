@@ -48,13 +48,17 @@ public class Parser
     {
         var open_parenthesis = Match(Tipo.ParéntesisAbierto);
         var signature = Match(Tipo.Accion);
-        if (v.StartsWith("$añadircarta"))
+        if (v == "$añadircarta")
         {
             return new AñadirCarta(open_parenthesis, signature, ParseArgumentCard(), ParseArgumentPlayer(), Match(Tipo.ParéntesisCerrado));
         }
-        if (v.StartsWith("$robarcarta"))
+        if (v == "$robarcarta")
         {
             return new RobarCarta(open_parenthesis, signature, ParseArgumentCard(), ParseArgumentPlayer(), Match(Tipo.ParéntesisCerrado));
+        }
+        if (v == "$banearjugador")
+        {
+            return new BanearJugador(open_parenthesis, signature, ParseArgumentPlayer(), Match(Tipo.ParéntesisCerrado));
         }
         throw new Exception("Un acción debe empezar especificando el tipo de retorno");
     }
