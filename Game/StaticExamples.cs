@@ -23,9 +23,9 @@ public class Test
         Manager manager = new Manager(scorer, context);
         manager.SimulateGame();
     }
-    private static void TestParser()
+    public static void TestParser()
     {
-        Lexer lexer = new Lexer("( $void_añadircarta [ ( $carta_robar [Valor mayor && Suit corazonrojo ] {Jugador Alvaro}) ]  {Bet mayor })");
+        Lexer lexer = new Lexer("( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazonrojo ] {Jugador Alvaro}) ]  {Bet mayor })");
         List<Token> tokens = lexer.Lex();
         Parser parser = new Parser(tokens);
         var tree = parser.Parse();

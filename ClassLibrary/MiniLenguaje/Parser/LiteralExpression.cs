@@ -1,5 +1,5 @@
 namespace Poker;
-public abstract class LiteralExpression : Iprintable
+public class LiteralExpression : Iprintable
 {
     public LiteralExpression(Token open, LiteralArguments arguments, Token closed)
     {
@@ -10,7 +10,7 @@ public abstract class LiteralExpression : Iprintable
     public Token Open { get; }
     public LiteralArguments Arguments { get; }
     public Token Closed { get; }
-    public abstract string valor { get; }
+    public string valor => "Argumentos: ";
     public virtual IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open;

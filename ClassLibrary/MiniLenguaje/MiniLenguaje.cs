@@ -3,10 +3,8 @@ public class Mini_Lenguaje
 {
     internal Mini_Lenguaje(Player A, IGlobal_Contexto contexto)
     {
-        this.A = A;
         Contexto = contexto;
     }
-    private Player A { get; }
     private IGlobal_Contexto Contexto { get; }
     public void Evaluate(string? line)
     {
@@ -19,13 +17,21 @@ public class Mini_Lenguaje
         Lexer lexer = new Lexer(line);
         List<Token> tokens = lexer.Lex();
         Parser parser = new Parser(tokens);
-        var tree = parser.Parse();
+        var tree = (Return<bool>)parser.Parse();
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine(line);
         Console.ResetColor();
         print_tree.print(tree);
-        Evaluator evaluator = new Evaluator(tree, Contexto);
-        evaluator.Evaluate();
+        try
+        {
+            tree.Get_Object(Enumerable.Empty<bool>(), Contexto);
+            Console.WriteLine("El efecto se pudo realizar sin problemas");
+        }
+        catch (System.Exception)
+        {
+            Console.WriteLine("Hubo un problema con el efecto");
+        }
+        
     }
 }
 

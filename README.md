@@ -77,7 +77,7 @@ La clase Manager se encarga de recibir toda la configuración que el usuario des
 Contiene la implementación de los *efectos* en nuestro juego. El lenguaje se base en acciones que pueden retornar ya sea un *jugador*, una *carta* o *void*. Un efecto en nuestro lenguaje sería el siguiente:
 
 ```bash
-( $void_añadircarta [ ( $carta_robar [Valor mayor && Suit corazonrojo ] {Jugador  PC}] {Bet mayorapostador}) 
+( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazonrojo ] {Jugador  PC}] {Bet mayorapostador}) 
 ```
 
 ###### Lo que nos permite realizar efectos complejos aparte de todas las posibles descripciones literales descritas a continuación es la posibilidad de componer acciones.
@@ -86,7 +86,7 @@ El ejemplo anterior ejecuta la acción de robarle la carta al jugador *PC* de ma
 
 #### Syntaxis:
 
-Cada acción es definida entre parentésis,  primero contiene su nombre definido como : $tiporetorno_nombre, después se le pasan los argumentos, una expresión dentro de [ ] al evaluarse devolverá una carta mientras que otra dentro de {} devolverá un jugador. Como se puede observar en el ejemplo dentro de [] hay una acción, esto es posble ya que esta devuelve una carta. Pero también existe syntaxis como:
+Cada acción es definida entre parentésis,  primero contiene su nombre , después se le pasan los argumentos, una expresión dentro de [ ] al evaluarse devolverá una carta mientras que otra dentro de {} devolverá un jugador. Como se puede observar en el ejemplo dentro de [] hay una acción, esto es posble ya que esta devuelve una carta. Pero también existe syntaxis como:
 
 ```bash
 Valor mayor && Suit corazonrojo 
@@ -97,11 +97,11 @@ Esto representa una descripción literal del objeto, en este caso una carta, que
 Finalmente como dependemos de las acciones y sintaxis predefinidos he aquí un aŕbol de lo que es posible hacer con cada una.
 
 ```bash
-├── Acciones
+├── Acciones ()
 │   ├── Void
-│   │    ├── $void_añadircarta
+│   │    ├── $añadircarta
 │   ├── Carta
-│   │    ├── $carta_robar
+│   │    ├── $robarcarta
 │   ├── Jugador
 │   │    
 ├── Descripciones
@@ -133,6 +133,6 @@ Define la lógica de lo que ocurre en una ronda de nuestro juego, además una ro
 
 ## Mejoras, Ideas, Bugs :
 
-- implementar la acción de banar al jugador.
+- implementar la acción de banear al jugador.
 
 - aclarar bien las abstracciones que intentan representar *IFindPlayer*, *IFindPlayer*.
