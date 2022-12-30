@@ -5,16 +5,16 @@ public class Scorer
     public Scorer(params Rank[] some_ranks)
     {
         Rankings = new List<Rank>();
-        Rankings.Add(new EscaleraColorRank("Escalera-Color"));
-        Rankings.Add(new FourKindRank("Cuatro Tipo"));
-        Rankings.Add(new FullRank("Full"));
-        Rankings.Add(new EscaleraRank("Escalera"));
-        Rankings.Add(new ColorRank("Color"));
-        Rankings.Add(new TrioRank("Un Trio"));
-        Rankings.Add(new ThreePairRank("Tres Parejas"));
-        Rankings.Add(new TwoPairRank("Dos Parejas"));
-        Rankings.Add(new PairRank("Una Pareja"));
-        Rankings.Add(new CartaAltaRank("Carta Alta"));
+        Rankings.Add(new EscaleraColorRank("escaleracolor"));
+        Rankings.Add(new FourKindRank("cuatrotipo"));
+        Rankings.Add(new FullRank("full"));
+        Rankings.Add(new EscaleraRank("escalera"));
+        Rankings.Add(new ColorRank("color"));
+        Rankings.Add(new TrioRank("trio"));
+        Rankings.Add(new ThreePairRank("tresparejas"));
+        Rankings.Add(new TwoPairRank("dosparejas"));
+        Rankings.Add(new PairRank("pareja"));
+        Rankings.Add(new CartaAltaRank("cartaalta"));
         foreach (var rank in some_ranks)
         {
             Rankings.Add(rank);

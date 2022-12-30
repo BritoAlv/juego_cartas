@@ -65,6 +65,14 @@ public class Parser
         Token closed_brace = Match(Tipo.CorcheteCerrado);
         return new LiteralDescribeCard(open_brace, new LiteralArguments(tokens_description), closed_brace);
     }
+
+    private LiteralDescribeHand ParseLiteralHand()
+    {
+        Token open_question = Match(Tipo.QuestionAbierta);
+        var tokens_description = ParseDescriptionTokens(Tipo.CorcheteCerrado);
+        Token closed_question = Match(Tipo.QuestionCerrada);
+        return new LiteralDescribeHand(open_question, new LiteralArguments(tokens_description), closed_question);
+    }
     private LiteralDescribePlayer ParseLiteralPlayer()
     {
         Token open_llave = Match(Tipo.LLaveAbierta);

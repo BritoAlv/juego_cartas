@@ -1,7 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using NeoSmart.Unicode;
 namespace Poker;
 
-public class Hand : IComparable<Hand>
+public class Hand : IComparable<Hand>, IEqualityComparer<Hand>
 {
     public override string ToString()
     {
@@ -71,5 +72,19 @@ public class Hand : IComparable<Hand>
             return comparer.All(x => x == true);
         }
         return false;
+    }
+
+    public bool Equals(Hand? x, Hand? y)
+    {
+        if (x is null || y is null)
+        {
+            return false;
+        }
+        return x.Igual(y);
+    }
+
+    public int GetHashCode([DisallowNull] Hand obj)
+    {
+        return obj.Cards.GetHashCode();
     }
 }

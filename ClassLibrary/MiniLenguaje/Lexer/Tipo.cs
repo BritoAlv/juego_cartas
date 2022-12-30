@@ -13,5 +13,7 @@ public enum Tipo
     Accion,
     Objeto,
     And,
-    Descripcion
+    Descripcion,
+    QuestionAbierta,
+    QuestionCerrada
 }
