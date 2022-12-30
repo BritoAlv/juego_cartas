@@ -43,22 +43,18 @@ public class Parser
         var verb_action = LookAhead(1);
         return ParseAction(verb_action.Text);
     }
-
     // differentiate between parse an action player or an action card.
     private Accion ParseAction(string v)
     {
         var open_parenthesis = Match(Tipo.ParéntesisAbierto);
         var signature = Match(Tipo.Accion);
-        var find_card = ParseArgumentCard();
-        var find_player = ParseArgumentPlayer();
-        var closed_parenthesis = Match(Tipo.ParéntesisCerrado);
         if (v.StartsWith("$añadircarta"))
         {
-            return new AñadirCarta(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
+            return new AñadirCarta(open_parenthesis, signature, ParseArgumentCard(), ParseArgumentPlayer(), Match(Tipo.ParéntesisCerrado));
         }
         if (v.StartsWith("$robarcarta"))
         {
-            return new RobarCarta(open_parenthesis, signature, find_card, find_player, closed_parenthesis);
+            return new RobarCarta(open_parenthesis, signature, ParseArgumentCard(), ParseArgumentPlayer(), Match(Tipo.ParéntesisCerrado));
         }
         throw new Exception("Un acción debe empezar especificando el tipo de retorno");
     }
