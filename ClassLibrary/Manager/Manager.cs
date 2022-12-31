@@ -35,7 +35,10 @@ public class Manager
         var winner = Global_Contexto.PlayerManager.Get_Player_By_Pos(0);
         foreach (var player in Global_Contexto.PlayerManager.Players.Where(x => x.Id != winner.Id))
         {
-            winner.add_efecto(player.remove_efecto());
+            if (player.get_efectos.Count > 0)
+            {
+                winner.add_efecto(player.remove_efecto());
+            }
         }
         Tools.ShowColoredMessage($"Winner is:   {winner.Id} \n", ConsoleColor.DarkGray);
         Global_Contexto.PlayerManager.Filtro_Partida = new List<PlayerManager.Filtrar>();

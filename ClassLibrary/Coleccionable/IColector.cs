@@ -5,36 +5,36 @@ public interface IColector
     void add_efecto(string efecto);
     string remove_efecto();
 }
-public class JsonColector : IColector
+public class Colector : IColector
 {
-    public List<string> get_efectos{ get; }
+    public List<string> get_efectos
+    {
+        get
+        {
+            return File.ReadAllLines(pathID).ToList();
+        }
+    }
     private string pathID;
-    public JsonColector(string id)
+    public Colector(string id)
     {
         string path = Directory.GetCurrentDirectory();
         path = Path.Join(path, "..", "Effects");
-        pathID = Path.Join(path, id + ".json");
+        pathID = Path.Join(path, id + ".txt");
         //Si no existe el archivo lo crea
-        if (File.Exists(pathID))
+        if (!File.Exists(pathID))
         {
-            get_efectos = File.ReadAllLines(pathID).ToList();
-        }
-        else
-        {
-            get_efectos = new List<string>();
             File.Create(pathID);
         }
     }
     public void add_efecto(string efecto)
     {
-        get_efectos.Add(efecto);
-        File.WriteAllLines(pathID, get_efectos);
+        File.AppendAllLines(pathID, new List<string> { efecto });
     }
     public string remove_efecto()
     {
+        var lines = System.IO.File.ReadAllLines(pathID);
         string effect = get_efectos[get_efectos.Count - 1];
-        get_efectos.Remove(effect);
-        File.WriteAllLines(pathID, get_efectos);
+        System.IO.File.WriteAllLines(pathID, lines.Take(lines.Length - 1).ToArray());
         return effect;
     }
 }

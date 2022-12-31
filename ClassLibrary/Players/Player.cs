@@ -3,13 +3,13 @@ using System.Diagnostics.CodeAnalysis;
 namespace Poker;
 public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>, IColector
 {
-    public JsonColector Colector { get; private set; }
+    public IColector Colector { get; private set; }
     public List<string> get_efectos => Colector.get_efectos;
     protected Player(string id, int dinero)
     {
         Id = id;
         Dinero = dinero;
-        Colector = new JsonColector(id);
+        Colector = new Colector(id);
     }
     public string Id { get; }
     internal int Dinero { get; set; }
