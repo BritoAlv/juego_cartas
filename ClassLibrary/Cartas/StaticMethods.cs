@@ -13,7 +13,7 @@ public partial class Card : ICloneable, IDescribable<Card>, IEqualityComparer<Ca
             case "pica":
                 return x => x.Where(m => m.Suit == CardSuit.Pica);
             case "trebol":
-                return x => x.Where(m => m.Suit == CardSuit.Pica);
+                return x => x.Where(m => m.Suit == CardSuit.Trébol);
         }
         return x => Enumerable.Empty<Card>();
     }

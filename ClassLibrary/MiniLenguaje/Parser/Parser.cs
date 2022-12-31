@@ -42,6 +42,7 @@ public class Parser
         {
             position++;
             var find_T = Factory.CreateAction(LookAhead(1).Text, this);
+            position++;
             return (IArgument<T>)find_T;
         }
         else

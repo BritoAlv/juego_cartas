@@ -21,7 +21,7 @@ internal static class Extensor
                 return Emoji.RedHeart;
             case CardSuit.Diamante:
                 return Emoji.DiamondSuit;
-            case CardSuit.Trébol:
+            case CardSuit.Pica:
                 return Emoji.SpadeSuit;
             default:
                 return Emoji.ClubSuit;

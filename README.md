@@ -49,12 +49,19 @@ En tu turno debes escribir que Decisión decides realizar, las posibles decision
 │   ├── Ronda
 │   ├── Tests
 │   └── Tools
+├── Effects
+├── Examples
 └── Game
+
 ```
 
 ## Game:
 
 La carpeta *Game* representa una aplicación de consola que apoyada en la librería de clases ejecuta el juego. Además es posible definir nuevas clases y objetos para extender las reglas / jugabilidad del juego, según cada estructura del juego lo permita.
+
+## Examples:
+
+Contiene ejemplos para mostrar el uso de efectos. 
 
 # Estructura de la librería de clases:
 
@@ -147,8 +154,10 @@ Define la lógica de lo que ocurre en una ronda de nuestro juego, además una ro
 
 ## Mejoras, Ideas, Bugs :
 
-- El principal problema actual es que el parser solamente soporta devolver acciones de tipo *bool* dado que tengo que castear el objeto que devuelve el parser a tipo *bool*, esto no es lo correcto, además se supone que el parser sea lo menos dependiente posible de las acciones predefinidas, esto está casi hecho excepto por el problema descrito anteriormente que lo impide.
+- Muy pocas acciones predefinidas, actualmente 3, en teoría añadir una nueva acción predefinida debe ser implementar la clase abstracta especificada, y añadirla a la *Factory*.
 
-- Más capturas de pantalla mostrando la realización de los efectos a través del lenguaje finalmente.
+- Añadir más ejemplos de como funcionan los efectos.
 
-- Acabar de implementar que los efectos que pueda usar un jugador sean los que el ha coleccionado hasta el momento, y no algunos random que el pueda escribir como sucede ahora.
+- Añadir condiciones de activación a los efectos, la idea sería añadir a nuestro *parser* la estructura de *if*, else, donde tendríamos tres efectos, uno sería la condición, si el efecto ( condición) se realiza satisfactoriamente se realiza el efecto dentro del *if*, en caso contrario el especificado por el *else*
+
+- Mejorar la estrategia de el jugador de la computadora, en este punto es muy rústico sobre como juega.
