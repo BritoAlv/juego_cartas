@@ -103,7 +103,7 @@ public class Test
     }
     public static void TestingLexerLinear()
     {
-        Lexer lexer = new Lexer("( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazón rojo] {Jugador ALVARO}) ]  {Bet mayor })");
+        Lexer lexer = new Lexer("( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazón rojo] {Jugador ALVARO}) ]  {Apuesta mayor })");
         List<Token> tokens = lexer.Lex();
         foreach (var token in tokens)
         {
