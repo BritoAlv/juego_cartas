@@ -4,7 +4,7 @@ Cuando una action necesita como argumento un objeto *T*, ha de ser un objeto que
 
 # Sobre los literalDescribe:
 
-Esto se refiere a cuando queremos describir literalmente cierta estructura de nuestro juego, ya sea un jugador o una carta, esta debe implementar la clase abstracta *LiteralDescribe<T>* donde *T* es el objeto que deseamos describir . Cada literalDescribe debe contener la implementación de como evalúa los objetos que lo describen. O sea los literalDescribe poseen internamente un mini-parser. Los literalDescribe (internamente) usan el source obtenido a través de la interfaz *IArgument<T>* para buscar el objeto descrito en cuestión. 
+Esto se refiere a cuando queremos describir literalmente cierta estructura de nuestro juego, ya sea un jugador o una carta, esta debe implementar la clase abstracta *LiteralDescribe<T>* donde *T* es el objeto que deseamos describir , por lo que debe implementar la interfaz *IDescribable* .  O sea los literalDescribe poseen internamente un mini-parser aportado por la implementación del objeto *T*. Los literalDescribe (internamente) usan el source obtenido a través de la interfaz *IArgument<T>* para buscar el objeto descrito en cuestión. 
 
 # Como añadir nuevas acciones a nuestro lenguaje:
 

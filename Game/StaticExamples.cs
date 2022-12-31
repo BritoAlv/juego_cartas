@@ -28,7 +28,7 @@ public class Test
         Lexer lexer = new Lexer("( $añadircarta [ ( $robarcarta [Valor mayor && Suit corazonrojo ] {Jugador Alvaro}) ]  {Apuesta mayor })");
         List<Token> tokens = lexer.Lex();
         Parser parser = new Parser(tokens);
-        var tree = parser.Parse();
+        var tree = (Return<bool>)parser.Parse();
         print_tree.print(tree);
     }
     public static void RandomComputerPlay()

@@ -16,20 +16,14 @@ public class Mini_Lenguaje
         // get tokens from the string.
         Lexer lexer = new Lexer(line);
         List<Token> tokens = lexer.Lex();
-        if (tokens.Count <= 1)
-        {
-            Console.WriteLine("Hubo un problema con el efecto");
-            return;
-        }
         Parser parser = new Parser(tokens);
-        var tree = (Return<bool>)parser.Parse();
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine(line);
         Console.ResetColor();
-        print_tree.print(tree);
+        var tree = parser.Parse();
         try
         {
-            tree.Get_Object(Enumerable.Empty<bool>(), Contexto);
+            ((Return<bool>)tree).Get_Object(Enumerable.Empty<bool>(), Contexto);
             Console.WriteLine("El efecto se pudo realizar sin problemas");
         }
         catch (System.Exception)

@@ -1,13 +1,8 @@
 namespace Poker;
-public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>
+public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>, IColector
 {
     public static string Valor => "Jugador";
 
-    protected Player(string id, int dinero)
-    {
-        Id = id;
-        Dinero = dinero;
-    }
 
     public static Func<IEnumerable<Player>, IEnumerable<Player>> get_T_func(UnaryDescriptionArgument unary)
     {

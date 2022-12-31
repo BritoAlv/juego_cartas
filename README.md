@@ -5,9 +5,13 @@
  https://edcharbeneau.com/csharp-functional-workshop-instructions/
  https://github.com/terrajobst/minsk/
 
+## Como colección:
+
+Cuando un jugador gana una partida recibe un efecto de cada uno de los demás jugadores, añadiendo a su colección de efectos disponibles estos para un próximo juego.
+
 ## Run
 
-This is implemented in NET 7.0 (no reason to use it by now ) . 
+Está implementado en NET 7.0 para hacer uso de la nueva *feature* de que las clases abstractas genéricas pueden definir métodos estáticos virtuales, así es como cada objeto le transmite al parser como interpretarlo, de forma que al añadir una estructura nueva a nuestro juego, tengamos que implementar la clase abstracta requerida a nivel de estructura y no modificar nuestro parser. Para ejecutarlo realizar:
 
 ```bash
 cd Game
@@ -31,6 +35,7 @@ En tu turno debes escribir que Decisión decides realizar, las posibles decision
 ```bash
 ├── ClassLibrary
 │   ├── Cartas
+│   ├── Colector
 │   ├── Contexto
 │   ├── Decision
 │   ├── Hand
@@ -97,7 +102,7 @@ Cada acción es definida entre parentésis,  primero contiene su nombre , despu�
 
 Esto representa una descripción literal del objeto, en este caso una carta, que debe satisfacer las dos descripciones unarias anteriores, cada descripción unaria va a estar dada por un Objeto escrito con letra mayúscula y una palabra que describe a dicho objeto con letra minúscula. Cada estructura de descripción literal define los objetos que entiende y sus descripciones, en el caso de Carta posee definido los objetos *Valor* y *Suit*, cada uno, respectivamente posee en sus descripciones definido a *mayor* y *corazonrojo*.
 
-Finalmente como dependemos de las acciones y sintaxis predefinidos he aquí un árbol de lo que es posible hacer con cada una. Internamente ambos *lexer* y *parser* están definidos teniendo en cuenta la extensibilidad en el sentido de que si se desea añadir una  nueva acción predefinida a los efectos es posible realizarlo, sobre esto leer [Action.md](./Action.md) . Aclaro que esto no se refiere a las acciones que puede realizar el usuario, estas son las que pueda realizar a través de las accionespredefinidas, anteriormente usando descripciones literales o composición. 
+Finalmente como dependemos de las acciones y sintaxis predefinidos he aquí un árbol de lo que es posible hacer con cada una. Internamente ambos *lexer* y *parser* están definidos teniendo en cuenta la extensibilidad en el sentido de que si se desea añadir una  nueva acción predefinida a los efectos es posible realizarlo, sobre esto leer [Action.md](./Action.md) . Aclaro que esto no se refiere a las acciones que puede realizar el usuario, estas son las que pueda realizar a través de las acciones predefinidas, anteriormente usando descripciones literales o composición. 
 
 ```bash
 ├── Acciones ()
@@ -142,10 +147,8 @@ Define la lógica de lo que ocurre en una ronda de nuestro juego, además una ro
 
 ## Mejoras, Ideas, Bugs :
 
-- Resolver el casteo que se hace implicitamente cuando se devuelve el objeto que el parser obtuvo. 
+- El principal problema actual es que el parser solamente soporta devolver acciones de tipo *bool* dado que tengo que castear el objeto que devuelve el parser a tipo *bool*, esto no es lo correcto, además se supone que el parser sea lo menos dependiente posible de las acciones predefinidas, esto está casi hecho excepto por el problema descrito anteriormente que lo impide.
 
-- Añadirle algunos efectos predeterminados a los jugadores, para que el ganador de una partida pueda obtener algunos efectos de los jugadores que perdieron
+- Más capturas de pantalla mostrando la realización de los efectos a través del lenguaje finalmente.
 
-- Realizar capturas de pantalla.
-
-- Seria ideal que cada acción predefinida tuviera una inerfaz a través de la cual definiera como parsearla, de esta forma el Parser no tuviese que saber cual es la acción específica que está parseando como lo hace en este momento.
+- Acabar de implementar que los efectos que pueda usar un jugador sean los que el ha coleccionado hasta el momento, y no algunos random que el pueda escribir como sucede ahora.

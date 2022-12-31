@@ -4,8 +4,10 @@ namespace Poker;
 /// </summary>
 public class Human_Player : Player
 {
+   
     public Human_Player(string id, int dinero) : base(id, dinero)
     {
+        
     }
     public override int realizar_apuesta(IGlobal_Contexto contexto)
     {

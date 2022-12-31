@@ -32,7 +32,12 @@ public class Manager
             Ronda ronda = new Ronda(Scorer, Global_Contexto);
             Global_Contexto.PlayerManager.Set_Active_Players(ronda.Simulate());
         }
-        Tools.ShowColoredMessage($"Winner is: {Global_Contexto.PlayerManager.Get_Player_By_Pos(0).Id} \n", ConsoleColor.DarkGray);
+        var winner = Global_Contexto.PlayerManager.Get_Player_By_Pos(0);
+        foreach (var player in Global_Contexto.PlayerManager.Players.Where(x => x.Id != winner.Id))
+        {
+            winner.add_efecto(player.remove_efecto());
+        }
+        Tools.ShowColoredMessage($"Winner is:   {winner.Id} \n", ConsoleColor.DarkGray);
         Global_Contexto.PlayerManager.Filtro_Partida = new List<PlayerManager.Filtrar>();
     }
 }
