@@ -161,3 +161,5 @@ Define la lógica de lo que ocurre en una ronda de nuestro juego, además una ro
 - Añadir condiciones de activación a los efectos, la idea sería añadir a nuestro *parser* la estructura de *if*, else, donde tendríamos tres efectos, uno sería la condición, si el efecto ( condición) se realiza satisfactoriamente se realiza el efecto dentro del *if*, en caso contrario el especificado por el *else*
 
 - Mejorar la estrategia de el jugador de la computadora, en este punto es muy rústico sobre como juega.
+
+- Añadir más comentarios, (casi que no tiene).
