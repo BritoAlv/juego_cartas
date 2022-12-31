@@ -1,5 +1,5 @@
 namespace Poker;
-public abstract class Return<T> : IArgument<T>, Iprintable
+public abstract class Return<T> : IArgument<T>, Iprintable, IFirst
 {
     protected Return(Token open_parenthesis, Token signature, Token closed_parenthesis)
     {
@@ -17,5 +17,11 @@ public abstract class Return<T> : IArgument<T>, Iprintable
     {
         return Evaluate(contexto);
     }
+
+    public abstract bool Evaluate_Top(IGlobal_Contexto contexto);
 }
 
+public interface IFirst // needs a better name
+{
+    bool Evaluate_Top(IGlobal_Contexto contexto);
+}

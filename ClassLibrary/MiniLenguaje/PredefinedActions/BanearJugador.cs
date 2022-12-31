@@ -15,6 +15,11 @@ public class BanearJugador : Return<bool>
         return true;
     }
 
+    public override bool Evaluate_Top(IGlobal_Contexto contexto)
+    {
+        return Evaluate(contexto);
+    }
+
     public override IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open_Parenthesis;

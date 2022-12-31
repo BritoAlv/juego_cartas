@@ -26,7 +26,7 @@ public class Parser
         }
         return Current;
     }
-    Token Match(Tipo tipo)
+    public Token Match(Tipo tipo)
     {
         if (Current.Tipo == tipo)
         {
@@ -36,23 +36,12 @@ public class Parser
         }
         return new SyntaxToken(Tipo.Wrong, "\0");
     }
-    // public API Parse.
-    public object Parse()
-    {
-        var verb_action = LookAhead(1);
-        return ParseAction(verb_action.Text);
-    }
-    private object ParseAction(string v)
-    {
-        var open_parenthesis = Match(Tipo.ParéntesisAbierto);
-        var signature = Match(Tipo.Accion);
-        return PredefinedActions(v, open_parenthesis, signature);
-    }
-    private IArgument<T> ParseArgument<T>() where T : IDescribable<T>, IEqualityComparer<T>
+    public IArgument<T> ParseArgument<T>() where T : IDescribable<T>, IEqualityComparer<T>
     {
         if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
         {
-            var find_T = ParseAction(LookAhead(2).Text);
+            position++;
+            var find_T = Factory.CreateAction(LookAhead(1).Text, this);
             return (IArgument<T>)find_T;
         }
         else
@@ -83,13 +72,13 @@ public class Parser
         }
         if (text == "{")
         {
-            return Tipo.LLaveAbierta;
+            return Tipo.LLaveCerrada;
         }
         if (text == "¿")
         {
             return Tipo.ParéntesisCerrado;
         }
-        return Tipo.ParéntesisAbierto;
+        return Tipo.Wrong;
     }
 
     private List<Token> ParseDescriptionTokens(Tipo tipo)
@@ -101,23 +90,5 @@ public class Parser
             position++;
         }
         return tokens_description;
-    }
-
-    // add new actions here and how parse its arguments also.
-    private object PredefinedActions(string v, Token open_parenthesis, Token signature)
-    {
-        if (v == "$añadircarta")
-        {
-            return new AñadirCarta(open_parenthesis, signature, ParseArgument<Card>(), ParseArgument<Player>(), Match(Tipo.ParéntesisCerrado));
-        }
-        if (v == "$robarcarta")
-        {
-            return new RobarCarta(open_parenthesis, signature, ParseArgument<Card>(), ParseArgument<Player>(), Match(Tipo.ParéntesisCerrado));
-        }
-        if (v == "$banearjugador")
-        {
-            return new BanearJugador(open_parenthesis, signature, ParseArgument<Player>(), Match(Tipo.ParéntesisCerrado));
-        }
-        throw new Exception($"El nombre de la acción {signature.Text} no se encontró entre los nombres predefinidos");
     }
 }

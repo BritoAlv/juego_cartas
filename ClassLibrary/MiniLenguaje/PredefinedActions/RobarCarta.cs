@@ -15,6 +15,17 @@ public class RobarCarta : Return<Card>
         contexto.Ronda_Contexto.CardsManager.RemoverCarta(player, card);
         return card;
     }
+
+    public override bool Evaluate_Top(IGlobal_Contexto contexto)
+    {
+        var Card = Evaluate(contexto);
+        if (Card is not null)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public override IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open_Parenthesis;

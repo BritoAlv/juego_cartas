@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-
 namespace Poker;
 public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>, IColector
 {
@@ -34,7 +33,6 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
     }
     public abstract IDecision parse_decision(IGlobal_Contexto contexto);
     public abstract int realizar_apuesta(IGlobal_Contexto contexto);
-
     public bool Equals(Player? x, Player? y)
     {
         if (x is null || y is null)
@@ -47,7 +45,6 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
         }
         return false;
     }
-
     public int GetHashCode([DisallowNull] Player obj)
     {
         return obj.Id.GetHashCode();
@@ -56,7 +53,6 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
     {
         Colector.add_efecto(efecto);
     }
-
     public string remove_efecto()
     {
         return Colector.remove_efecto();
