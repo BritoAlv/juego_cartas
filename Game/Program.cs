@@ -5,6 +5,7 @@ public class Program
     {
         // scorer contains rankings by default but a custom rank like dos dos can be added, defaults are poker ones.
         Scorer scorer = new Scorer();
+        scorer.Add_Rank(new TwoTwos("dos dos")); // add custom rank.
 
         // Define PLayers
         Player A = new Human_Player("Barbaro", 120);
@@ -27,14 +28,18 @@ public class Program
         // Define settings for the rounds. 
         Ronda_Context ronda = new Ronda_Context(mini_rondas_contexto);
 
-        // Define settings for the game.
-        Global_Contexto context = new Global_Contexto(ronda, A, B, C);
+        Factory factory = new Factory();
+        factory.AddPredefined
+        (
+            (x, parser) => x == "$intercambiardoscartas" ? new IntercambiarDosCartas(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null
+        );
 
-        
+        // Define settings for the game.
+        Global_Contexto context = new Global_Contexto(ronda, factory, A, B, C);
         Manager manager = new Manager(scorer, context);
 
         manager.SimulateGame();
     }
-
-
 }
+
+

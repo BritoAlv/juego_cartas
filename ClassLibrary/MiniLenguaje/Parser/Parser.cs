@@ -1,11 +1,14 @@
 namespace Poker;
 public class Parser
 {
-    public Parser(List<Token> tokens)
+    public Parser(List<Token> tokens, IGlobal_Contexto contexto)
     {
         Tokens = tokens;
+        Contexto = contexto;
     }
     public List<Token> Tokens { get; }
+    public IGlobal_Contexto Contexto { get; }
+
     int position = 0;
     Token Current
     {
@@ -41,7 +44,7 @@ public class Parser
         if (LookAhead(1).Tipo == Tipo.ParéntesisAbierto)
         {
             position++;
-            var find_T = Factory.CreateAction(LookAhead(1).Text, this);
+            var find_T = Contexto.factory.CreateAction(LookAhead(1).Text, this);
             position++;
             return (IArgument<T>)find_T;
         }

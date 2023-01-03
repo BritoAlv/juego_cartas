@@ -1,4 +1,9 @@
 namespace Poker;
+
+/*
+This is the class in charge of Parsing the arguments that are literal descriptions
+of object T.
+*/
 public class LiteralDescribe<T> : IArgument<T> where T : IDescribable<T>, IEqualityComparer<T>
 {
     public LiteralDescribe(Token open, LiteralArguments literalArguments, Token closed)

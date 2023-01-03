@@ -16,9 +16,9 @@ public class Mini_Lenguaje
         // get tokens from the string.
         Lexer lexer = new Lexer(line);
         List<Token> tokens = lexer.Lex();
-        Parser parser = new Parser(tokens);
+        Parser parser = new Parser(tokens, Contexto);
         var signature = tokens[1].Text;
-        var tree = Factory.CreateAction(tokens[1].Text, parser);
+        var tree = Contexto.factory.CreateAction(tokens[1].Text, parser);
         print_tree.print((Iprintable)tree);
         try
         {

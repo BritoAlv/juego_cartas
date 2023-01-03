@@ -1,4 +1,7 @@
 namespace Poker;
+/*
+some extensors methods to perform effects.
+*/
 public static class Extensors
 {
     public static int Summ(this IEnumerable<int> to_sum)

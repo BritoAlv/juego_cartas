@@ -5,13 +5,16 @@ namespace Poker;
 /// </summary>
 public class Global_Contexto : IGlobal_Contexto
 {
-    public Global_Contexto(IRonda_Context ronda_Context, params Player[] players)
+    public Global_Contexto(IRonda_Context ronda_Context, Factory factory, params Player[] players)
     {
         Ronda_Contexto = ronda_Context;
+        this.factory = factory;
         PlayerManager = new PlayerManager(players);
     }
     public PlayerManager PlayerManager { get; }
     public IRonda_Context Ronda_Contexto { get; }
+    public Factory factory { get; }
+
     public void Config()
     {
         Ronda_Contexto.Apuestas = new Bet(this.PlayerManager.Get_Active_Players(1));
