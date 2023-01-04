@@ -1,5 +1,8 @@
 namespace Poker;
 
+/// <summary>
+/// This is a IColector implementation
+/// </summary>
 public class Colector : IColector
 {
     public List<string> get_efectos
