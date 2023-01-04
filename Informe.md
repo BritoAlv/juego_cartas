@@ -26,7 +26,7 @@ En tu turno debes escribir que Decisión decides realizar, las posibles decision
 
 - Pasar : no apostar en la mini-ronda.
 
-- Abandondar : salir de la ronda, no de la partida.
+- Abandonar : salir de la ronda, no de la partida.
 
 - Efecto: puedes escribir que efecto deseas realizar basado en las reglas del lenguaje descrito a continuación.
 
@@ -56,7 +56,7 @@ En tu turno debes escribir que Decisión decides realizar, las posibles decision
 
 ## Game:
 
-La carpeta *Game* representa una aplicación de consola que apoyada en la librería de clases ejecuta el juego. Además es posible definir nuevas clases y objetos para extender las reglas / jugabilidad del juego, según cada estructura del juego lo permita.
+La carpeta *Game* representa una aplicación de consola que apoyada en la librería de clases ejecuta el juego. Además es posible definir nuevas clases y objetos para extender las reglas del juego, según cada estructura del juego lo permita.
 
 ## Examples:
 
@@ -70,7 +70,7 @@ Contiene la definición de Carta, dada por el *Suit* y el *Value*. Análogamente
 
 ### Contexto:
 
-Los contextos representan la información de la partida que se está ejecutando tanto como los jugadores activos como las apuestas realizadas, se supone que esta parte de la librería de clases, defina lo que un jugador pueda acceder y revisar el estado del juego, y a partir de esto determinar decisiones como *banear* a un jugador o regalar dinero, está dividido en el contexto de la partida, de las rondas, y el de las minirondas que quede explicito donde es útil cada estructura. Además lo que la lógica del juego necesita del *Contexto* es a través de interfaces para garantizar que cambios en la estructura interna de el Contexto no afecte a el código exterior a él que depende de él mientras que se cumpla el contrato.
+Los contextos representan la información de la partida que se está ejecutando tanto como los jugadores activos como las apuestas realizadas, se supone que esta parte de la librería de clases, defina lo que un jugador pueda acceder y revisar el estado del juego, y a partir de esto determinar decisiones como *banear* a un jugador o regalar dinero, está dividido en el contexto de la partida, de las rondas, y el de las mini-rondas que quede explicito donde es útil cada estructura. Además lo que la lógica del juego necesita del *Contexto* es a través de interfaces para garantizar que cambios en la estructura interna de el Contexto no afecte a el código exterior a él que depende de él mientras que se cumpla el contrato.
 
 - Contexto de la Partida: Contiene un Manager de Jugadores a través del cual se pueden aplicar acciones como banear a un jugador de una ronda.
 
@@ -153,12 +153,16 @@ Define la lógica de lo que ocurre en una ronda de nuestro juego, además una ro
 
 ## Mejoras, Ideas, Bugs :
 
+- Mejorar la estrategia de el jugador de la computadora, en este punto es muy rústico sobre como juega.
+
 - Muy pocas acciones predefinidas, actualmente 3, en teoría añadir una nueva acción predefinida debe ser implementar la clase abstracta especificada, y añadirla a la *Factory*.
 
 - Añadir más ejemplos de como funcionan los efectos.
 
-- Añadir condiciones de activación a los efectos, la idea sería añadir a nuestro *parser* la estructura de *if*, else, donde tendríamos tres efectos, uno sería la condición, si el efecto ( condición) se realiza satisfactoriamente se realiza el efecto dentro del *if*, en caso contrario el especificado por el *else*
+- Añadir condiciones de activación a los efectos, la idea sería añadir a nuestro *parser* la estructura de *if*, else, donde tendríamos tres efectos, uno sería la condición, si el efecto ( condición) se realiza satisfactoriamente se realiza el efecto dentro del *if*, en caso contrario el especificado por el *else*.
 
-- Mejorar la estrategia de el jugador de la computadora, en este punto es muy rústico sobre como juega.
+- Dar la posibilidad a el usuario desde la aplicación visual (consola) de crear nuevos efectos, ahora mismo el usuario modificaba el txt, pero no debe ser así  
 
 - Añadir más comentarios, (casi que no tiene).
+
+- Añadir algún tipo de carta coleccionable al juego, que sean las que contienen los efectos que un jugador puede realizar.
