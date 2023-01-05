@@ -10,8 +10,11 @@ public class BanearJugador : Return<bool>
 
     public override IEnumerable<bool> Evaluate(IGlobal_Contexto contexto)
     {
-        var player = Player.Get_Object(contexto.PlayerManager.Get_Active_Players(2), contexto);
-        contexto.PlayerManager.Filtro_Mini_Ronda.Add(x => x.Id != player.Id);
+        var players = Player.Get_Objects(contexto.PlayerManager.Get_Active_Players(2), contexto);
+        foreach (var player in players)
+        {
+            contexto.PlayerManager.Filtro_Mini_Ronda.Add(x => x.Id != player.Id);
+        }
         return new List<bool> { true };
     }
 

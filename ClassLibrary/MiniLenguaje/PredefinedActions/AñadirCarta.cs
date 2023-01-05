@@ -13,9 +13,15 @@ public class AñadirCarta : Return<bool>
 
     public override IEnumerable<bool> Evaluate(IGlobal_Contexto contexto)
     {
-        var cards = Card.Get_Object(contexto.Ronda_Contexto.CardsManager.All_Cards(), contexto);
-        var player = Player.Get_Object(contexto.PlayerManager.Get_Active_Players(2), contexto);
-        contexto.Ronda_Contexto.CardsManager.AñadirCarta(player, cards);
+        var cards = Card.Get_Objects(contexto.Ronda_Contexto.CardsManager.All_Cards(), contexto);
+        var player = Player.Get_Objects(contexto.PlayerManager.Get_Active_Players(2), contexto);
+        foreach (var jugador in player)
+        {
+            foreach (var card in cards)
+            {
+                contexto.Ronda_Contexto.CardsManager.AñadirCarta(jugador, card);
+            }    
+        }
         return new List<bool>{ true };
     }
 

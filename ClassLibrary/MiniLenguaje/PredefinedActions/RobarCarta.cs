@@ -10,16 +10,27 @@ public class RobarCarta : Return<Card>
     public IArgument<Player> Player { get; }
     public override IEnumerable<Card> Evaluate(IGlobal_Contexto contexto)
     {
-        var player = Player.Get_Object(contexto.PlayerManager.Get_Active_Players(2), contexto);
-        var card = Card.Get_Object(player.Hand.Cards, contexto);
-        contexto.Ronda_Contexto.CardsManager.RemoverCarta(player, card);
-        return new List<Card> { card };
+        HashSet<Card> obtained_cards = new HashSet<Card>();
+        var players = Player.Get_Objects(contexto.PlayerManager.Get_Active_Players(2), contexto);
+        foreach (var player in players)
+        {
+            var cards = Card.Get_Objects(player.Hand.Cards, contexto);
+            foreach (var card in cards)
+            {
+                if (!obtained_cards.Contains(card))
+                {
+                    obtained_cards.Add(card);
+                }
+                contexto.Ronda_Contexto.CardsManager.RemoverCarta(player, card);
+            }
+        }
+        return obtained_cards;
     }
 
     public override bool Evaluate_Top(IGlobal_Contexto contexto)
     {
-        var Card = Evaluate(contexto).FirstOrDefault();
-        if (Card is not null)
+        var Cards = Evaluate(contexto).FirstOrDefault();
+        if (Cards is not null)
         {
             return true;
         }
