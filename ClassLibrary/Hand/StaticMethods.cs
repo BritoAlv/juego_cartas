@@ -34,12 +34,23 @@ public partial class Hand : IComparable<Hand>, IDescribable<Hand>, IEqualityComp
         var identifier = unary.Objeto.Text;
         switch (identifier)
         {
-            case "Valor":
+            case "Cantidad":
+                return Hand_Func_Cantidad(unary.Description.Text);
+            case "Priority":
                 return Hand_Func_Valor(unary.Description.Text);
             case "Rank":
                 return Hand_Func_Rank(unary.Description.Text);
             default:
                 return x => new List<Hand>();
         }
+    }
+
+    private static Func<IEnumerable<Hand>, IEnumerable<Hand>> Hand_Func_Cantidad(string text)
+    {
+        if (text == "%2")
+        {
+            return x => x.Where(m => m.Cards.Count() % 2 == 0);
+        }
+        return x => new List<Hand>();
     }
 }

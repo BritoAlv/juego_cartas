@@ -8,18 +8,6 @@ public class Factory
     public Factory()
     {
         this.predefined_actions = new List<Func<string, Parser, object?>>();
-        predefined_actions.Add
-        (
-            (x, parser) => x == "$añadircarta" ? new AñadirCarta(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null
-        );
-        predefined_actions.Add
-        (
-            (x, parser) => x == "$robarcarta" ? new RobarCarta(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null
-        );
-        predefined_actions.Add
-        (
-            (x, parser) => x == "$banearjugador" ? new BanearJugador(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null
-        );
     }
 
     public List<Func<string, Parser, object?>> predefined_actions { get; private set; }

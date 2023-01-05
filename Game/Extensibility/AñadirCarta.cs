@@ -1,4 +1,4 @@
-namespace Poker;
+using Poker;
 
 public class AñadirCarta : Return<bool>
 {

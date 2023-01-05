@@ -53,7 +53,7 @@ public class CardManager
         return A.Hand.Cards.ToArray();
     }
 
-    internal IEnumerable<Card> All_Cards()
+    public IEnumerable<Card> All_Cards()
     {
         foreach (var list_card in Cards.Values)
         {

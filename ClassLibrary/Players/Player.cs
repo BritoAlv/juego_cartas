@@ -17,9 +17,9 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
         Colector = new Colector(id);
     }
     public string Id { get; }
-    internal int Dinero { get; set; }
+    public int Dinero { get; set; }
     private Hand? _hand;
-    internal Hand Hand
+    public Hand Hand
     {
         get
         {

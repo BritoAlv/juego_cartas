@@ -1,4 +1,4 @@
-namespace Poker;
+using Poker;
 
 public class AumentarDinero : Return<int>
 {

@@ -13,7 +13,8 @@ public class Mini_Lenguaje
         {
             return;
         }
-        line = line.Replace("Jugador yo", "Jugador " +Contexto.PlayerManager.Current.Id); // another parch
+        line = PreProcess(line);
+
         // get tokens from the string.
         Lexer lexer = new Lexer(line);
         List<Token> tokens = lexer.Lex();
@@ -23,7 +24,7 @@ public class Mini_Lenguaje
         print_tree.print((Iprintable)tree);
         try
         {
-            if ( ((IFirst)tree).Evaluate_Top(Contexto))
+            if (((IFirst)tree).Evaluate_Top(Contexto))
             {
                 Console.WriteLine("El efecto se pudo realizar sin problemas");
             }
@@ -39,5 +40,9 @@ public class Mini_Lenguaje
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.ResetColor();
     }
-}
 
+    private string PreProcess(string line)
+    {
+        return line.Replace("Jugador yo", "Jugador " + Contexto.PlayerManager.Current!.Id); // another parch    }
+    }
+}

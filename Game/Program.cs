@@ -33,11 +33,22 @@ public class Program
         (
             (x, parser) => x == "$intercambiardoscartas" ? new IntercambiarDosCartas(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
         );
+        factory.AddPredefined
+        (
+            (x, parser) => x == "$añadircarta" ? new AñadirCarta(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        factory.AddPredefined
+        (
+            (x, parser) => x == "$robarcarta" ? new RobarCarta(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        factory.AddPredefined
+        (
+            (x, parser) => x == "$banearjugador" ? new BanearJugador(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
 
         // Define settings for the game.
         Global_Contexto context = new Global_Contexto(ronda, factory, A, B, C);
         Manager manager = new Manager(scorer, context);
-
         manager.SimulateGame();
     }
 }
