@@ -15,5 +15,7 @@ public enum Tipo
     And,
     Descripcion,
     QuestionAbierta,
-    QuestionCerrada
+    QuestionCerrada,
+    IF,
+    Else
 }

@@ -56,6 +56,16 @@ public class Lexer
                 result.Add(new SyntaxToken(Tipo.LLaveCerrada, "}"));
                 position++;
             }
+            else if (Current == '¿')
+            {
+                result.Add(new SyntaxToken(Tipo.QuestionAbierta, "¿"));
+                position++;
+            }
+            else if (Current == '?')
+            {
+                result.Add(new SyntaxToken(Tipo.QuestionCerrada, "?"));
+                position++;
+            }
             else if (LookAhead(2) == "&&")
             {
                 result.Add(new SyntaxToken(Tipo.And, "&&"));
@@ -66,6 +76,19 @@ public class Lexer
                 result.Add(new SyntaxToken(Tipo.And, "||"));
                 position = position + 2;
             }
+
+            else if (LookAhead(2) == "if")
+            {
+                result.Add(new SyntaxToken(Tipo.IF, "if"));
+                position = position + 2;
+            }
+
+            else if (LookAhead(4) == "else")
+            {
+                result.Add(new SyntaxToken(Tipo.Else, "else"));
+                position = position + 4;
+            }
+
             else if (Current == '$')
             {
                 position++;
