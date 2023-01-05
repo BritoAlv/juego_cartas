@@ -16,13 +16,18 @@ public abstract class Return<T> : IArgument<T>, Iprintable, IFirst
     public Token Closed_Parenthesis { get; }
     public string valor => "Acción " + Signature.Text;
     public abstract IEnumerable<Iprintable> GetChildrenIprintables();
-    public abstract T Evaluate(IGlobal_Contexto contexto);
+    public abstract IEnumerable<T> Evaluate(IGlobal_Contexto contexto);
     public T Get_Object(IEnumerable<T> list, IGlobal_Contexto contexto)
     {
-        return Evaluate(contexto);
+        return Get_Objects(list, contexto).First();
     }
 
     public abstract bool Evaluate_Top(IGlobal_Contexto contexto);
+
+    public IEnumerable<T> Get_Objects(IEnumerable<T> list, IGlobal_Contexto contexto)
+    {
+        return Evaluate(contexto);
+    }
 }
 
 

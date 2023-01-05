@@ -24,16 +24,22 @@ public class LiteralDescribe<T> : IArgument<T> where T : IDescribable<T>, IEqual
     }
     public T Get_Object(IEnumerable<T> list, IGlobal_Contexto contexto)
     {
+        return Get_Objects(list, contexto).First();
+    }
+
+    public IEnumerable<T> Get_Objects(IEnumerable<T> list, IGlobal_Contexto contexto)
+    {
         foreach (var Func in GetTFunction(LiteralArguments))
         {
             IEnumerable<T> obtained_T = Func(list);
             if (obtained_T.Count() > 0)
             {
-                return obtained_T.First();
+                return obtained_T;
             }
         }
         throw new Exception("No se encontró: ");
     }
+
     private List<Func<IEnumerable<T>, IEnumerable<T>>> GetTFunction(LiteralArguments arguments)
     {
         List<Func<IEnumerable<T>, IEnumerable<T>>> result = new List<Func<IEnumerable<T>, IEnumerable<T>>>();

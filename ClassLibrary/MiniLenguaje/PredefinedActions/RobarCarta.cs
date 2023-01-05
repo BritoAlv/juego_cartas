@@ -8,17 +8,17 @@ public class RobarCarta : Return<Card>
     }
     public IArgument<Card> Card { get; }
     public IArgument<Player> Player { get; }
-    public override Card Evaluate(IGlobal_Contexto contexto)
+    public override IEnumerable<Card> Evaluate(IGlobal_Contexto contexto)
     {
         var player = Player.Get_Object(contexto.PlayerManager.Get_Active_Players(2), contexto);
         var card = Card.Get_Object(player.Hand.Cards, contexto);
         contexto.Ronda_Contexto.CardsManager.RemoverCarta(player, card);
-        return card;
+        return new List<Card> { card };
     }
 
     public override bool Evaluate_Top(IGlobal_Contexto contexto)
     {
-        var Card = Evaluate(contexto);
+        var Card = Evaluate(contexto).FirstOrDefault();
         if (Card is not null)
         {
             return true;
