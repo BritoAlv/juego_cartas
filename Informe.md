@@ -100,10 +100,9 @@ El ejemplo anterior ejecuta la acción de robarle la carta al jugador *PC* de ma
 
 #### Syntaxis:
 
-Cada acción es definida entre parentésis,  primero contiene su nombre , después se le pasan los argumentos, una expresión dentro de [ ] al evaluarse devolverá una carta mientras que otra dentro de {} devolverá un jugador. Como se puede observar en el ejemplo dentro de [] hay una acción, esto es posible ya que esta devuelve una carta. Pero también existe syntax como:
-
+Cada acción es definida entre parentésis,  primero contiene su nombre , después se le pasan los argumentos, una expresión dentro de{} representa un argumento, o sea, que al evaluarse esta expresión se devolverá un objeto. Por otro lado:
 ```bash
-[Valor mayor && Suit corazonrojo] 
+{Valor mayor && Suit corazonrojo}
 ```
 
 Esto representa una descripción literal del objeto, en este caso una carta, que debe satisfacer las dos descripciones unarias anteriores, cada descripción unaria va a estar dada por un Objeto escrito con letra mayúscula y una palabra que describe a dicho objeto con letra minúscula. Cada estructura de descripción literal define los objetos que entiende y sus descripciones, en el caso de Carta posee definido los objetos *Valor* y *Suit*, cada uno, respectivamente posee en sus descripciones definido a *mayor* y *corazonrojo*.
@@ -120,12 +119,12 @@ Finalmente como dependemos de las acciones y sintaxis predefinidos he aquí un �
 │   ├── Jugador
 │   │    ├── 
 ├── Descripciones
-│   ├── Carta []
+│   ├── Carta {}
 │   │    ├── Valor
 │   │    │   ├── >2, <3, mayor, menor, 1,2,3 ...
 │   │    ├── Suit
 │   │    │   ├── trebol, pica, ...
-│   ├── Hand ¿?
+│   ├── Hand {}
 │   │    ├── Valor
 │   │    │   ├── >2, <3, mayor, menor, 
 │   │    ├── Rank
@@ -153,7 +152,7 @@ Define la lógica de lo que ocurre en una ronda de nuestro juego, además una ro
 
 ## Mejoras, Ideas, Bugs :
 
-- Mejorar la estrategia de el jugador de la computadora, en este punto es muy rústico sobre como juega.
+- La estrategia del jugador de la computadora implementa una idea de agresividad, y también nota cuando otro jugador está siendo agresivo, por lo que decide cuando retirarse, apostar o continuar. Esto es mejor que nada, pero igual sigue siendo muy rústico.
 
 - Muy pocas acciones predefinidas, actualmente 3, en teoría añadir una nueva acción predefinida debe ser implementar la clase abstracta especificada, y añadirla a la *Factory*.
 

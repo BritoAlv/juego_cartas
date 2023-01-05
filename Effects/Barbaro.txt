@@ -1,1 +1,1 @@
-( $añadircarta [ ( $robarcarta [Valor mayor && Suit diamante ] {Dinero <100}) ]  {Apuesta mayor })
+( $añadircarta { ( $robarcarta {Valor mayor && Suit diamante } {Dinero <100}) } {Apuesta mayor })

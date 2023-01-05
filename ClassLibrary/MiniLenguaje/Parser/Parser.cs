@@ -55,36 +55,13 @@ public class Parser
     }
     private LiteralDescribe<T> ParseLiteral<T>() where T : IDescribable<T>, IEqualityComparer<T>
     {
-        Token open = Current;
-        Tipo opposite = Get_Opposite(open.Text);
+        Token open = Match(Tipo.LLaveAbierta);
         position++;
-        var tokens_description = ParseDescriptionTokens(opposite);
+        var tokens_description = ParseDescriptionTokens(Tipo.LLaveCerrada);
         Token closed = Current;
         position++;
         return new LiteralDescribe<T>(open, new LiteralArguments(tokens_description), closed);
     }
-
-    private Tipo Get_Opposite(string text)
-    {
-        if (text == "[")
-        {
-            return Tipo.CorcheteCerrado;
-        }
-        if (text == "(")
-        {
-            return Tipo.ParéntesisCerrado;
-        }
-        if (text == "{")
-        {
-            return Tipo.LLaveCerrada;
-        }
-        if (text == "¿")
-        {
-            return Tipo.ParéntesisCerrado;
-        }
-        return Tipo.Wrong;
-    }
-
     private List<Token> ParseDescriptionTokens(Tipo tipo)
     {
         List<Token> tokens_description = new List<Token>();

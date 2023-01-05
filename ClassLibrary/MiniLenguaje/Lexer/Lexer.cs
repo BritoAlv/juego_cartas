@@ -56,26 +56,6 @@ public class Lexer
                 result.Add(new SyntaxToken(Tipo.LLaveCerrada, "}"));
                 position++;
             }
-            else if (Current == '[')
-            {
-                result.Add(new SyntaxToken(Tipo.CorcheteAbierto, "["));
-                position++;
-            }
-            else if (Current == ']')
-            {
-                result.Add(new SyntaxToken(Tipo.CorcheteCerrado, "]"));
-                position++;
-            }
-            else if (Current == '¿')
-            {
-                result.Add(new SyntaxToken(Tipo.QuestionAbierta, "¿"));
-                position++;
-            }
-            else if (Current == '?')
-            {
-                result.Add(new SyntaxToken(Tipo.QuestionCerrada, "?"));
-                position++;
-            }
             else if (LookAhead(2) == "&&")
             {
                 result.Add(new SyntaxToken(Tipo.And, "&&"));
