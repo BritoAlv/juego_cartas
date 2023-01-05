@@ -36,13 +36,13 @@ public class IntercambiarDosCartas : Return<bool>
     public IArgument<Player> First { get; }
     public IArgument<Player> Second { get; }
 
-    public override bool Evaluate(IGlobal_Contexto contexto)
+    public override IEnumerable<bool> Evaluate(IGlobal_Contexto contexto)
     {
         var player1 = First.Get_Object(contexto.PlayerManager.Get_Active_Players(2), contexto);
         var player2 = Second.Get_Object(contexto.PlayerManager.Get_Active_Players(2), contexto);
         if (contexto.Ronda_Contexto.CardsManager.Get_PLayer_Cards(player1).Length < 2 && contexto.Ronda_Contexto.CardsManager.Get_PLayer_Cards(player2).Length < 2 )
         {
-            return false;
+            return new List<bool> { false };
         }
         var card1 = contexto.Ronda_Contexto.CardsManager.Remove_Random_Card(player1);
         var card2 = contexto.Ronda_Contexto.CardsManager.Remove_Random_Card(player1);
@@ -52,12 +52,12 @@ public class IntercambiarDosCartas : Return<bool>
         contexto.Ronda_Contexto.CardsManager.AñadirCarta(player1, card4);
         contexto.Ronda_Contexto.CardsManager.AñadirCarta(player2, card1);
         contexto.Ronda_Contexto.CardsManager.AñadirCarta(player2, card2);
-        return true;
+        return new List<bool> { true };
     }
 
     public override bool Evaluate_Top(IGlobal_Contexto contexto)
     {
-        return Evaluate(contexto);
+        return Evaluate(contexto).First();
     }
 
     public override IEnumerable<Iprintable> GetChildrenIprintables()
