@@ -6,7 +6,7 @@ public class Efecto : IDecision
     public bool DoDecision(Player player, IGlobal_Contexto contexto)
     {
         
-        Mini_Lenguaje lenguaje = new Mini_Lenguaje(player, contexto);
+        Mini_Lenguaje lenguaje = new Mini_Lenguaje(contexto);
         var colector = player.Colector;
         if (colector.get_efectos.Count == 0)
         {

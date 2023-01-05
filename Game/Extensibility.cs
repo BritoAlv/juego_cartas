@@ -38,8 +38,8 @@ public class IntercambiarDosCartas : Return<bool>
 
     public override IEnumerable<bool> Evaluate(IGlobal_Contexto contexto)
     {
-        var player1 = First.Get_Object(contexto.PlayerManager.Get_Active_Players(2), contexto);
-        var player2 = Second.Get_Object(contexto.PlayerManager.Get_Active_Players(2), contexto);
+        var player1 = First.Get_Objects(contexto.PlayerManager.Get_Active_Players(2), contexto).First();
+        var player2 = Second.Get_Objects(contexto.PlayerManager.Get_Active_Players(2), contexto).First();
         if (contexto.Ronda_Contexto.CardsManager.Get_PLayer_Cards(player1).Length < 2 && contexto.Ronda_Contexto.CardsManager.Get_PLayer_Cards(player2).Length < 2 )
         {
             return new List<bool> { false };

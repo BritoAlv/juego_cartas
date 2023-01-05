@@ -1,7 +1,7 @@
 namespace Poker;
 public class Mini_Lenguaje
 {
-    internal Mini_Lenguaje(Player A, IGlobal_Contexto contexto)
+    internal Mini_Lenguaje(IGlobal_Contexto contexto)
     {
         Contexto = contexto;
     }
@@ -13,6 +13,7 @@ public class Mini_Lenguaje
         {
             return;
         }
+        line = line.Replace("Jugador yo", "Jugador " +Contexto.PlayerManager.Current.Id); // another parch
         // get tokens from the string.
         Lexer lexer = new Lexer(line);
         List<Token> tokens = lexer.Lex();

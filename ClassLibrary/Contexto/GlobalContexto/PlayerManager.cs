@@ -76,6 +76,7 @@ public class PlayerManager
             _filtro_mini_ronda = value;
         }
     }
+    public Player Current { get; set; }
     public IEnumerable<Player> Get_Active_Players(int level)
     {
         if (level == 1)
