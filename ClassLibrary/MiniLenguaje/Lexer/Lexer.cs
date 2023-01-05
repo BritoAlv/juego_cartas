@@ -61,6 +61,13 @@ public class Lexer
                 result.Add(new SyntaxToken(Tipo.QuestionAbierta, "¿"));
                 position++;
             }
+
+            else if (Current == '^')
+            {
+                result.Add(new SyntaxToken(Tipo.Complemento, "^"));
+                position++;
+            }
+
             else if (Current == '?')
             {
                 result.Add(new SyntaxToken(Tipo.QuestionCerrada, "?"));

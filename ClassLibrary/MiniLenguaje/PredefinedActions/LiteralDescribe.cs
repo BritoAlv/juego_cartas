@@ -6,25 +6,24 @@ of objects T.
 */
 public class LiteralDescribe<T> : IArgument<T> where T : IDescribable<T>, IEqualityComparer<T>
 {
-    public LiteralDescribe(Token open, LiteralArguments literalArguments, Token closed)
+    public LiteralDescribe(Token open, LiteralArguments literalArguments, Token closed, Token? complemento = null)
     {
         Open = open;
         LiteralArguments = literalArguments;
         Closed = closed;
+        Complemento = complemento;
     }
     public string valor => "Literal Describe" + T.Valor;
     public Token Open { get; }
     public LiteralArguments LiteralArguments { get; }
     public Token Closed { get; }
+    public Token? Complemento { get; }
+
     public IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open;
         yield return LiteralArguments;
         yield return Closed;
-    }
-    public T Get_Object(IEnumerable<T> list, IGlobal_Contexto contexto)
-    {
-        return Get_Objects(list, contexto).First();
     }
 
     public IEnumerable<T> Get_Objects(IEnumerable<T> list, IGlobal_Contexto contexto)
@@ -34,6 +33,10 @@ public class LiteralDescribe<T> : IArgument<T> where T : IDescribable<T>, IEqual
             IEnumerable<T> obtained_T = Func(list);
             if (obtained_T.Count() > 0)
             {
+                if (Complemento is not null)
+                {
+                    return obtained_T.Complementt(list);
+                }
                 return obtained_T;
             }
         }

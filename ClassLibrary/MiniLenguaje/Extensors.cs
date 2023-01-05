@@ -57,4 +57,15 @@ public static class Extensors
         return result;
     }
 
+    public static IEnumerable<T> Complementt<T>(this IEnumerable<T> first, IEnumerable<T> universe) where T : IEqualityComparer<T>
+    {
+        foreach (var element in universe)
+        {
+            if (!first.Contains(element))
+            {
+                yield return element;
+            }
+        }
+    }
+
 }

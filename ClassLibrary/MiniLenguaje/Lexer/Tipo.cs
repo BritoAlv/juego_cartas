@@ -20,5 +20,6 @@ public enum Tipo
     Else,
     ThidrOption,
     ThirdOption,
-    Implies
+    Implies,
+    Complemento
 }

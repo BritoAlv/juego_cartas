@@ -58,8 +58,12 @@ public class Parser
         Token open = Match(Tipo.LLaveAbierta);
         position++;
         var tokens_description = ParseDescriptionTokens(Tipo.LLaveCerrada);
-        Token closed = Current;
-        position++;
+        Token closed = Match(Tipo.LLaveCerrada);
+        if (Current.Text == "^")
+        {
+            var complement = Match(Tipo.Complemento);
+            return new LiteralDescribe<T>(open, new LiteralArguments(tokens_description), closed, complement);
+        }
         return new LiteralDescribe<T>(open, new LiteralArguments(tokens_description), closed);
     }
     private List<Token> ParseDescriptionTokens(Tipo tipo)
