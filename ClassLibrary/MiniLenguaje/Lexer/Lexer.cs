@@ -106,6 +106,14 @@ public class Lexer
                 var text = "$" + LexWord();
                 result.Add(new ActionToken(Tipo.Accion, text));
             }
+
+            else if (Current == '#')
+            {
+                position++;
+                var text = "#" + LexArgument();
+                result.Add(new DescriptionToken(Tipo.Descripcion, text));
+            }
+
             else if (char.IsAsciiLetterUpper(Current))
             {
                 var text = LexWord();
@@ -127,6 +135,18 @@ public class Lexer
         }
         return result;
     }
+
+    private string LexArgument()
+    {
+        var text = "";
+        while(char.IsLetterOrDigit(Current))
+        {
+            text = text + Current;
+            position++;
+        }
+        return text;
+    }
+
     string LexWord()
     {
         var text = "";

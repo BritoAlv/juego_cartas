@@ -31,7 +31,7 @@ public class Program
         Factory factory = new Factory();
         factory.AddPredefined
         (
-            (x, parser) => x == "$intercambiardoscartas" ? new IntercambiarDosCartas(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null
+            (x, parser) => x == "$intercambiardoscartas" ? new IntercambiarDosCartas(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
         );
 
         // Define settings for the game.
@@ -41,5 +41,3 @@ public class Program
         manager.SimulateGame();
     }
 }
-
-
