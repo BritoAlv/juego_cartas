@@ -66,6 +66,17 @@ public class Lexer
                 result.Add(new SyntaxToken(Tipo.QuestionCerrada, "?"));
                 position++;
             }
+
+            else if (Current == '!')
+            {
+                result.Add(new SyntaxToken(Tipo.ThirdOption, "!"));
+                position++;
+            }
+
+            else if (LookAhead(2) == "=>")
+            {
+                result.Add(new SyntaxToken(Tipo.Implies, "=>"));
+            }
             else if (LookAhead(2) == "&&")
             {
                 result.Add(new SyntaxToken(Tipo.And, "&&"));

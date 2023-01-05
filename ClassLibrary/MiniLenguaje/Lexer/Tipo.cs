@@ -17,5 +17,8 @@ public enum Tipo
     QuestionAbierta,
     QuestionCerrada,
     IF,
-    Else
+    Else,
+    ThidrOption,
+    ThirdOption,
+    Implies
 }

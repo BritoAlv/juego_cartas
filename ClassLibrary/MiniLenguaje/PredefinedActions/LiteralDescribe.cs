@@ -2,7 +2,7 @@ namespace Poker;
 
 /*
 This is the class in charge of Parsing the arguments that are literal descriptions
-of object T.
+of objects T.
 */
 public class LiteralDescribe<T> : IArgument<T> where T : IDescribable<T>, IEqualityComparer<T>
 {
@@ -52,16 +52,14 @@ public class LiteralDescribe<T> : IArgument<T> where T : IDescribable<T>, IEqual
     }
     private Func<IEnumerable<T>, IEnumerable<T>> get_T_func(BinaryDescriptionArgument binary)
     {
+        Func<IEnumerable<T>, IEnumerable<T>> T1 = T.get_T_func(binary.Izq);
+        Func<IEnumerable<T>, IEnumerable<T>> T2 = T.get_T_func(binary.Der);
         if (binary.Operador.Text == "&&")
         {
-            Func<IEnumerable<T>, IEnumerable<T>> T1 = T.get_T_func(binary.Izq);
-            Func<IEnumerable<T>, IEnumerable<T>> T2 = T.get_T_func(binary.Der);
             return x => T1(x).Intersectt(T2(x));
         }
         else if (binary.Operador.Text == "||")
         {
-            Func<IEnumerable<T>, IEnumerable<T>> T1 = T.get_T_func(binary.Izq);
-            Func<IEnumerable<T>, IEnumerable<T>> T2 = T.get_T_func(binary.Der);
             return x => T1(x).Unionn(T2(x));
         }
         return x => Enumerable.Empty<T>();
