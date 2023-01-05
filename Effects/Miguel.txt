@@ -1,1 +1,3 @@
-($banearjugador {Dinero mayor})
+(
+	$banearjugador {Dinero mayor}
+)

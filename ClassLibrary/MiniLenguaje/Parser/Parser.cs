@@ -56,7 +56,6 @@ public class Parser
     private LiteralDescribe<T> ParseLiteral<T>() where T : IDescribable<T>, IEqualityComparer<T>
     {
         Token open = Match(Tipo.LLaveAbierta);
-        position++;
         var tokens_description = ParseDescriptionTokens(Tipo.LLaveCerrada);
         Token closed = Match(Tipo.LLaveCerrada);
         if (Current.Text == "^")

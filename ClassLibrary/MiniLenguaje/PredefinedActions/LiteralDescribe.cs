@@ -40,7 +40,7 @@ public class LiteralDescribe<T> : IArgument<T> where T : IDescribable<T>, IEqual
                 return obtained_T;
             }
         }
-        throw new Exception("No se encontró: ");
+        return Enumerable.Empty<T>();
     }
 
     private List<Func<IEnumerable<T>, IEnumerable<T>>> GetTFunction(LiteralArguments arguments)

@@ -9,9 +9,23 @@ public class Colector : IColector
     {
         get
         {
-            return File.ReadAllLines(pathID).ToList();
+            return Process(File.ReadAllText(pathID));
         }
     }
+
+    private List<string> Process(string file)
+    {
+        file = file.TrimEnd('\n');
+        List<string> result = new List<string>();
+        result = file.Split("\n)", StringSplitOptions.RemoveEmptyEntries).ToList();
+        for (int i = 0; i < result.Count; i++)
+        {
+            result[i] = result[i] + "\n)";
+        }
+        return result;
+    }
+
+
     private string pathID;
     public Colector(string id)
     {
@@ -26,13 +40,26 @@ public class Colector : IColector
     }
     public void add_efecto(string efecto)
     {
-        File.AppendAllLines(pathID, new List<string> { efecto });
+        List<string> nueva = this.get_efectos;
+        nueva.Add(efecto);
+        string result = "";
+        foreach (var efect in nueva)
+        {
+            result = result + efect;
+        }
+        File.WriteAllText(pathID, result);
     }
     public string remove_efecto()
     {
-        var lines = System.IO.File.ReadAllLines(pathID);
-        string effect = get_efectos[get_efectos.Count - 1];
-        System.IO.File.WriteAllLines(pathID, lines.Take(lines.Length - 1).ToArray());
+        List<string> nueva = this.get_efectos;
+        string effect = nueva[nueva.Count - 1];
+        nueva.RemoveAt(nueva.Count - 1);
+        string result = "";
+        foreach (var efect in nueva)
+        {
+            result = result + efect;
+        }
+        File.WriteAllText(pathID, result);
         return effect;
     }
 }

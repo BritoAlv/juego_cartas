@@ -1,1 +1,3 @@
-($intercambiardoscartas {Jugador Barbaro} {Jugador Miguel})
+(
+	$intercambiardoscartas {Jugador Barbaro} {Jugador Miguel}
+)

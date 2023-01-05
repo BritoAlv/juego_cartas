@@ -1,1 +1,6 @@
-( $añadircarta { ( $robarcarta {Valor mayor && Suit diamante } {Dinero <100}) } {Apuesta mayor })
+(
+	if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo})? =>
+	 	($aumentardinero #20 {Jugador yo}) 
+	 	!
+	 	($aumentardinero #40 { Jugador yo }^) 
+)

@@ -45,6 +45,10 @@ public class Program
         (
             (x, parser) => x == "$banearjugador" ? new BanearJugador(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
         );
+        factory.AddPredefined
+        (
+            (x, parser) => x == "$aumentardinero" ? new AumentarDinero(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion),  parser.Match(Tipo.Argumento), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
 
         // Define settings for the game.
         Global_Contexto context = new Global_Contexto(ronda, factory, A, B, C);

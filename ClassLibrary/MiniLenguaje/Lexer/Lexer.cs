@@ -32,7 +32,7 @@ public class Lexer
         var result = new List<Token>();
         while (Current != '\0')
         {
-            if (Current == ' ')
+            if (Current == ' ' || Current == '\n' || Current == '\t')
             {
                 position++;
             }
@@ -83,6 +83,7 @@ public class Lexer
             else if (LookAhead(2) == "=>")
             {
                 result.Add(new SyntaxToken(Tipo.Implies, "=>"));
+                position = position + 2;
             }
             else if (LookAhead(2) == "&&")
             {
@@ -100,13 +101,6 @@ public class Lexer
                 result.Add(new SyntaxToken(Tipo.IF, "if"));
                 position = position + 2;
             }
-
-            else if (LookAhead(4) == "else")
-            {
-                result.Add(new SyntaxToken(Tipo.Else, "else"));
-                position = position + 4;
-            }
-
             else if (Current == '$')
             {
                 position++;
@@ -118,7 +112,7 @@ public class Lexer
             {
                 position++;
                 var text = "#" + LexArgument();
-                result.Add(new DescriptionToken(Tipo.Descripcion, text));
+                result.Add(new DescriptionToken(Tipo.Argumento, text));
             }
 
             else if (char.IsAsciiLetterUpper(Current))
@@ -131,7 +125,7 @@ public class Lexer
                 }
                 result.Add(new ObjetoToken(Tipo.Objeto, text));
             }
-            else if (char.IsAsciiLetterLower(Current) || char.IsAsciiDigit(Current) || Current == '>' || Current == '<')
+            else if (char.IsAsciiLetterLower(Current) || char.IsAsciiDigit(Current) || Current == '>' || Current == '<' || Current == '%')
             {
                 result.Add(new DescriptionToken(Tipo.Descripcion, LexDescription()));
             }
@@ -167,7 +161,7 @@ public class Lexer
     string LexDescription()
     {
         var text = "";
-        while (char.IsLetterOrDigit(Current) || Current == '>' || Current == '<')
+        while (char.IsLetterOrDigit(Current) || Current == '>' || Current == '<' || Current == '%')
         {
             text = text + Current;
             position++;
