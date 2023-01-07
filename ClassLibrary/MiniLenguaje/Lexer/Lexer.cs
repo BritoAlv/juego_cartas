@@ -32,11 +32,7 @@ public class Lexer
         var result = new List<Token>();
         while (Current != '\0')
         {
-            if (Current == ' ' || Current == '\n' || Current == '\t')
-            {
-                position++;
-            }
-            else if (Current == '(')
+            if (Current == '(')
             {
                 result.Add(new SyntaxToken(Tipo.ParéntesisAbierto, "("));
                 position++;
@@ -61,25 +57,21 @@ public class Lexer
                 result.Add(new SyntaxToken(Tipo.QuestionAbierta, "¿"));
                 position++;
             }
-
             else if (Current == '^')
             {
                 result.Add(new SyntaxToken(Tipo.Complemento, "^"));
                 position++;
             }
-
             else if (Current == '?')
             {
                 result.Add(new SyntaxToken(Tipo.QuestionCerrada, "?"));
                 position++;
             }
-
             else if (Current == '!')
             {
                 result.Add(new SyntaxToken(Tipo.ThirdOption, "!"));
                 position++;
             }
-
             else if (LookAhead(2) == "=>")
             {
                 result.Add(new SyntaxToken(Tipo.Implies, "=>"));
@@ -92,10 +84,9 @@ public class Lexer
             }
             else if (LookAhead(2) == "||")
             {
-                result.Add(new SyntaxToken(Tipo.And, "||"));
+                result.Add(new SyntaxToken(Tipo.Or, "||"));
                 position = position + 2;
             }
-
             else if (LookAhead(2) == "if")
             {
                 result.Add(new SyntaxToken(Tipo.IF, "if"));
@@ -104,30 +95,24 @@ public class Lexer
             else if (Current == '$')
             {
                 position++;
-                var text = "$" + LexWord();
+                var text = "$" + Lex_Word();
                 result.Add(new ActionToken(Tipo.Accion, text));
             }
-
             else if (Current == '#')
             {
                 position++;
-                var text = "#" + LexArgument();
+                var text = "#" + Lex_Word();
                 result.Add(new DescriptionToken(Tipo.Argumento, text));
             }
-
             else if (char.IsAsciiLetterUpper(Current))
             {
-                var text = LexWord();
-                if (text == text.ToUpper())
-                {
-                    result.Add(new ObjetoToken(Tipo.Nombre, text));
-                    continue;
-                }
+                /*
+                Implicitly, Here is applied a specific syntax rule of the language after an Tipo.Objeto comes an Tipo.Descripción
+                */
+                var text = Lex_Word();
                 result.Add(new ObjetoToken(Tipo.Objeto, text));
-            }
-            else if (char.IsAsciiLetterLower(Current) || char.IsAsciiDigit(Current) || Current == '>' || Current == '<' || Current == '%')
-            {
-                result.Add(new DescriptionToken(Tipo.Descripcion, LexDescription()));
+                position++;
+                result.Add(new DescriptionToken(Tipo.Descripcion, Lex_Word()));
             }
             else
             {
@@ -137,35 +122,17 @@ public class Lexer
         return result;
     }
 
-    private string LexArgument()
+    string Lex_Word()
     {
+        /*
+        Implicitly is applied a specific syntax rule of the language, it's that we do not allow spaces between words.
+        */
         var text = "";
-        while(char.IsLetterOrDigit(Current))
+        while(Current != ' ')
         {
             text = text + Current;
             position++;
         }
         return text;
-    }
-
-    string LexWord()
-    {
-        var text = "";
-        while (char.IsLetter(Current) || Current == '_')
-        {
-            text = text + Current;
-            position++;
-        }
-        return text;
-    }
-    string LexDescription()
-    {
-        var text = "";
-        while (char.IsLetterOrDigit(Current) || Current == '>' || Current == '<' || Current == '%')
-        {
-            text = text + Current;
-            position++;
-        }
-        return text.TrimEnd().TrimStart();
     }
 }
