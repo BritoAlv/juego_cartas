@@ -13,13 +13,12 @@ public class Hand_Hold : Return<bool>
         var players = Jugador.Get_Objects(contexto.PlayerManager.Get_Active_Players(2), contexto);
         bool flag = true;
         var hands = Hand.Get_Objects(contexto.PlayerManager.Get_Active_Players(2).Select(x => x.Hand), contexto);
+        if (hands is null || hands.Count() == 0)
+        {
+            return new List<bool> { false };
+        }
         foreach (var player in players)
         {
-            if (hands is null || hands.Count() == 0)
-            {
-                flag = false;
-                break;
-            }
             if (!hands.Contains(player.Hand))
             {
                 flag = false;
@@ -60,7 +59,7 @@ public class Card_Hold : Return<bool>
         foreach (var player in players)
         {
             var cards = Cards.Get_Objects(contexto.Ronda_Contexto.CardsManager.All_Cards(), contexto);
-            if (player.Hand.Cards.Any(x => cards.Contains(x)))
+            if (!player.Hand.Cards.Any(x => cards.Contains(x)))
             {
                 flag = false;
                 break;

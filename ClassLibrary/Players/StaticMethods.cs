@@ -50,7 +50,7 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
     {
         if (text == "mayor")
         {
-            return x => x.OrderByDescending(m => m.Dinero);
+            return x => x.OrderByDescending(m => m.Dinero).Take(1);
         }
 
         else if (text.StartsWith(">"))

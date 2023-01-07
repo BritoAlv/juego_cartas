@@ -31,11 +31,11 @@ public partial class Card : ICloneable, IDescribable<Card>, IEqualityComparer<Ca
         }
         if (text == "mayor")
         {
-            return x => x.OrderByDescending(x => x.Value);
+            return x => x.OrderByDescending(x => x.Value).Take(1);
         }
         if (text == "menor")
         {
-            return x => x.OrderBy(x => x.Value);
+            return x => x.OrderBy(x => x.Value).Take(1);
         }
         if (int.TryParse(text, out var val))
         {
