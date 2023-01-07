@@ -101,6 +101,7 @@ El ejemplo anterior ejecuta la acción de robarle la carta al jugador *PC* de ma
 #### Syntaxis:
 
 Cada acción es definida entre parentésis,  primero contiene su nombre , después se le pasan los argumentos, una expresión dentro de{} representa un argumento, o sea, que al evaluarse esta expresión se devolverá un objeto. Por otro lado:
+
 ```bash
 {Valor mayor && Suit corazonrojo}
 ```

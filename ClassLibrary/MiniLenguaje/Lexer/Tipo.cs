@@ -19,5 +19,6 @@ public enum Tipo
     Implies,
     Complemento,
     Argumento,
-    Or
+    Or,
+    While
 }

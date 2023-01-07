@@ -1,5 +1,4 @@
 namespace Poker;
-
 /// <summary>
 /// Only one place to declare predefined actions.
 /// </summary>
@@ -20,22 +19,16 @@ public class Factory
     public List<Func<string, Parser, object?>> predefined_actions { get; private set; }
     internal object CreateAction(string text, Parser parser)
     {
-        if (text == "if")
+        if (text == "while" || text == "if")
         {
             Token open = parser.Match(Tipo.ParéntesisAbierto);
-            Token signature = parser.Match(Tipo.IF);
+            Token signature = text == "while" ? parser.Match(Tipo.While) : parser.Match(Tipo.IF);
             Token open_question = parser.Match(Tipo.QuestionAbierta);
             Return<bool> condition;
             Return<bool> condition1 = (Return<bool>)this.CreateAction(parser.LookAhead(1).Text, parser);
-            if (parser.LookAhead(0).Text == "&&")
+            if (parser.LookAhead(0).Text == "&&" || parser.LookAhead(0).Text == "||")
             {
-                Token op = parser.Match(Tipo.And);
-                Return<bool> condition2 = (Return<bool>)this.CreateAction(parser.LookAhead(1).Text, parser);
-                condition = new BinaryAction(condition1, op, condition2);
-            }
-            if (parser.LookAhead(0).Text == "||")
-            {
-                Token op = parser.Match(Tipo.Or);
+                Token op = parser.LookAhead(0).Text == "&&" ? parser.Match(Tipo.And) : parser.Match(Tipo.Or);
                 Return<bool> condition2 = (Return<bool>)this.CreateAction(parser.LookAhead(1).Text, parser);
                 condition = new BinaryAction(condition1, op, condition2);
             }
@@ -49,6 +42,11 @@ public class Factory
             while (parser.LookAhead(0).Text == "(")
             {
                 action1.Add((IFirst)this.CreateAction(parser.LookAhead(1).Text, parser));
+            }
+            if (text == "while")
+            {
+                var closee = parser.Match(Tipo.ParéntesisCerrado);
+                return new While_Expresion(open, signature, condition, implies, action1, closee);
             }
             Token not = parser.Match(Tipo.ThirdOption);
             List<IFirst> action2 = new List<IFirst>();
