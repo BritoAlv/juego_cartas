@@ -13,9 +13,7 @@ public class Factory
             (x, parser) => x == "$holdhand" ? new Hand_Hold(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Hand>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
         );
     }
-
     public List<Func<string, Parser, object?>> predefined_actions { get; private set; }
-
     internal object CreateAction(string text, Parser parser)
     {
         if (text == "if")
@@ -26,9 +24,17 @@ public class Factory
             Return<bool> condition = (Return<bool>)this.CreateAction(parser.LookAhead(1).Text, parser);
             Token closed_question = parser.Match(Tipo.QuestionCerrada);
             Token implies = parser.Match(Tipo.Implies);
-            var action1 = (IFirst)this.CreateAction(parser.LookAhead(1).Text, parser);
+            List<IFirst> action1 = new List<IFirst>();
+            while (parser.LookAhead(0).Text == "(")
+            {
+                action1.Add((IFirst)this.CreateAction(parser.LookAhead(1).Text, parser));
+            }
             Token not = parser.Match(Tipo.ThirdOption);
-            var action2 = (IFirst)this.CreateAction(parser.LookAhead(1).Text, parser);
+            List<IFirst> action2 = new List<IFirst>();
+            while (parser.LookAhead(0).Text == "(")
+            {
+                action2.Add((IFirst)this.CreateAction(parser.LookAhead(1).Text, parser));
+            }
             Token closed = parser.Match(Tipo.ParéntesisCerrado);
             return new IF_Expresion(open, signature, condition, implies, action1, not, action2, closed);
         }
@@ -41,11 +47,8 @@ public class Factory
             }
         }
         throw new Exception("No se encontró la acción");
-
     }
-
     // calls to the factory should have Current = ) parser responsibility.
-
     public void AddPredefined(Func<string, Parser, object> func)
     {
         predefined_actions.Add(func);

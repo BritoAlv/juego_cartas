@@ -1,6 +1,10 @@
 namespace Poker;
 public class Lexer
 {
+    static HashSet<char> syntax_token = new HashSet<char>()
+    {
+        '{', '}', '(', ')', '!', '^', '#'
+    };
     int position = 0;
     char Current
     {
@@ -128,7 +132,7 @@ public class Lexer
         Implicitly is applied a specific syntax rule of the language, it's that we do not allow spaces between words.
         */
         var text = "";
-        while(Current != ' ')
+        while(Current != ' ' && Current != '\t' && Current != '\n' && !syntax_token.Contains(Current))
         {
             text = text + Current;
             position++;

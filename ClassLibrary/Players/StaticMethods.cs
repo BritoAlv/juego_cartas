@@ -59,6 +59,12 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
             return x => x.Where(m => m.Dinero > a);
         }
 
+        else if (text.StartsWith("="))
+        {
+            int a = int.Parse(text.Substring(1));
+            return x => x.Where(m => m.Dinero == a);
+        }
+
         else if (text == "menor")
         {
             return x => x.OrderBy(m => m.Dinero);

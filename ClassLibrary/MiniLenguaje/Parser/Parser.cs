@@ -12,7 +12,7 @@ public class Parser
     int position = 0;
     Token Current
     {
-        get
+        get 
         {
             if (position < Tokens.Count)
             {

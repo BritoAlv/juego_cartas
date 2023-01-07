@@ -1,4 +1,3 @@
 (
-	if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo})? =>
-	    ($aumentardinero #20 {Jugador yo}) ! ($aumentardinero #40 { Jugador yo }^) 
+	$intercambiardoscartas {Jugador Barbaro} {Jugador Miguel}
 )
