@@ -34,75 +34,75 @@ public class Lexer
         {
             if (Current == '(')
             {
-                result.Add(new SyntaxToken(Tipo.ParéntesisAbierto, "("));
+                result.Add(new Token(Tipo.ParéntesisAbierto, "("));
                 position++;
             }
             else if (Current == ')')
             {
-                result.Add(new SyntaxToken(Tipo.ParéntesisCerrado, ")"));
+                result.Add(new Token(Tipo.ParéntesisCerrado, ")"));
                 position++;
             }
             else if (Current == '{')
             {
-                result.Add(new SyntaxToken(Tipo.LLaveAbierta, "{"));
+                result.Add(new Token(Tipo.LLaveAbierta, "{"));
                 position++;
             }
             else if (Current == '}')
             {
-                result.Add(new SyntaxToken(Tipo.LLaveCerrada, "}"));
+                result.Add(new Token(Tipo.LLaveCerrada, "}"));
                 position++;
             }
             else if (Current == '¿')
             {
-                result.Add(new SyntaxToken(Tipo.QuestionAbierta, "¿"));
+                result.Add(new Token(Tipo.QuestionAbierta, "¿"));
                 position++;
             }
             else if (Current == '^')
             {
-                result.Add(new SyntaxToken(Tipo.Complemento, "^"));
+                result.Add(new Token(Tipo.Complemento, "^"));
                 position++;
             }
             else if (Current == '?')
             {
-                result.Add(new SyntaxToken(Tipo.QuestionCerrada, "?"));
+                result.Add(new Token(Tipo.QuestionCerrada, "?"));
                 position++;
             }
             else if (Current == '!')
             {
-                result.Add(new SyntaxToken(Tipo.ThirdOption, "!"));
+                result.Add(new Token(Tipo.ThirdOption, "!"));
                 position++;
             }
             else if (LookAhead(2) == "=>")
             {
-                result.Add(new SyntaxToken(Tipo.Implies, "=>"));
+                result.Add(new Token(Tipo.Implies, "=>"));
                 position = position + 2;
             }
             else if (LookAhead(2) == "&&")
             {
-                result.Add(new SyntaxToken(Tipo.And, "&&"));
+                result.Add(new Token(Tipo.And, "&&"));
                 position = position + 2;
             }
             else if (LookAhead(2) == "||")
             {
-                result.Add(new SyntaxToken(Tipo.Or, "||"));
+                result.Add(new Token(Tipo.Or, "||"));
                 position = position + 2;
             }
             else if (LookAhead(2) == "if")
             {
-                result.Add(new SyntaxToken(Tipo.IF, "if"));
+                result.Add(new Token(Tipo.IF, "if"));
                 position = position + 2;
             }
             else if (Current == '$')
             {
                 position++;
                 var text = "$" + Lex_Word();
-                result.Add(new ActionToken(Tipo.Accion, text));
+                result.Add(new Token(Tipo.Accion, text));
             }
             else if (Current == '#')
             {
                 position++;
                 var text = "#" + Lex_Word();
-                result.Add(new DescriptionToken(Tipo.Argumento, text));
+                result.Add(new Token(Tipo.Argumento, text));
             }
             else if (char.IsAsciiLetterUpper(Current))
             {
@@ -110,9 +110,9 @@ public class Lexer
                 Implicitly, Here is applied a specific syntax rule of the language after an Tipo.Objeto comes an Tipo.Descripción
                 */
                 var text = Lex_Word();
-                result.Add(new ObjetoToken(Tipo.Objeto, text));
+                result.Add(new Token(Tipo.Objeto, text));
                 position++;
-                result.Add(new DescriptionToken(Tipo.Descripcion, Lex_Word()));
+                result.Add(new Token(Tipo.Descripcion, Lex_Word()));
             }
             else
             {

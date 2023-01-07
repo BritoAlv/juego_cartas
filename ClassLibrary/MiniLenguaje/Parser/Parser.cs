@@ -18,7 +18,7 @@ public class Parser
             {
                 return Tokens[position];
             }
-            return new SyntaxToken(Tipo.Wrong, "\0");
+            return new Token(Tipo.Wrong, "\0");
         }
     }
     public Token LookAhead(int distance)
@@ -37,7 +37,7 @@ public class Parser
             position++;
             return current;
         }
-        return new SyntaxToken(Tipo.Wrong, "\0");
+        return new Token(Tipo.Wrong, "\0");
     }
     public IArgument<T> ParseArgument<T>() where T : IDescribable<T>, IEqualityComparer<T>
     {

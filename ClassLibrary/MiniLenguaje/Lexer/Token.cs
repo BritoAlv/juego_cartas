@@ -1,6 +1,6 @@
 namespace Poker;
 
-public abstract class Token : Iprintable
+public class Token : Iprintable
 {
     public Token(Tipo tipo, string text)
     {

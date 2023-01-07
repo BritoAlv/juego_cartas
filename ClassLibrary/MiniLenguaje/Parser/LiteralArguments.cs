@@ -24,7 +24,7 @@ public class LiteralArguments : Iprintable
             {
                 return tokens[position];
             }
-            return new SyntaxToken(Tipo.Wrong, "\0");
+            return new Token(Tipo.Wrong, "\0");
         }
         UnaryDescriptionArgument ParseUnaryDescription()
         {
