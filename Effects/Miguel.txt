@@ -1,3 +1,15 @@
 (
-	$banearjugador {Dinero mayor}
+	if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo}) || ($holdcard {Valor mayor} {Dinero mayor)? =>
+	    (
+			$aumentardinero #20
+				{
+					Jugador yo
+				}	
+		)
+		(
+			$banearjugador 
+				{	
+					Dinero = 120
+				}
+		)
 )

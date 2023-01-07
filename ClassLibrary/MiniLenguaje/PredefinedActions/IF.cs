@@ -20,6 +20,10 @@ public class IF_Expresion : Return<bool>
         {
             return Action1.Select(x => x.Evaluate_Top(contexto)).ToList();
         }
+        if (Action2.Count == 0)
+        {
+            return new List<bool> { false };
+        }
         return Action2.Select(x => x.Evaluate_Top(contexto)).ToList();
     }
     public override bool Evaluate_Top(IGlobal_Contexto contexto)
