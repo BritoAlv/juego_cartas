@@ -1,3 +1,40 @@
 (
-	$intercambiardoscartas {Jugador Barbaro} {Jugador Miguel}
-)
+$if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo}) && ($holdcard {Valor mayor} {Dinero mayor})? =>
+	(
+		$aumentardinero #20
+		{
+			Jugador yo
+		}	
+	)
+	(
+		$banearjugador 
+		{	
+			Dinero = 120
+		}
+	)
+	! 
+	(
+		$asignarint #valorcarta
+		{
+			(
+			        $getcardvalue 
+				{ Valor mayor } { Jugador yo  } 
+			) 
+		}
+	)
+	(
+		$while ¿($operationbool #valorcarta>0 )? =>
+		(
+			$asignarint #valorcarta 
+			{
+				(
+					$operationint #valorcarta/2
+				)
+			}
+		)
+		(
+			$modificarvalorcarta #valorcarta 
+				{Valor mayor} {Jugador random}	
+		)	
+	)
+) 

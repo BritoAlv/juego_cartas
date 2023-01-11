@@ -91,21 +91,27 @@ public class Lexer
                 result.Add(new Token(Tipo.Or, "||"));
                 position = position + 2;
             }
-            else if (LookAhead(2) == "if")
-            {
-                result.Add(new Token(Tipo.IF, "if"));
-                position = position + 2;
-            }
             else if (Current == '$')
             {
                 position++;
                 var text = "$" + Lex_Word();
+                if (text == "$if")
+                {
+                    result.Add(new Token(Tipo.IF, "$if"));
+                }
+                else if (text == "$while")
+                {
+                    result.Add(new Token(Tipo.While, "$while"));
+                }
+                else
+                {
                 result.Add(new Token(Tipo.Accion, text));
+                }
             }
             else if (Current == '#')
             {
                 position++;
-                var text = "#" + Lex_Word();
+                var text = Lex_Word();
                 result.Add(new Token(Tipo.Argumento, text));
             }
             else if (char.IsAsciiLetterUpper(Current))
@@ -125,7 +131,6 @@ public class Lexer
         }
         return result;
     }
-
     string Lex_Word()
     {
         /*

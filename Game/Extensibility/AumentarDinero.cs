@@ -13,7 +13,7 @@ public class AumentarDinero : Return<int>
 
     public override IEnumerable<int> Evaluate(IGlobal_Contexto contexto)
     {
-        int dinero = int.Parse(Argumento.Text.Substring(1));
+        int dinero = int.Parse(Argumento.Text);
         foreach (var player in Player.Get_Objects(contexto.PlayerManager.Get_Active_Players(2), contexto))
         {
             player.Dinero += dinero;

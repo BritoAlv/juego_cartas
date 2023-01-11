@@ -44,8 +44,24 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
 
     private static Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Jugador(string text)
     {
+        if (text == "random")
+        {
+            return x => GetRandom_Player(x.ToList());
+        }
         return x => x.Where(m => m.Id == text);
     }
+
+    private static IEnumerable<Player> GetRandom_Player(List<Player> players)
+    {
+        Random a = new Random();
+        int index = a.Next(0, players.Count);
+        Player player = players[index];
+        players[index] = players[0];
+        players[0] = player;
+        return players;
+
+    }
+
     private static Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Dinero(string text)
     {
         if (text == "mayor")

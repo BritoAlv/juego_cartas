@@ -15,14 +15,34 @@ public class Factory
         (
             (x, parser) => x == "$holdcard" ? new Card_Hold(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
         );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$getcardvalue" ? new Getcardvalue(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$asignarint" ? new AsignarInt(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), (Return<int>)parser.ParseAction(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$operationbool" ? new OperationBool(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$operationint" ? new OperationInt(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$modificarvalorcarta" ? new ModificarValorCarta(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.ParseArgument<Card>(), parser.ParseArgument<Player>() ,  parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
     }
     public List<Func<string, Parser, object?>> predefined_actions { get; private set; }
     internal object CreateAction(string text, Parser parser)
     {
-        if (text == "while" || text == "if")
+        if (text == "$while" || text == "$if")
         {
             Token open = parser.Match(Tipo.ParéntesisAbierto);
-            Token signature = text == "while" ? parser.Match(Tipo.While) : parser.Match(Tipo.IF);
+            Token signature = text == "$while" ? parser.Match(Tipo.While) : parser.Match(Tipo.IF);
             Token open_question = parser.Match(Tipo.QuestionAbierta);
             Return<bool> condition;
             Return<bool> condition1 = (Return<bool>)this.CreateAction(parser.LookAhead(1).Text, parser);
@@ -43,19 +63,22 @@ public class Factory
             {
                 action1.Add((IFirst)this.CreateAction(parser.LookAhead(1).Text, parser));
             }
-            if (text == "while")
+            if (text == "$while")
             {
                 var closee = parser.Match(Tipo.ParéntesisCerrado);
                 return new While_Expresion(open, signature, condition, implies, action1, closee);
             }
-            Token not = parser.Match(Tipo.ThirdOption);
-            List<IFirst> action2 = new List<IFirst>();
-            while (parser.LookAhead(0).Text == "(")
+            else
             {
-                action2.Add((IFirst)this.CreateAction(parser.LookAhead(1).Text, parser));
+                Token not = parser.Match(Tipo.ThirdOption);
+                List<IFirst> action2 = new List<IFirst>();
+                while (parser.LookAhead(0).Text == "(")
+                {
+                    action2.Add((IFirst)this.CreateAction(parser.LookAhead(1).Text, parser));
+                }
+                Token closed = parser.Match(Tipo.ParéntesisCerrado);
+                return new IF_Expresion(open, signature, condition, implies, action1, not, action2, closed);
             }
-            Token closed = parser.Match(Tipo.ParéntesisCerrado);
-            return new IF_Expresion(open, signature, condition, implies, action1, not, action2, closed);
         }
         foreach (var func in predefined_actions)
         {

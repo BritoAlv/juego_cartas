@@ -75,4 +75,12 @@ public class Parser
         }
         return tokens_description;
     }
+
+    internal object ParseAction()
+    {
+        position++;
+        var find_T = Contexto.factory.CreateAction(LookAhead(1).Text, this);
+        position++;
+        return find_T;
+    }
 }
