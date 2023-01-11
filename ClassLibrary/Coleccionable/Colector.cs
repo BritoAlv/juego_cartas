@@ -12,7 +12,6 @@ public class Colector : IColector
             return Process(File.ReadAllText(pathID));
         }
     }
-
     private List<string> Process(string file)
     {
         file = file.TrimEnd('\n');
@@ -24,8 +23,6 @@ public class Colector : IColector
         }
         return result;
     }
-
-
     private string pathID;
     public Colector(string id)
     {
