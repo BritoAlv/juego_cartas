@@ -7,6 +7,7 @@ namespace Eval
         Multiplication,
         Division,
         LogicalAnd,
-        LogicalOr
+        LogicalOr,
+        Mayor
     }
 }

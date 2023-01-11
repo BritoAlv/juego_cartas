@@ -61,6 +61,8 @@ namespace Eval
                         return (bool)left && (bool)right;
                     case BoundBinaryOperatorKind.LogicalOr:
                         return (bool)left || (bool)right;
+                    case BoundBinaryOperatorKind.Mayor:
+                        return (int)left > (int)right;
                     default:
                         throw new Exception($"Unexpected binary Operator {b.Op.Kind}");
                 }

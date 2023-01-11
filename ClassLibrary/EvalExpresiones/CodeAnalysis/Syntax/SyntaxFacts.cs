@@ -16,7 +16,9 @@ namespace Eval
                 case SyntaxKind.SlashToken:
                     return 4;
                 case SyntaxKind.AmpersandAmpersandToken:
+                case SyntaxKind.Mayor:
                     return 2;
+
                  case SyntaxKind.PipePipeToken:
                     return 1;
                 default:

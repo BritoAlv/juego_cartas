@@ -101,6 +101,8 @@ namespace Eval
                     return new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null);
                 case '!':
                     return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);
+                case '>':
+                    return new SyntaxToken(SyntaxKind.Mayor, _position++, ">", null);
                 case '&':
                     if (LookAhead == '&')
                     {

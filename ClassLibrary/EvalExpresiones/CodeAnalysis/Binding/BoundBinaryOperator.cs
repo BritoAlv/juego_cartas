@@ -22,8 +22,7 @@ namespace Eval
             
             new BoundBinaryOperator(SyntaxKind.AmpersandAmpersandToken, BoundBinaryOperatorKind.LogicalAnd, typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.PipePipeToken, BoundBinaryOperatorKind.LogicalOr, typeof(bool)),
-
-
+            new BoundBinaryOperator(SyntaxKind.Mayor, BoundBinaryOperatorKind.Mayor, typeof(int), typeof(int), typeof(bool))
         };
 
         public SyntaxKind SyntaxKind { get; }

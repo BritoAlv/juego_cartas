@@ -27,6 +27,7 @@ namespace Eval
         IdentifierToken,
         BangToken,
         AmpersandAmpersandToken,
-        PipePipeToken
+        PipePipeToken,
+        Mayor
     }
 }
