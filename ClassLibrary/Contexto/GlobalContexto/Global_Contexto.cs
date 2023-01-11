@@ -10,10 +10,12 @@ public class Global_Contexto : IGlobal_Contexto
         Ronda_Contexto = ronda_Context;
         this.factory = factory;
         PlayerManager = new PlayerManager(players);
+        variables = new Dictionary<string, object>();
     }
     public PlayerManager PlayerManager { get; }
     public IRonda_Context Ronda_Contexto { get; }
     public Factory factory { get; }
+    public Dictionary<string, object> variables{ get; set; }
 
     public void Config()
     {
