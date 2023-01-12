@@ -11,16 +11,19 @@ public class Global_Contexto : IGlobal_Contexto
         this.factory = factory;
         PlayerManager = new PlayerManager(players);
         variables = new Dictionary<string, object>();
+        this.efectos = new List<Return<bool>>();
     }
     public PlayerManager PlayerManager { get; }
     public IRonda_Context Ronda_Contexto { get; }
     public Factory factory { get; }
     public Dictionary<string, object> variables{ get; set; }
+    public List<Return<bool>> efectos { get; set; }
 
     public void Config()
     {
         Ronda_Contexto.Apuestas = new Bet(this.PlayerManager.Get_Active_Players(1));
         Ronda_Contexto.CardsManager = new CardManager(this.PlayerManager.Get_Active_Players(1));
         this.PlayerManager.Shufle_Players();
+        this.efectos = new List<Return<bool>>();
     }
 }

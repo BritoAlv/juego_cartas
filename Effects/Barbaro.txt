@@ -1,16 +1,10 @@
 (
-$if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo}) && ($holdcard {Valor mayor} {Dinero mayor})? =>
+$if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo}) || ($holdcard {Valor mayor} {Dinero mayor})? =>
 	(
-		$aumentardinero #20
+		$halfmoney
 		{
 			Jugador yo
 		}	
-	)
-	(
-		$banearjugador 
-		{	
-			Dinero = 120
-		}
 	)
 	! 
 	(
@@ -37,4 +31,4 @@ $if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo}) && ($holdcard {Val
 				{Valor mayor} {Jugador random}	
 		)	
 	)
-) 
+)

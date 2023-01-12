@@ -65,7 +65,6 @@ public partial class Card : ICloneable, IDescribable<Card>, IEqualityComparer<Ca
         {
             this.Value = (CardValue)a;
         }
-        
     }
 
 }

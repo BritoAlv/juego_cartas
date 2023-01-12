@@ -35,6 +35,10 @@ public class Factory
         (
             (x, parser) => x == "$modificarvalorcarta" ? new ModificarValorCarta(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.ParseArgument<Card>(), parser.ParseArgument<Player>() ,  parser.Match(Tipo.ParéntesisCerrado)) : null!
         );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$halfmoney" ? new Half_Money(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>() ,  parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
     }
     public List<Func<string, Parser, object?>> predefined_actions { get; private set; }
     internal object CreateAction(string text, Parser parser)

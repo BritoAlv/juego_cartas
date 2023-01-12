@@ -1,5 +1,4 @@
 namespace Poker;
-using Eval;
 public class OperationInt : Return<int>
 {
     public OperationInt(Token open_parenthesis, Token signature, Token argumento, Token closed_parenthesis) : base(open_parenthesis, signature, closed_parenthesis)

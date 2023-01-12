@@ -6,4 +6,5 @@ public interface IGlobal_Contexto
     Dictionary<string, object> variables { get; set; }
     Factory factory { get; }
     void Config();
+    List<Return<bool>> efectos {get;set;}
 }
