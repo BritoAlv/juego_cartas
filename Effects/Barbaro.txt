@@ -1,17 +1,35 @@
 (
-$if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo}) || ($holdcard {Valor mayor} {Dinero mayor})? =>
-	(
-		$halfmoney
+$if ¿($holdhand { Cantidad %2  } {Jugador yo}) || ($holdcard {Valor mayor} {Dinero mayor})? =>
+	($finalround #efectonuevo 
 		{
-			Jugador yo
-		}	
+			(
+			$if ¿($exist #dineromio)? => 
+				(
+				$if ¿($operationbool #stage)? =>
+					($asignarint #actualdinero {($getdinero {Jugador yo})})
+						(
+						$if ¿($operationbool #actualdinero>dineromio)? =>
+							($asignarint #dineromio {($operationint #actualdinero)})
+							!
+							($aumentardinero #[dineromio-actualdinero]/2 {Jugador yo})
+							($asignarbool #efectonuevo {($operationbool #false)})
+						)
+					!
+					($asignarbool #stage { ($operationbool #true) } )
+					($asignarint #dineromio { ($getdinero {Jugador yo}) })
+				)
+			!
+			($asignarint #dineromio {($getdinero {Jugador yo})})
+			($asignarbool #stage {($operationbool #false)})
+			)
+		}
 	)
 	! 
 	(
 		$asignarint #valorcarta
 		{
 			(
-			        $getcardvalue 
+			    $getcardvalue 
 				{ Valor mayor } { Jugador yo  } 
 			) 
 		}

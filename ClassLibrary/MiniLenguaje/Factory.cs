@@ -21,10 +21,6 @@ public class Factory
         );
         predefined_actions.Add
         (
-            (x, parser) => x == "$asignarint" ? new AsignarInt(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), (Return<int>)parser.ParseAction(), parser.Match(Tipo.ParéntesisCerrado)) : null!
-        );
-        predefined_actions.Add
-        (
             (x, parser) => x == "$operationbool" ? new OperationBool(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.Match(Tipo.ParéntesisCerrado)) : null!
         );
         predefined_actions.Add
@@ -37,7 +33,23 @@ public class Factory
         );
         predefined_actions.Add
         (
-            (x, parser) => x == "$halfmoney" ? new Half_Money(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>() ,  parser.Match(Tipo.ParéntesisCerrado)) : null!
+            (x, parser) => x == "$exist" ? new Exist(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento) ,  parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$finalround" ? new FinalRoundEffect(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento),  (IFirst)parser.ParseAction() ,  parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$getdinero" ? new Getdinero(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Player>() ,  parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$asignarbool" ? new Asignarbool(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), (Return<bool>)parser.ParseAction(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+        );
+        predefined_actions.Add
+        (
+            (x, parser) => x == "$asignarint" ? new AsignarInt(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), (Return<int>)parser.ParseAction(), parser.Match(Tipo.ParéntesisCerrado)) : null!
         );
     }
     public List<Func<string, Parser, object?>> predefined_actions { get; private set; }

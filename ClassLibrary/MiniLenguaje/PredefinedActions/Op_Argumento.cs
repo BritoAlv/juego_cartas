@@ -11,21 +11,12 @@ public static class Operacion
                 if (contexto.variables[word] is bool valor)
                 {
                     text = text.Replace(word, valor == true ? "true" : "false");
+                    continue;
                 }
                 if (contexto.variables[word] is int entero)
                 {
                     text = text.Replace(word, entero.ToString());
-                }
-            }
-            else
-            {
-                if (contexto.variables[word] is bool valor)
-                {
-                    text.Replace(word, "false");
-                }
-                if (contexto.variables[word] is int entero)
-                {
-                    text.Replace(word, "0");
+                    continue;
                 }
             }
         }

@@ -9,7 +9,7 @@ public class Token : Iprintable
     }
 
     public Tipo Tipo { get; }
-    public string Text { get; }
+    public string Text{ get; }
     public string valor => Text;
 
     public IEnumerable<Iprintable> GetChildrenIprintables()

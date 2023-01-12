@@ -21,39 +21,4 @@ public class OperationInt : Return<int>
         yield return Argumento;
         yield return Closed_Parenthesis;
     }
-    public string Replaace(string text, IGlobal_Contexto contexto)
-    {
-        List<string> words = get_all_words(text);
-        foreach (var word in words)
-        {
-            if (contexto.variables.ContainsKey(word))
-            {
-                text.Replace(word, ((int)contexto.variables[word]).ToString());
-            }
-            else
-            {
-                text.Replace(word, "0");
-            }
-        }
-        return text;
-    }
-    private List<string> get_all_words(string text)
-    {
-        List<string> words = new List<string>();
-        for (int i = 0; i < text.Length; i++)
-        {
-            if (char.IsLetter(text[i]))
-            {
-                int start = i;
-                string word = "";
-                while (char.IsLetter(text[i]))
-                {
-                    word = word + text[i];
-                    i++;
-                }
-                words.Add(word);
-            }
-        }
-        return words;
-    }
 }

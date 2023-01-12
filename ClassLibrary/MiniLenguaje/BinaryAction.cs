@@ -15,20 +15,28 @@ namespace Poker
         public override IEnumerable<bool> Evaluate(IGlobal_Contexto contexto)
         {
             IEnumerable<bool> result1 = this.condition1.Evaluate(contexto);
-            IEnumerable<bool> result2 = this.condition2.Evaluate(contexto);
             if (op.Text == "&&")
             {
-                if (result1.All(x => x == true) && result2.All(x => x == true))
+                if (result1.All(x => x == true))
                 {
-                    return new List<bool> { true };
+                    IEnumerable<bool> result2 = this.condition2.Evaluate(contexto);
+                    if (result2.All(x => x == true))
+                    {
+                        return new List<bool> { true };
+                    }
                 }
                 return new List<bool> { false };
             }
             if (op.Text == "||")
             {
-                if (result1.All(x => x == true) || result2.All(x => x == true))
+                if (result1.All(x => x == true))
                 {
                     return new List<bool> { true };
+                }
+                IEnumerable<bool> result2 = this.condition2.Evaluate(contexto);
+                if (result2.All(x => x == true))
+                {
+                    return new List<bool> {true};
                 }
                 return new List<bool> { false };
             }
