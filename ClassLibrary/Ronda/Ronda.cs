@@ -88,9 +88,9 @@ internal class Ronda
         {
             player.Hand = new Hand(this.Scorer);
         }
-        foreach (var efect in Global_Contexto.efectos)
+        foreach (var efecto in Global_Contexto.FinalRoundEffects)
         {
-            efect.Evaluate_Top(Global_Contexto);
+            efecto.Evaluate(Global_Contexto);
         }
     }
 }

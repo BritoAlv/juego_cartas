@@ -32,7 +32,7 @@ public abstract class Return<T> : IArgument<T>, Iprintable, IFirst
 
 
 /*
-Every action that implements this interface have to define how evaluate himself, 
+Every action that implements this interface have to define how evaluate itself, 
 when it's the principal action of the effect.
 */
 public interface IFirst // needs a better name
