@@ -9,27 +9,27 @@ public class Factory
         this.predefined_actions = new List<Func<string, Parser, object?>>();
         predefined_actions.Add
         (
-            (x, parser) => x == "$holdhand" ? new Hand_Hold(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Hand>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+            (x, parser) => x == "$holdhand" ? new Hand_Hold(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Hand>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null
         );
         predefined_actions.Add
         (
-            (x, parser) => x == "$holdcard" ? new Card_Hold(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+            (x, parser) => x == "$holdcard" ? new Card_Hold(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null
         );
         predefined_actions.Add
         (
-            (x, parser) => x == "$getcardvalue" ? new Getcardvalue(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null!
+            (x, parser) => x == "$getcardvalue" ? new Getcardvalue(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.ParseArgument<Card>(), parser.ParseArgument<Player>(), parser.Match(Tipo.ParéntesisCerrado)) : null
         );
         predefined_actions.Add
         (
-            (x, parser) => x == "$operationbool" ? new OperationBool(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.Match(Tipo.ParéntesisCerrado)) : null!
+            (x, parser) => x == "$operationbool" ? new OperationBool(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.Match(Tipo.ParéntesisCerrado)) : null
         );
         predefined_actions.Add
         (
-            (x, parser) => x == "$operationint" ? new OperationInt(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.Match(Tipo.ParéntesisCerrado)) : null!
+            (x, parser) => x == "$operationint" ? new OperationInt(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.Match(Tipo.ParéntesisCerrado)) : null
         );
         predefined_actions.Add
         (
-            (x, parser) => x == "$modificarvalorcarta" ? new ModificarValorCarta(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.ParseArgument<Card>(), parser.ParseArgument<Player>() ,  parser.Match(Tipo.ParéntesisCerrado)) : null!
+            (x, parser) => x == "$modificarvalorcarta" ? new ModificarValorCarta(parser.Match(Tipo.ParéntesisAbierto), parser.Match(Tipo.Accion), parser.Match(Tipo.Argumento), parser.ParseArgument<Card>(), parser.ParseArgument<Player>() ,  parser.Match(Tipo.ParéntesisCerrado)) : null
         );
         predefined_actions.Add
         (

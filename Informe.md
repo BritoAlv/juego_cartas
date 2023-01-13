@@ -11,7 +11,7 @@ Cuando un jugador gana una partida recibe un efecto de cada uno de los demás ju
 
 ## Run
 
-Está implementado en NET 7.0 para hacer uso de la nueva *feature* de que las clases abstractas genéricas pueden definir métodos estáticos virtuales, así es como cada objeto le transmite al parser como interpretarlo, de forma que al añadir una estructura nueva a nuestro juego, tengamos que implementar la clase abstracta requerida a nivel de estructura y no modificar nuestro parser. Para ejecutarlo realizar:
+Está implementado en NET 7.0 para hacer uso de la nueva *feature* de que las clases abstractas genéricas pueden definir métodos estáticos virtuales, así es como cada descripción literal le transmite al parser como interpretarlo, de forma que al añadir una estructura nueva a nuestro juego, tengamos que implementar la clase abstracta requerida a nivel de estructura y no modificar nuestro parser. Para ejecutarlo realizar:
 
 ```bash
 cd Game
@@ -35,9 +35,10 @@ En tu turno debes escribir que Decisión decides realizar, las posibles decision
 ```bash
 ├── ClassLibrary
 │   ├── Cartas
-│   ├── Colector
+│   ├── Coleccionable
 │   ├── Contexto
 │   ├── Decision
+│   ├── EvalExpresiones
 │   ├── Hand
 │   ├── Manager
 │   ├── Minilenguaje
@@ -56,21 +57,23 @@ En tu turno debes escribir que Decisión decides realizar, las posibles decision
 
 ## Game:
 
-La carpeta *Game* representa una aplicación de consola que apoyada en la librería de clases ejecuta el juego. Además es posible definir nuevas clases y objetos para extender las reglas del juego, según cada estructura del juego lo permita.
+La carpeta *Game* representa una aplicación de consola que apoyada en la librería de clases ejecuta el juego. Además es posible definir nuevas clases y objetos para *extender* las reglas del juego, según cada estructura del juego lo permita.
 
 ## Examples:
 
-Contiene ejemplos para mostrar el uso de efectos. 
+Contiene ejemplos de efectos. 
 
 # Estructura de la librería de clases:
 
 ### Cartas & Hand:
 
-Contiene la definición de Carta, dada por el *Suit* y el *Value*. Análogamente *Hand* contiene lo que representa la Mano de lo jugadores.
+Contiene la definición de Carta, dada por el *Suit* y el *Value*. Análogamente *Hand* contiene lo que representa la Mano de lo jugadores. Tanto las cartas, como la mano, como los jugadores implementan la interfaz *IDescribable<T>* que define cómo pueden ser descritos estos objetos en el minilenguaje. (la responsabilidad de como debe ser descrito está en la estructura y no en quien utiliza la descripción). 
 
 ### Contexto:
 
-Los contextos representan la información de la partida que se está ejecutando tanto como los jugadores activos como las apuestas realizadas, se supone que esta parte de la librería de clases, defina lo que un jugador pueda acceder y revisar el estado del juego, y a partir de esto determinar decisiones como *banear* a un jugador o regalar dinero, está dividido en el contexto de la partida, de las rondas, y el de las mini-rondas que quede explicito donde es útil cada estructura. Además lo que la lógica del juego necesita del *Contexto* es a través de interfaces para garantizar que cambios en la estructura interna de el Contexto no afecte a el código exterior a él que depende de él mientras que se cumpla el contrato.
+Definí la interfaz IGlobalContexto para evitar propagación de errores al cambiar la estructura interna de la clase que implementa esa interfaz. (las clases no deben de depender de clases específicas sino de contratos.) Mientras que este sea cumplido, las clases que usan el contexto no tendrán problemas (acordarse propagación de errores).
+
+Los contextos representan la información de la partida que se está ejecutando tanto como los jugadores activos como las apuestas realizadas, se supone que esta parte de la librería de clases, defina lo que un jugador pueda acceder y revisar el estado del juego, y a partir de esto determinar decisiones como *banear* a un jugador o regalar dinero, está dividido en el contexto de la partida, de las rondas, y el de las mini-rondas que quede explicito donde es útil cada estructura.
 
 - Contexto de la Partida: Contiene un Manager de Jugadores a través del cual se pueden aplicar acciones como banear a un jugador de una ronda.
 
@@ -155,11 +158,7 @@ Define la lógica de lo que ocurre en una ronda de nuestro juego, además una ro
 
 - La estrategia del jugador de la computadora implementa una idea de agresividad, y también nota cuando otro jugador está siendo agresivo, por lo que decide cuando retirarse, apostar o continuar. Esto es mejor que nada, pero igual sigue siendo muy rústico.
 
-- Muy pocas acciones predefinidas, actualmente 3, en teoría añadir una nueva acción predefinida debe ser implementar la clase abstracta especificada, y añadirla a la *Factory*.
-
 - Añadir más ejemplos de como funcionan los efectos.
-
-- Añadir condiciones de activación a los efectos, la idea sería añadir a nuestro *parser* la estructura de *if*, else, donde tendríamos tres efectos, uno sería la condición, si el efecto ( condición) se realiza satisfactoriamente se realiza el efecto dentro del *if*, en caso contrario el especificado por el *else*.
 
 - Dar la posibilidad a el usuario desde la aplicación visual (consola) de crear nuevos efectos, ahora mismo el usuario modificaba el txt, pero no debe ser así  
 

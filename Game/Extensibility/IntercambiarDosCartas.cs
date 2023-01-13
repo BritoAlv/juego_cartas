@@ -1,9 +1,7 @@
 /*
 This file contains customs classes to demonstrate extensibility.
 */
-
 using Poker;
-
 /*
 exchange two random cards of two players. new predefined action that takes two player as argument.
 */
@@ -14,10 +12,8 @@ public class IntercambiarDosCartas : Return<bool>
         First = first;
         Second = second;
     }
-
     public IArgument<Player> First { get; }
     public IArgument<Player> Second { get; }
-
     public override IEnumerable<bool> Evaluate(IGlobal_Contexto contexto)
     {
         var player1 = First.Get_Objects(contexto.PlayerManager.Get_Active_Players(2), contexto).First();
@@ -36,12 +32,10 @@ public class IntercambiarDosCartas : Return<bool>
         contexto.Ronda_Contexto.CardsManager.AñadirCarta(player2, card2);
         return new List<bool> { true };
     }
-
     public override bool Evaluate_Top(IGlobal_Contexto contexto)
     {
         return Evaluate(contexto).First();
     }
-
     public override IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open_Parenthesis;

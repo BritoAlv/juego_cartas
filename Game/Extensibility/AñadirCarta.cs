@@ -7,7 +7,6 @@ public class AñadirCarta : Return<bool>
         Card = card;
         Player = player;
     }
-
     public IArgument<Card> Card { get; }
     public IArgument<Player> Player { get; }
 

@@ -18,7 +18,6 @@ public class Global_Contexto : IGlobal_Contexto
     public Factory factory { get; }
     public Dictionary<string, object> variables{ get; set; }
     public List<FinalRoundEffect> FinalRoundEffects {get;set;}
-
     public void Config()
     {
         Ronda_Contexto.Apuestas = new Bet(this.PlayerManager.Get_Active_Players(1));
