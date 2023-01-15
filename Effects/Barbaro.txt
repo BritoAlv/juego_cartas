@@ -1,1 +1,52 @@
-( $añadircarta [ ( $robarcarta [Valor mayor && Suit diamante ] {Dinero <100}) ]  {Apuesta mayor })
+(
+$if ¿($holdhand { Cantidad %2  } {Jugador yo}) || ($holdcard {Valor mayor} {Dinero mayor})? =>
+	($finalround #efectonuevo 
+		{
+			(
+			$if ¿($exist #dineromio)? => 
+				(
+				$if ¿($operationbool #stage)? =>
+					($asignarint #actualdinero {($getdinero {Jugador yo})})
+						(
+						$if ¿($operationbool #actualdinero>dineromio)? =>
+							($asignarint #dineromio {($operationint #actualdinero)})
+							!
+							($aumentardinero #[dineromio-actualdinero]/2 {Jugador yo})
+							($asignarbool #efectonuevo {($operationbool #false)})
+						)
+					!
+					($asignarbool #stage { ($operationbool #true) } )
+					($asignarint #dineromio { ($getdinero {Jugador yo}) })
+				)
+			!
+			($asignarint #dineromio {($getdinero {Jugador yo})})
+			($asignarbool #stage {($operationbool #false)})
+			)
+		}
+	)
+	! 
+	(
+		$asignarint #valorcarta
+		{
+			(
+			    $getcardvalue 
+				{ Valor mayor } { Jugador yo  } 
+			) 
+		}
+	)
+	(
+		$while ¿($operationbool #valorcarta>0 )? =>
+		(
+			$asignarint #valorcarta 
+			{
+				(
+					$operationint #valorcarta/2
+				)
+			}
+		)
+		(
+			$modificarvalorcarta #valorcarta 
+				{Valor mayor} {Jugador random}	
+		)	
+	)
+)

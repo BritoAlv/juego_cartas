@@ -44,6 +44,7 @@ internal class MiniRonda
     }
     void JugarPlayer(Player player)
     {
+        Global_Contexto.PlayerManager.Current = player; // this is a patch?
         IDecision decision = new InvalidDecision();
         bool flag = false;
         do

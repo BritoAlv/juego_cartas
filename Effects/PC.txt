@@ -1,0 +1,49 @@
+(
+$if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo}) || ($holdcard {Valor mayor} {Dinero mayor})? =>
+	(
+		$aumentardinero #20
+		{
+			Jugador yo
+		}	
+	)
+	(
+		$banearjugador 
+		{	
+			Dinero = 120
+		}
+	)
+	! 
+	(
+		$añadircarta
+		{ 
+			(
+			$robarcarta 
+			{
+				Valor mayor && Suit diamante
+			}
+			{
+				Dinero <100
+			}
+			)   
+		}
+		{
+			Apuesta mayor
+		}
+	) 
+) 
+)
+(
+$if ¿($holdhand { Cantidad %2 && Priority >3 } {Jugador yo}) || ($holdcard {Valor mayor} {Dinero mayor)? =>
+	    (
+			$aumentardinero #20
+				{
+					Jugador yo
+				}	
+		)
+		(
+			$banearjugador 
+				{	
+					Dinero = 120
+				}
+		)
+)

@@ -1,0 +1,25 @@
+namespace Eval
+{
+    /*
+    This represent every type of token in our grammar, can be +,- or 223.
+    */
+    public sealed class SyntaxToken : SyntaxNode
+    {
+        public SyntaxToken(SyntaxKind kind, int position, string text, object value)
+        {
+            Kind = kind;
+            Position = position;
+            Text = text;
+            Value = value;
+        }
+        public override SyntaxKind Kind { get; }
+        public int Position { get; }
+        public string Text { get; }
+        public object Value { get; }
+
+        public override IEnumerable<SyntaxNode> GetChildren()
+        {
+            return Enumerable.Empty<SyntaxNode>();
+        }
+    }
+}

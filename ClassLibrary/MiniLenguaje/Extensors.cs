@@ -1,4 +1,7 @@
 namespace Poker;
+/*
+some extensors methods to perform effects.
+*/
 public static class Extensors
 {
     public static int Summ(this IEnumerable<int> to_sum)
@@ -52,6 +55,17 @@ public static class Extensors
             result.Add(value2);
         }
         return result;
+    }
+
+    public static IEnumerable<T> Complementt<T>(this IEnumerable<T> first, IEnumerable<T> universe) where T : IEqualityComparer<T>
+    {
+        foreach (var element in universe)
+        {
+            if (!first.Contains(element))
+            {
+                yield return element;
+            }
+        }
     }
 
 }

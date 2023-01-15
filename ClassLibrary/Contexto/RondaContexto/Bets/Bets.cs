@@ -58,6 +58,11 @@ public class Bet
         return result.Select(x => x.Max()).Max();
     }
 
+    public int Cuantas_Apuestas(Player X)
+    {
+        return Bets[X].Where(m => m > 0).Count();
+    }
+
     public int Get_Max_Sum_Apuesta()
     {
         IEnumerable<List<int>> result = Bets.Values.Where(x => x.Count > 0);
@@ -71,5 +76,14 @@ public class Bet
     public Player? Get_Mayor_Apostador()
     {
         return (Player?)Bets.Keys.OrderByDescending(x => Bets[x].Sum()).FirstOrDefault();
+    }
+    public bool Puede_Pasar(Player A)
+    {
+        var player = Get_Mayor_Apostador();
+        if (player is null)
+        {
+            return true;
+        }
+        return player.Id == A.Id;
     }
 }

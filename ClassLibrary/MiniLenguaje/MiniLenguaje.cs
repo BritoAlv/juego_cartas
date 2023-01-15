@@ -1,7 +1,7 @@
 namespace Poker;
 public class Mini_Lenguaje
 {
-    internal Mini_Lenguaje(Player A, IGlobal_Contexto contexto)
+    internal Mini_Lenguaje(IGlobal_Contexto contexto)
     {
         Contexto = contexto;
     }
@@ -13,16 +13,18 @@ public class Mini_Lenguaje
         {
             return;
         }
+        line = PreProcess(line);
+
         // get tokens from the string.
         Lexer lexer = new Lexer(line);
         List<Token> tokens = lexer.Lex();
-        Parser parser = new Parser(tokens);
+        Parser parser = new Parser(tokens, Contexto);
         var signature = tokens[1].Text;
-        var tree = Factory.CreateAction(tokens[1].Text, parser);
+        var tree = Contexto.factory.CreateAction(tokens[1].Text, parser);
         print_tree.print((Iprintable)tree);
         try
         {
-            if ( ((IFirst)tree).Evaluate_Top(Contexto))
+            if (((IFirst)tree).Evaluate_Top(Contexto))
             {
                 Console.WriteLine("El efecto se pudo realizar sin problemas");
             }
@@ -38,5 +40,9 @@ public class Mini_Lenguaje
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.ResetColor();
     }
-}
 
+    private string PreProcess(string line)
+    {
+        return line.Replace("Jugador yo", "Jugador " + Contexto.PlayerManager.Current!.Id); // another parch    }
+    }
+}

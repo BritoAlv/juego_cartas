@@ -49,7 +49,9 @@ internal class Ronda
     }
     List<Player> GetWinners(IEnumerable<Player> round_finalist)
     {
-        var best_hand = round_finalist.Select(x => x.Hand).OrderDescending().FirstOrDefault();
+        var player_by_hand = round_finalist.Select(x => x.Hand).OrderDescending();
+        var best_hand = player_by_hand.FirstOrDefault();
+        var worse_hand = player_by_hand.Last();
         if (best_hand is null)
         {
             Console.WriteLine("Nadie ganó la ronda");
@@ -85,6 +87,10 @@ internal class Ronda
         foreach (var player in Participants)
         {
             player.Hand = new Hand(this.Scorer);
+        }
+        foreach (var efecto in Global_Contexto.FinalRoundEffects)
+        {
+            efecto.Evaluate(Global_Contexto);
         }
     }
 }

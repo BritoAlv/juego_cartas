@@ -1,9 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
 namespace Poker;
-public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>, IColector
+
+/// <summary>
+/// Defines all the requirements that a player should obey.
+/// </summary>
+public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>
 {
+    /// <summary>
+    /// This have the responsibility of deal with effects.
+    /// </summary>
     public IColector Colector { get; private set; }
-    public List<string> get_efectos => Colector.get_efectos;
     protected Player(string id, int dinero)
     {
         Id = id;
@@ -11,9 +17,9 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
         Colector = new Colector(id);
     }
     public string Id { get; }
-    internal int Dinero { get; set; }
+    public int Dinero { get; set; }
     private Hand? _hand;
-    internal Hand Hand
+    public Hand Hand
     {
         get
         {
@@ -31,8 +37,15 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
             _hand = value;
         }
     }
+    /*
+    THis defines the logic of what decision take.
+    */
     public abstract IDecision parse_decision(IGlobal_Contexto contexto);
+    /*
+    This defines the logic of how much money the player should bet.
+    */
     public abstract int realizar_apuesta(IGlobal_Contexto contexto);
+    
     public bool Equals(Player? x, Player? y)
     {
         if (x is null || y is null)
@@ -48,14 +61,6 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
     public int GetHashCode([DisallowNull] Player obj)
     {
         return obj.Id.GetHashCode();
-    }
-    public void add_efecto(string efecto)
-    {
-        Colector.add_efecto(efecto);
-    }
-    public string remove_efecto()
-    {
-        return Colector.remove_efecto();
     }
     public List<int> Apuestas { get; set; } = new List<int>();
 }

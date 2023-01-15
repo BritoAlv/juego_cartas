@@ -1,6 +1,10 @@
 namespace Poker;
 public class Lexer
 {
+    static HashSet<char> syntax_token = new HashSet<char>()
+    {
+        '{', '}', '(', ')', '!', '^', '#'
+    };
     int position = 0;
     char Current
     {
@@ -32,79 +36,93 @@ public class Lexer
         var result = new List<Token>();
         while (Current != '\0')
         {
-            if (Current == ' ')
+            if (Current == '(')
             {
-                position++;
-            }
-            else if (Current == '(')
-            {
-                result.Add(new SyntaxToken(Tipo.ParéntesisAbierto, "("));
+                result.Add(new Token(Tipo.ParéntesisAbierto, "("));
                 position++;
             }
             else if (Current == ')')
             {
-                result.Add(new SyntaxToken(Tipo.ParéntesisCerrado, ")"));
+                result.Add(new Token(Tipo.ParéntesisCerrado, ")"));
                 position++;
             }
             else if (Current == '{')
             {
-                result.Add(new SyntaxToken(Tipo.LLaveAbierta, "{"));
+                result.Add(new Token(Tipo.LLaveAbierta, "{"));
                 position++;
             }
             else if (Current == '}')
             {
-                result.Add(new SyntaxToken(Tipo.LLaveCerrada, "}"));
-                position++;
-            }
-            else if (Current == '[')
-            {
-                result.Add(new SyntaxToken(Tipo.CorcheteAbierto, "["));
-                position++;
-            }
-            else if (Current == ']')
-            {
-                result.Add(new SyntaxToken(Tipo.CorcheteCerrado, "]"));
+                result.Add(new Token(Tipo.LLaveCerrada, "}"));
                 position++;
             }
             else if (Current == '¿')
             {
-                result.Add(new SyntaxToken(Tipo.QuestionAbierta, "¿"));
+                result.Add(new Token(Tipo.QuestionAbierta, "¿"));
+                position++;
+            }
+            else if (Current == '^')
+            {
+                result.Add(new Token(Tipo.Complemento, "^"));
                 position++;
             }
             else if (Current == '?')
             {
-                result.Add(new SyntaxToken(Tipo.QuestionCerrada, "?"));
+                result.Add(new Token(Tipo.QuestionCerrada, "?"));
                 position++;
+            }
+            else if (Current == '!')
+            {
+                result.Add(new Token(Tipo.ThirdOption, "!"));
+                position++;
+            }
+            else if (LookAhead(2) == "=>")
+            {
+                result.Add(new Token(Tipo.Implies, "=>"));
+                position = position + 2;
             }
             else if (LookAhead(2) == "&&")
             {
-                result.Add(new SyntaxToken(Tipo.And, "&&"));
+                result.Add(new Token(Tipo.And, "&&"));
                 position = position + 2;
             }
             else if (LookAhead(2) == "||")
             {
-                result.Add(new SyntaxToken(Tipo.And, "||"));
+                result.Add(new Token(Tipo.Or, "||"));
                 position = position + 2;
             }
             else if (Current == '$')
             {
                 position++;
-                var text = "$" + LexWord();
-                result.Add(new ActionToken(Tipo.Accion, text));
+                var text = "$" + Lex_Word();
+                if (text == "$if")
+                {
+                    result.Add(new Token(Tipo.IF, "$if"));
+                }
+                else if (text == "$while")
+                {
+                    result.Add(new Token(Tipo.While, "$while"));
+                }
+                else
+                {
+                result.Add(new Token(Tipo.Accion, text));
+                }
+            }
+            else if (Current == '#')
+            {
+                position++;
+                var text = Lex_Word();
+                result.Add(new Token(Tipo.Argumento, text));
             }
             else if (char.IsAsciiLetterUpper(Current))
             {
-                var text = LexWord();
-                if (text == text.ToUpper())
-                {
-                    result.Add(new ObjetoToken(Tipo.Nombre, text));
-                    continue;
-                }
-                result.Add(new ObjetoToken(Tipo.Objeto, text));
-            }
-            else if (char.IsAsciiLetterLower(Current) || char.IsAsciiDigit(Current) || Current == '>' || Current == '<')
-            {
-                result.Add(new DescriptionToken(Tipo.Descripcion, LexDescription()));
+                /*
+                Implicitly, Here is applied a specific syntax rule of the language after an Tipo.Objeto comes an Tipo.Descripción
+                */
+                var text = Lex_Word();
+                result.Add(new Token(Tipo.Objeto, text));
+                position++;
+                result.Add(new Token(Tipo.Descripcion, Lex_Word()));
             }
             else
             {
@@ -113,24 +131,17 @@ public class Lexer
         }
         return result;
     }
-    string LexWord()
+    string Lex_Word()
     {
+        /*
+        Implicitly is applied a specific syntax rule of the language, it's that we do not allow spaces between words.
+        */
         var text = "";
-        while (char.IsLetter(Current) || Current == '_')
+        while(Current != ' ' && Current != '\t' && Current != '\n' && !syntax_token.Contains(Current))
         {
             text = text + Current;
             position++;
         }
         return text;
-    }
-    string LexDescription()
-    {
-        var text = "";
-        while (char.IsLetterOrDigit(Current) || Current == '>' || Current == '<')
-        {
-            text = text + Current;
-            position++;
-        }
-        return text.TrimEnd().TrimStart();
     }
 }

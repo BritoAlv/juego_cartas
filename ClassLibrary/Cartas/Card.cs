@@ -8,7 +8,7 @@ public partial class Card : ICloneable, IDescribable<Card>, IEqualityComparer<Ca
         Value = value;
         Suit = suit;
     }
-    public CardValue Value { get; }
+    public CardValue Value { get; private set; }
     
     public CardSuit Suit { get; }
     public object Clone()
@@ -57,6 +57,14 @@ public partial class Card : ICloneable, IDescribable<Card>, IEqualityComparer<Ca
             return 1;
         }
         return (int)this.Value;
+    }
+
+    public void change_value(int a)
+    {
+        if (a > 1)
+        {
+            this.Value = (CardValue)a;
+        }
     }
 
 }

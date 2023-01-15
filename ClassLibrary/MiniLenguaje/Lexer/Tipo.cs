@@ -7,13 +7,18 @@ public enum Tipo
     ParéntesisCerrado,
     Wrong,
     LLaveAbierta,
-    CorcheteAbierto,
-    CorcheteCerrado,
     LLaveCerrada,
     Accion,
     Objeto,
     And,
     Descripcion,
     QuestionAbierta,
-    QuestionCerrada
+    QuestionCerrada,
+    IF,
+    ThirdOption,
+    Implies,
+    Complemento,
+    Argumento,
+    Or,
+    While
 }

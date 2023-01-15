@@ -1,9 +1,7 @@
 namespace Poker;
-public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>, IColector
+public abstract partial class Player : Ideable, IApostador, IDescribable<Player>, IEqualityComparer<Player>
 {
     public static string Valor => "Jugador";
-
-
     public static Func<IEnumerable<Player>, IEnumerable<Player>> get_T_func(UnaryDescriptionArgument unary)
     {
         var identifier = unary.Objeto.Text;
@@ -46,19 +44,41 @@ public abstract partial class Player : Ideable, IApostador, IDescribable<Player>
 
     private static Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Jugador(string text)
     {
+        if (text == "random")
+        {
+            return x => GetRandom_Player(x.ToList());
+        }
         return x => x.Where(m => m.Id == text);
     }
+
+    private static IEnumerable<Player> GetRandom_Player(List<Player> players)
+    {
+        Random a = new Random();
+        int index = a.Next(0, players.Count);
+        Player player = players[index];
+        players[index] = players[0];
+        players[0] = player;
+        return players;
+
+    }
+
     private static Func<IEnumerable<Player>, IEnumerable<Player>> Player_Func_Dinero(string text)
     {
         if (text == "mayor")
         {
-            return x => x.OrderByDescending(m => m.Dinero);
+            return x => x.OrderByDescending(m => m.Dinero).Take(1);
         }
 
         else if (text.StartsWith(">"))
         {
             int a = int.Parse(text.Substring(1));
             return x => x.Where(m => m.Dinero > a);
+        }
+
+        else if (text.StartsWith("="))
+        {
+            int a = int.Parse(text.Substring(1));
+            return x => x.Where(m => m.Dinero == a);
         }
 
         else if (text == "menor")
