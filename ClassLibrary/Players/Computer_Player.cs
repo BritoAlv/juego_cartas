@@ -26,7 +26,6 @@ public class Basic_Computer_Player : Player
             return this.Dinero / 10 == 0 ? 1 : this.Dinero / 10;
         }
         return 1;
-
     }
     public override IDecision parse_decision(IGlobal_Contexto contexto)
     {

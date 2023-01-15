@@ -7,10 +7,8 @@ public class AumentarDinero : Return<int>
         Argumento = argumento;
         Player = player;
     }
-
     public Token Argumento { get; }
     public IArgument<Player> Player { get; }
-
     public override IEnumerable<int> Evaluate(IGlobal_Contexto contexto)
     {
         int dinero = (int)Eval.Evaluador.Evaluator(Operacion.Replaace(Argumento.Text, contexto));
@@ -20,13 +18,11 @@ public class AumentarDinero : Return<int>
         }
         return new List<int> { dinero };
     }
-
     public override bool Evaluate_Top(IGlobal_Contexto contexto)
     {
         var dinero = Evaluate(contexto).FirstOrDefault();
         return true;
     }
-
     public override IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open_Parenthesis;

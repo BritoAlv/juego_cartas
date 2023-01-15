@@ -5,9 +5,7 @@ public class BanearJugador : Return<bool>
     {
         Player = player;
     }
-
     public IArgument<Player> Player { get; }
-
     public override IEnumerable<bool> Evaluate(IGlobal_Contexto contexto)
     {
         var players = Player.Get_Objects(contexto.PlayerManager.Get_Active_Players(2), contexto);
@@ -17,12 +15,10 @@ public class BanearJugador : Return<bool>
         }
         return new List<bool> { true };
     }
-
     public override bool Evaluate_Top(IGlobal_Contexto contexto)
     {
         return Evaluate(contexto).First();
     }
-
     public override IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open_Parenthesis;

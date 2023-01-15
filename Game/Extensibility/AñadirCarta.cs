@@ -9,7 +9,6 @@ public class AñadirCarta : Return<bool>
     }
     public IArgument<Card> Card { get; }
     public IArgument<Player> Player { get; }
-
     public override IEnumerable<bool> Evaluate(IGlobal_Contexto contexto)
     {
         var cards = Card.Get_Objects(contexto.Ronda_Contexto.CardsManager.All_Cards(), contexto);
@@ -23,12 +22,10 @@ public class AñadirCarta : Return<bool>
         }
         return new List<bool>{ true };
     }
-
     public override bool Evaluate_Top(IGlobal_Contexto contexto)
     {
         return Evaluate(contexto).First();
     }
-
     public override IEnumerable<Iprintable> GetChildrenIprintables()
     {
         yield return Open_Parenthesis;
