@@ -1,6 +1,6 @@
 # Introducción:
 
-Este proyecto se trata de implementar un juego de cartas, con un minilenguaje que permita realizar efectos durante el juego, al estilo *Yugioh*, el cual además, debe poseer un jugador virtual y una interfaz gráfica. Su objetivo es evaluar las buenas prácticas de Oriented Object Programming. Y constituye una introducción a la creación de proyectos a gran escala, donde es necesario saber separar las componentes en modulos, submódulos, y así continuamente.
+Este proyecto se trata de implementar un juego de cartas, con un minilenguaje que permita realizar efectos durante el juego, al estilo *Yugioh*, el cual además, debe poseer un jugador virtual y una interfaz gráfica. Su objetivo es evaluar las buenas prácticas de Object Oriented Programming, y constituye una introducción a la creación de proyectos a gran escala, donde es necesario saber separar las componentes en modulos, submódulos, etc.
 
 En este proyecto, la temática es un juego de poker, que ha sido extendido para que los jugadores puedan realizar algunas acciones durante la partida, a través de él minilenguaje, usa como interfaz visual la consola prieta, y hasta hoy no posee correctamente separada la parte visual de el backend.
 
@@ -36,6 +36,64 @@ Está implementado en C# 11 (NET 7.0) para hacer uso de la nueva *feature* de qu
 cd Game
 dotnet run
 ```
+
+# MiniLenguaje
+
+```bash
+(
+$if ¿($holdhand { Cantidad %2  } {Jugador yo}) || ($holdcard {Valor mayor} {Dinero mayor})? =>
+    ($finalround #efectonuevo 
+        {
+            (
+            $if ¿($exist #dineromio)? => 
+                (
+                $if ¿($operationbool #stage)? =>
+                    ($asignarint #actualdinero {($getdinero {Jugador yo})})
+                        (
+                        $if ¿($operationbool #actualdinero>dineromio)? =>
+                            ($asignarint #dineromio {($operationint #actualdinero)})
+                            !
+                            ($aumentardinero #[dineromio-actualdinero]/2 {Jugador yo})
+                            ($asignarbool #efectonuevo {($operationbool #false)})
+                        )
+                    !
+                    ($asignarbool #stage { ($operationbool #true) } )
+                    ($asignarint #dineromio { ($getdinero {Jugador yo}) })
+                )
+            !
+            ($asignarint #dineromio {($getdinero {Jugador yo})})
+            ($asignarbool #stage {($operationbool #false)})
+            )
+        }
+    )
+    ! 
+    (
+        $asignarint #valorcarta
+        {
+            (
+                $getcardvalue 
+                { Valor mayor } { Jugador yo  } 
+            ) 
+        }
+    )
+    (
+        $while ¿($operationbool #valorcarta>0 )? =>
+        (
+            $asignarint #valorcarta 
+            {
+                (
+                    $operationint #valorcarta/2
+                )
+            }
+        )
+        (
+            $modificarvalorcarta #valorcarta 
+                {Valor mayor} {Jugador random}    
+        )    
+    )
+) 
+```
+
 
 # Based on:
 
